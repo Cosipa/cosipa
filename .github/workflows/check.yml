@@ -2,14 +2,6 @@ name: Validate profile generation
 
 on:
   pull_request:
-  push:
-    branches: [main]
-    paths:
-      - "src/**"
-      - "README.md"
-      - ".python-version"
-      - "renovate.json"
-      - ".github/workflows/**"
 
 permissions:
   contents: read
