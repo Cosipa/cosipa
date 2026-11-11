@@ -11,11 +11,11 @@
 <div align="center">
 
 <!-- profile:typing:start -->
-<a href="./profile-showcase/generated/typing-iosevka-dark.ed8d1167eb0a.svg#gh-dark-mode-only">
-  <img src="./profile-showcase/generated/typing-iosevka-dark.ed8d1167eb0a.svg" alt="Typing introduction — outlined Iosevka">
+<a href="./src/assets/generated/typing-iosevka-dark.ed8d1167eb0a.svg#gh-dark-mode-only">
+  <img src="./src/assets/generated/typing-iosevka-dark.ed8d1167eb0a.svg" alt="Typing introduction — outlined Iosevka">
 </a>
-<a href="./profile-showcase/generated/typing-iosevka-light.abb87d0f9458.svg#gh-light-mode-only">
-  <img src="./profile-showcase/generated/typing-iosevka-light.abb87d0f9458.svg" alt="Typing introduction — outlined Iosevka">
+<a href="./src/assets/generated/typing-iosevka-light.abb87d0f9458.svg#gh-light-mode-only">
+  <img src="./src/assets/generated/typing-iosevka-light.abb87d0f9458.svg" alt="Typing introduction — outlined Iosevka">
 </a>
 <!-- profile:typing:end -->
 
@@ -30,7 +30,7 @@
 <div align="center">
 
 <!-- profile:pgp:start -->
-[![PGP key](./profile-showcase/generated/pgp.d5297abf483e.svg)](https://github.com/Cosipa.gpg)
+[![PGP key](./src/assets/generated/pgp.d5297abf483e.svg)](https://github.com/Cosipa.gpg)
 <!-- profile:pgp:end -->
 
 [![Profile views](https://komarev.com/ghpvc/?username=Cosipa&style=flat&color=313131&label=views)](https://github.com/Cosipa)
@@ -39,22 +39,22 @@
 
 ## Toolbox
 
-![Linux](./profile-showcase/static/badge-linux.svg)
-![NixOS](./profile-showcase/static/badge-nixos.svg)
-![Neovim](./profile-showcase/static/badge-neovim.svg)
-![C](./profile-showcase/static/badge-c.svg)
-![C++](./profile-showcase/static/badge-cpp.svg)
-![Rust](./profile-showcase/static/badge-rust.svg)
-![Go](./profile-showcase/static/badge-go.svg)
-![Python](./profile-showcase/static/badge-python.svg)
-![Java](./profile-showcase/static/badge-java.svg)
+![Linux](./src/assets/static/badge-linux.svg)
+![NixOS](./src/assets/static/badge-nixos.svg)
+![Neovim](./src/assets/static/badge-neovim.svg)
+![C](./src/assets/static/badge-c.svg)
+![C++](./src/assets/static/badge-cpp.svg)
+![Rust](./src/assets/static/badge-rust.svg)
+![Go](./src/assets/static/badge-go.svg)
+![Python](./src/assets/static/badge-python.svg)
+![Java](./src/assets/static/badge-java.svg)
 
 ## Infrastructure as Code
 
-![Docker](./profile-showcase/static/badge-docker.svg)
-![Kubernetes](./profile-showcase/static/badge-kubernetes.svg)
-![Terraform](./profile-showcase/static/badge-terraform.svg)
-![Ansible](./profile-showcase/static/badge-ansible.svg)
+![Docker](./src/assets/static/badge-docker.svg)
+![Kubernetes](./src/assets/static/badge-kubernetes.svg)
+![Terraform](./src/assets/static/badge-terraform.svg)
+![Ansible](./src/assets/static/badge-ansible.svg)
 
 ## Latest posts
 
@@ -106,10 +106,10 @@
 <!-- profile:activity:start -->
 | Status | Repository | Title |
 | :---: | :-- | :-- |
-| <img src="./profile-showcase/generated/status-pr-open.05cacbdfd7d3.svg" alt="PR open" align="top"> | `NixOS/nixpkgs` | [zap: install desktop icons](https://github.com/NixOS/nixpkgs/pull/585770) · #585770 |
-| <img src="./profile-showcase/generated/status-pr-open.05cacbdfd7d3.svg" alt="PR open" align="top"> | `NixOS/nixpkgs` | [fido2-manage: update to 0.2.2](https://github.com/NixOS/nixpkgs/pull/585745) · #585745 |
-| <img src="./profile-showcase/generated/status-pr-open.05cacbdfd7d3.svg" alt="PR open" align="top"> | `NixOS/nixpkgs` | [iproute2: 7.2.0 \-&gt; 7.3.0](https://github.com/NixOS/nixpkgs/pull/585573) · #585573 |
-| <img src="./profile-showcase/generated/status-issue-open.de17ea530027.svg" alt="Issue open" align="top"> | `maxdorninger/MediaManager` | [\[BUG\] Prowlarr magnet redirect is discarded before Transmission grab](https://github.com/maxdorninger/MediaManager/issues/574) · #574 |
+| <img src="./src/assets/generated/status-pr-open.05cacbdfd7d3.svg" alt="PR open" align="top"> | `NixOS/nixpkgs` | [zap: install desktop icons](https://github.com/NixOS/nixpkgs/pull/585770) · #585770 |
+| <img src="./src/assets/generated/status-pr-open.05cacbdfd7d3.svg" alt="PR open" align="top"> | `NixOS/nixpkgs` | [fido2-manage: update to 0.2.2](https://github.com/NixOS/nixpkgs/pull/585745) · #585745 |
+| <img src="./src/assets/generated/status-pr-open.05cacbdfd7d3.svg" alt="PR open" align="top"> | `NixOS/nixpkgs` | [iproute2: 7.2.0 \-&gt; 7.3.0](https://github.com/NixOS/nixpkgs/pull/585573) · #585573 |
+| <img src="./src/assets/generated/status-issue-open.de17ea530027.svg" alt="Issue open" align="top"> | `maxdorninger/MediaManager` | [\[BUG\] Prowlarr magnet redirect is discarded before Transmission grab](https://github.com/maxdorninger/MediaManager/issues/574) · #574 |
 <!-- profile:activity:end -->
 
 ### Recently merged pull requests
@@ -123,44 +123,44 @@
 ## GitHub activity
 
 <!-- profile:snake:start -->
-<a href="./profile-showcase/generated/snake-dark.8e8d5cd1c3fe.svg#gh-dark-mode-only">
-  <img src="./profile-showcase/generated/snake-dark.8e8d5cd1c3fe.svg" alt="Cosipa&#x27;s contribution snake" width="1000">
+<a href="./src/assets/generated/snake-dark.8e8d5cd1c3fe.svg#gh-dark-mode-only">
+  <img src="./src/assets/generated/snake-dark.8e8d5cd1c3fe.svg" alt="Cosipa&#x27;s contribution snake" width="1000">
 </a>
-<a href="./profile-showcase/generated/snake-light.45534e909a06.svg#gh-light-mode-only">
-  <img src="./profile-showcase/generated/snake-light.45534e909a06.svg" alt="Cosipa&#x27;s contribution snake" width="1000">
+<a href="./src/assets/generated/snake-light.45534e909a06.svg#gh-light-mode-only">
+  <img src="./src/assets/generated/snake-light.45534e909a06.svg" alt="Cosipa&#x27;s contribution snake" width="1000">
 </a>
 <!-- profile:snake:end -->
 
 ### Public contribution stats
 
 <!-- profile:stats:start -->
-<a href="./profile-showcase/generated/stats-dark.bc924d0b4998.svg#gh-dark-mode-only">
-  <img src="./profile-showcase/generated/stats-dark.bc924d0b4998.svg" alt="Cosipa&#x27;s public GitHub contribution statistics" width="467">
+<a href="./src/assets/generated/stats-dark.bc924d0b4998.svg#gh-dark-mode-only">
+  <img src="./src/assets/generated/stats-dark.bc924d0b4998.svg" alt="Cosipa&#x27;s public GitHub contribution statistics" width="467">
 </a>
-<a href="./profile-showcase/generated/stats-light.9e43ff3c9cf2.svg#gh-light-mode-only">
-  <img src="./profile-showcase/generated/stats-light.9e43ff3c9cf2.svg" alt="Cosipa&#x27;s public GitHub contribution statistics" width="467">
+<a href="./src/assets/generated/stats-light.9e43ff3c9cf2.svg#gh-light-mode-only">
+  <img src="./src/assets/generated/stats-light.9e43ff3c9cf2.svg" alt="Cosipa&#x27;s public GitHub contribution statistics" width="467">
 </a>
 <!-- profile:stats:end -->
 
 ### This year's weekly line graph
 
 <!-- profile:timeline:start -->
-<a href="./profile-showcase/generated/timeline-dark.4374ab7da99c.svg#gh-dark-mode-only">
-  <img src="./profile-showcase/generated/timeline-dark.4374ab7da99c.svg" alt="Cosipa&#x27;s 365-day contribution timeline">
+<a href="./src/assets/generated/timeline-dark.4374ab7da99c.svg#gh-dark-mode-only">
+  <img src="./src/assets/generated/timeline-dark.4374ab7da99c.svg" alt="Cosipa&#x27;s 365-day contribution timeline">
 </a>
-<a href="./profile-showcase/generated/timeline-light.4198e56cf5ce.svg#gh-light-mode-only">
-  <img src="./profile-showcase/generated/timeline-light.4198e56cf5ce.svg" alt="Cosipa&#x27;s 365-day contribution timeline">
+<a href="./src/assets/generated/timeline-light.4198e56cf5ce.svg#gh-light-mode-only">
+  <img src="./src/assets/generated/timeline-light.4198e56cf5ce.svg" alt="Cosipa&#x27;s 365-day contribution timeline">
 </a>
 <!-- profile:timeline:end -->
 
 ## One of my personally favorite quotes
 
 <!-- profile:quote:start -->
-<a href="./quotes.txt#gh-dark-mode-only">
-  <img src="./profile-showcase/generated/quote-dark.7d44fde44d16.svg" alt="Quote card from quotes.txt">
+<a href="./src/data/quotes.txt#gh-dark-mode-only">
+  <img src="./src/assets/generated/quote-dark.7d44fde44d16.svg" alt="Quote card from quotes.txt">
 </a>
-<a href="./quotes.txt#gh-light-mode-only">
-  <img src="./profile-showcase/generated/quote-light.26f3343b7b77.svg" alt="Quote card from quotes.txt">
+<a href="./src/data/quotes.txt#gh-light-mode-only">
+  <img src="./src/assets/generated/quote-light.26f3343b7b77.svg" alt="Quote card from quotes.txt">
 </a>
 <!-- profile:quote:end -->
 

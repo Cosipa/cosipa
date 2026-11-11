@@ -4,7 +4,7 @@
 
 [Working components](#working) · [Mockups & setup pending](#mockups) · [Blog alternatives](#real-posts)
 
-These options are not used in [the profile README](./README.md). Original numbers are kept for reference. Everything is visible—no expanding sections.
+These options are not used in [the profile README](../README.md). Original numbers are kept for reference. Everything is visible—no expanding sections.
 
 <a id="working"></a>
 
@@ -16,7 +16,7 @@ These unused components already render or refresh successfully. GitHub Actions u
 
 Rosé Pine Moon, your two-line Fish/Starship prompt and branch symbol, no title bar or window buttons, and a steady beam cursor.
 
-![Undecorated Rosé Pine Moon terminal with Cosipa's two-line Starship prompt](./profile-showcase/terminal-rose-pine.svg)
+![Undecorated Rosé Pine Moon terminal with Cosipa's two-line Starship prompt](./assets/static/terminal-rose-pine.svg)
 
 <sub>Styling recreation, not a screenshot. Uses the installed IosevkaTerm Nerd Font from your Kitty/Foot setup. Glyphs are rendered as paths so font fallback cannot change the image.</sub>
 
@@ -25,10 +25,10 @@ Rosé Pine Moon, your two-line Fish/Starship prompt and branch symbol, no title 
 **Public GitHub data, rendered locally.** Rounded ends, subtle shading, and text shadows matching the other flat badges.
 
 <!-- profile:github-badges:start -->
-[![followers](./profile-showcase/generated/followers.5af084097a3f.svg)](https://github.com/Cosipa?tab=followers)
-[![stars](./profile-showcase/generated/stars.e7f81e54e52f.svg)](https://github.com/Cosipa/cosipa/stargazers)
-[![updated](./profile-showcase/generated/updated.f79310bf7dc9.svg)](https://github.com/Cosipa/cosipa/commits)
-[![repos](./profile-showcase/generated/repos.d5972ff650f6.svg)](https://github.com/Cosipa?tab=repositories)
+[![followers](./assets/generated/followers.5af084097a3f.svg)](https://github.com/Cosipa?tab=followers)
+[![stars](./assets/generated/stars.e7f81e54e52f.svg)](https://github.com/Cosipa/cosipa/stargazers)
+[![updated](./assets/generated/updated.f79310bf7dc9.svg)](https://github.com/Cosipa/cosipa/commits)
+[![repos](./assets/generated/repos.d5972ff650f6.svg)](https://github.com/Cosipa?tab=repositories)
 <!-- profile:github-badges:end -->
 
 <a id="real-posts"></a>
@@ -108,11 +108,11 @@ These are **not finished personal content**. Some are visual mockups; others hav
 **Placeholder.** No featured repository is selected yet.
 
 <!-- profile:repository-placeholder:start -->
-<a href="./profile-showcase/generated/repository-placeholder-dark.a543fce88cf0.svg#gh-dark-mode-only">
-  <img src="./profile-showcase/generated/repository-placeholder-dark.a543fce88cf0.svg" alt="Repository preview placeholder" width="400">
+<a href="./assets/generated/repository-placeholder-dark.a543fce88cf0.svg#gh-dark-mode-only">
+  <img src="./assets/generated/repository-placeholder-dark.a543fce88cf0.svg" alt="Repository preview placeholder" width="400">
 </a>
-<a href="./profile-showcase/generated/repository-placeholder-light.35e31349540e.svg#gh-light-mode-only">
-  <img src="./profile-showcase/generated/repository-placeholder-light.35e31349540e.svg" alt="Repository preview placeholder" width="400">
+<a href="./assets/generated/repository-placeholder-light.35e31349540e.svg#gh-light-mode-only">
+  <img src="./assets/generated/repository-placeholder-light.35e31349540e.svg" alt="Repository preview placeholder" width="400">
 </a>
 <!-- profile:repository-placeholder:end -->
 
@@ -128,8 +128,8 @@ These are **not finished personal content**. Some are visual mockups; others hav
 
 One sentence explaining the problem it solves, not just the language it's written in.
 
-![CLI](./profile-showcase/static/badge-cli.svg)
-![Local first](./profile-showcase/static/badge-local-first.svg)
+![CLI](./assets/static/badge-cli.svg)
+![Local first](./assets/static/badge-local-first.svg)
 
 [Source](https://github.com/Cosipa?tab=repositories)
 
@@ -140,8 +140,8 @@ One sentence explaining the problem it solves, not just the language it's writte
 
 The one that exists because you wanted to understand how something works.
 
-![Experiment](./profile-showcase/static/badge-experiment.svg)
-![Work in progress](./profile-showcase/static/badge-work-in-progress.svg)
+![Experiment](./assets/static/badge-experiment.svg)
+![Work in progress](./assets/static/badge-work-in-progress.svg)
 
 [Source](https://github.com/Cosipa?tab=repositories)
 
@@ -155,12 +155,12 @@ The one that exists because you wanted to understand how something works.
 
 | Project | Latest | What's new |
 | :-- | :-- | :-- |
-| `sidequest` | ![Demo version 1.4.0](./profile-showcase/static/badge-demo-version-1-4-0.svg) | Startup is no longer a coffee break. |
-| `tiny-parser` | ![Demo version 0.8.2](./profile-showcase/static/badge-demo-version-0-8-2.svg) | Error messages now attempt to help. |
-| `homelab-notes` | ![Demo rolling release](./profile-showcase/static/badge-demo-rolling-release.svg) | Another diagram of the same server. |
+| `sidequest` | ![Demo version 1.4.0](./assets/static/badge-demo-version-1-4-0.svg) | Startup is no longer a coffee break. |
+| `tiny-parser` | ![Demo version 0.8.2](./assets/static/badge-demo-version-0-8-2.svg) | Error messages now attempt to help. |
+| `homelab-notes` | ![Demo rolling release](./assets/static/badge-demo-rolling-release.svg) | Another diagram of the same server. |
 
 ## Decorative footer
 
 <!-- profile:footer:start -->
-![Decorative waving footer](./profile-showcase/static/footer-wave.svg)
+![Decorative waving footer](./assets/static/footer-wave.svg)
 <!-- profile:footer:end -->

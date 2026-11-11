@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "snake": {
-    "dark": "./profile-showcase/generated/snake-dark.8e8d5cd1c3fe.svg",
-    "light": "./profile-showcase/generated/snake-light.45534e909a06.svg"
+    "dark": "./src/assets/generated/snake-dark.8e8d5cd1c3fe.svg",
+    "light": "./src/assets/generated/snake-light.45534e909a06.svg"
   },
   "sources": {
     "activity": {

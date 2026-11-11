@@ -112,20 +112,20 @@
   "status-pr-open.svg": {
     "source": "https://github.com/primer/octicons/blob/main/icons/git-pull-request-16.svg",
     "sha256": "05cacbdfd7d36fd7a07160ab1b8995d6f83ebf7a41a8ad835646f8622ea7268b",
-    "note": "Locally composed compact GitHub-style status pill; Octicons path under MIT, see ../status-icons.LICENSE."
+    "note": "Locally composed compact GitHub-style status pill; Octicons path under MIT, see ./status-icons.LICENSE."
   },
   "status-issue-open.svg": {
     "source": "https://github.com/primer/octicons/blob/main/icons/issue-opened-16.svg",
     "sha256": "de17ea530027d77d005b09b2e32ac7c32d2a37fc1864b8a5d9d840bcc6c02d22",
-    "note": "Locally composed compact GitHub-style status pill; Octicons paths under MIT, see ../status-icons.LICENSE."
+    "note": "Locally composed compact GitHub-style status pill; Octicons paths under MIT, see ./status-icons.LICENSE."
   },
   "status-pr-merged.svg": {
     "source": "https://github.com/primer/octicons/blob/main/icons/git-merge-16.svg",
     "sha256": "adbe82d6dab56f152be2483c0292dd19a13bfedcb3aca9dcbc64e1a865492090",
-    "note": "Locally composed compact GitHub-style status pill; Octicons path under MIT, see ../status-icons.LICENSE."
+    "note": "Locally composed compact GitHub-style status pill; Octicons path under MIT, see ./status-icons.LICENSE."
   },
   "typing-iosevka.svg": {
-    "source": "../typing-iosevka.source.svg",
+    "source": "../source/typing-iosevka.svg",
     "sha256": "828b3ebabca75d55a62827e7ac2512c113cd2fb412b9ea12379cf4266a92c109",
     "note": "Local source exported with Inkscape text-to-path using IosevkaTerm Nerd Font; animation preserved, no runtime font dependency."
   },

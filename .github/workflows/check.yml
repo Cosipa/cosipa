@@ -5,13 +5,8 @@ on:
   push:
     branches: [main]
     paths:
-      - 'scripts/**'
-      - 'tests/**'
-      - 'profile.toml'
+      - 'src/**'
       - 'README.md'
-      - 'test.md'
-      - 'quotes.txt'
-      - 'profile-showcase/**'
       - '.python-version'
       - 'renovate.json'
       - '.github/workflows/**'
@@ -30,5 +25,5 @@ jobs:
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version-file: .python-version
-      - run: python -m unittest discover -s tests -v
-      - run: python scripts/update_profile.py --check
+      - run: python -m unittest discover -s src/scripts/tests -v
+      - run: python src/scripts/update_profile.py --check

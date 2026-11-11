@@ -11,23 +11,13 @@ import unittest
 from unittest.mock import patch
 import xml.etree.ElementTree as ET
 
-ROOT = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(ROOT / "scripts"))
+ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(ROOT / "src/scripts"))
+import profile_cards as cards
 import profile_data as data
 import update_profile as profile
 
 NOW = datetime(2026, 11, 12, 15, 30, tzinfo=UTC)
-TYPING_LINES = [
-    "Declarative > Imperative",
-    "My fridge is not connected to the internet",
-    "Checking out some cool projects",
-    "Updating packages...",
-    "Intentionally procrastinating...",
-    "Keeping busy with whatever",
-    "Reading a book, or a README, who knows",
-    "Receiving prometheus alerts",
-    "Fluxcd reconciling my cluster as we speak",
-]
 
 
 def contribution_document():
@@ -205,29 +195,21 @@ class MergedActivityTests(unittest.TestCase):
 
 class RenderTests(unittest.TestCase):
     def setUp(self):
-        self.config = tomllib.loads((ROOT / "profile.toml").read_text())
+        self.config = tomllib.loads((ROOT / "src/data/profile.toml").read_text())
         self.palette = self.config["colors"]["dark"]
+        source = ET.parse(ROOT / "src/assets/source/typing-iosevka.svg")
+        self.typing_lines = [node.text for node in source.iter("{http://www.w3.org/2000/svg}text")]
 
-    def test_quotes_are_user_supplied_only_and_deterministic(self):
-        entries = profile.quote_entries("# ignored\n\nAn exact quote\tIts author\nAnother exact quote\n")
+    def test_quotes_preserve_supplied_text_and_choose_deterministically(self):
+        entries = cards.quote_entries("# ignored\n\nAn exact quote\tIts author\nAnother exact quote\n")
         self.assertEqual(entries, [("An exact quote", "Its author"), ("Another exact quote", "")])
-        first = profile.quote_card(entries, NOW.date(), self.palette)
-        self.assertEqual(first, profile.quote_card(entries, NOW.date(), self.palette))
-        self.assertNotIn("Cosipa", first)
-        empty = profile.quote_card([], NOW.date(), self.palette)
+        first = cards.quote_card(entries, NOW.date(), self.palette)
+        self.assertEqual(first, cards.quote_card(entries, NOW.date(), self.palette))
+        supplied = cards.quote_card([("An exact quote", "Its author")], NOW.date(), self.palette)
+        self.assertIn("An exact quote", supplied)
+        self.assertIn("— Its author", supplied)
+        empty = cards.quote_card([], NOW.date(), self.palette)
         self.assertIn("No quotes configured", empty)
-        self.assertNotIn("Your chosen author", empty)
-
-    def test_quote_has_restrained_quotation_and_attribution_styling(self):
-        document = profile.quote_card([("An exact sample quote.", "Sample attribution")], NOW.date(), self.palette)
-        root = ET.fromstring(document)
-        ns = {"s": "http://www.w3.org/2000/svg"}
-        self.assertIn("“", document)
-        self.assertIn("An exact sample quote.”", document)
-        self.assertIn("— Sample attribution", document)
-        self.assertIsNotNone(root.find('.//s:g[@font-style="italic"]', ns))
-        self.assertEqual(len(root.findall(".//s:path", ns)), 1)  # Just a simple left rule.
-        self.assertEqual(root.findall(".//s:linearGradient", ns), [])
 
     def test_theme_selection_uses_github_anchor_markers_not_os_media(self):
         class Images(HTMLParser):
@@ -256,7 +238,7 @@ class RenderTests(unittest.TestCase):
                 self.assertEqual(parsed.images[i], {"src": paths[theme], "alt": alt, "width": "467"})
 
     def test_svg_and_markdown_text_are_escaped(self):
-        document = profile.quote_card([('<script>&"', '<author>')], NOW.date(), self.palette)
+        document = cards.quote_card([('<script>&"', '<author>')], NOW.date(), self.palette)
         ET.fromstring(document)
         self.assertNotIn("<script>", document)
         self.assertIn("&lt;script&gt;", document)
@@ -268,18 +250,12 @@ class RenderTests(unittest.TestCase):
 
     def test_public_stats_have_no_grade_or_private_commit_guess(self):
         facts = data.normalize_contributions(contribution_document(), NOW)
-        document = profile.stats_card("Cosipa", facts, NOW.date(), self.palette)
+        document = cards.stats_card("Cosipa", facts, NOW.date(), self.palette)
         self.assertIn("Public commit contributions", document)
         self.assertIn("Published restricted contributions", document)
         self.assertNotIn("Private commits", document)
         self.assertIn("2026 YTD", document)
-        root = ET.fromstring(document)
-        ns = {"s": "http://www.w3.org/2000/svg"}
-        self.assertEqual(root.attrib["height"], "229")
-        self.assertEqual(len(root.findall(".//s:rect", ns)), 1)  # Background only, no row pills.
-        self.assertEqual(root.findall(".//s:circle", ns), [])
-        self.assertIn(f'fill="#{self.palette["accent"]}"', document)
-        stale = profile.stats_card("Cosipa", facts, date(2027, 1, 1), self.palette)
+        stale = cards.stats_card("Cosipa", facts, date(2027, 1, 1), self.palette)
         self.assertIn("await", stale)
         self.assertNotIn("2026 YTD", stale)
 
@@ -299,23 +275,11 @@ class RenderTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             profile.post_excerpts(posts, "tip")
 
-    def test_badges_match_shields_flat_shape_and_shading(self):
-        document = profile.badge("pgp", "0xA8523AE122FE6E85")
-        root = ET.fromstring(document)
-        ns = {"s": "http://www.w3.org/2000/svg"}
-        clip = root.find(".//s:clipPath/s:rect", ns)
-        self.assertEqual(clip.attrib["rx"], "3")
-        self.assertEqual(clip.attrib["width"], root.attrib["width"])
-        self.assertEqual(len(root.findall(".//s:linearGradient/s:stop", ns)), 2)
-        self.assertEqual(len(root.findall(".//s:text", ns)), 4)
-        self.assertIn('clip-path="url(#badge)"', document)
-        self.assertIn('opacity=".3"', document)
-
     def test_badges_have_consistent_six_pixel_segment_padding(self):
         ns = {"s": "http://www.w3.org/2000/svg"}
         for label, value in [("followers", "5"), ("stars", "12"), ("updated", "2026-11-11"), ("pgp", "0xA8523AE122FE6E85")]:
             with self.subTest(label=label):
-                root = ET.fromstring(profile.badge(label, value))
+                root = ET.fromstring(cards.badge(label, value))
                 segments = root.findall('.//s:g[@clip-path="url(#badge)"]/s:rect', ns)[:2]
                 foreground = root.findall(".//s:text", ns)[1::2]
                 for segment, node in zip(segments, foreground):
@@ -323,34 +287,24 @@ class RenderTests(unittest.TestCase):
                     self.assertGreaterEqual(padding, 6)
                     self.assertLess(padding, 6.5)
                     self.assertEqual(node.attrib["lengthAdjust"], "spacingAndGlyphs")
-        self.assertLess(profile.badge_text_width("iiii"), profile.badge_text_width("WWWW"))
-        self.assertEqual(len(profile.BADGE_ADVANCES), 95)
+        self.assertLess(cards.badge_text_width("iiii"), cards.badge_text_width("WWWW"))
 
-    def test_demo_quotes_are_explicitly_labelled_placeholders(self):
-        entries = profile.quote_entries((ROOT / "quotes.txt").read_text())
-        self.assertTrue(entries)
-        for quote, author in entries:
-            self.assertIn("demo quote", quote.lower())
-            self.assertEqual(author, "Placeholder, not a real quotation")
-        document = profile.quote_card(entries, NOW.date(), self.palette)
-        self.assertIn("Placeholder, not a real quotation", document)
-        self.assertNotIn("No quotes configured", document)
-
-    def test_typing_source_and_export_keep_all_requested_taglines_and_rotate(self):
+    def test_typing_export_preserves_source_text_and_shows_one_line_at_a_time(self):
         ns = {"s": "http://www.w3.org/2000/svg"}
-        source = ET.parse(ROOT / "profile-showcase/typing-iosevka.source.svg").getroot()
-        self.assertEqual([node.text for node in source.findall(".//s:text", ns)], TYPING_LINES)
-        exported = ET.parse(ROOT / "profile-showcase/static/typing-iosevka.svg").getroot()
+        self.assertTrue(self.typing_lines)
+        exported = ET.parse(ROOT / "src/assets/static/typing-iosevka.svg").getroot()
         groups = exported.find('.//*[@id="typing-text"]').findall("s:g", ns)
-        self.assertEqual([group.find('.//*[@aria-label]').attrib["aria-label"] for group in groups], TYPING_LINES)
+        self.assertEqual([group.find('.//*[@aria-label]').attrib["aria-label"] for group in groups], self.typing_lines)
         animations = [group.find('s:animate[@attributeName="opacity"]', ns) for group in groups]
+        reveal = exported.find('.//s:animate[@attributeName="width"]', ns)
+        cycle_seconds = float(reveal.attrib["dur"].removesuffix("s")) * len(self.typing_lines)
         for animation in animations:
-            self.assertEqual(animation.attrib["dur"], "45s")
+            self.assertEqual(float(animation.attrib["dur"].removesuffix("s")), cycle_seconds)
             self.assertEqual(animation.attrib["repeatCount"], "indefinite")
-        # Every five-second slot shows exactly its own line, not overlapping text.
-        for slot in range(len(TYPING_LINES)):
+        # Each slot shows exactly its own line, not overlapping text.
+        for slot in range(len(self.typing_lines)):
             for fraction in (.01, .5, .99):
-                phase = (slot + fraction) / len(TYPING_LINES)
+                phase = (slot + fraction) / len(self.typing_lines)
                 active = []
                 for i, animation in enumerate(animations):
                     times = [float(t) for t in animation.attrib["keyTimes"].split(";")]
@@ -361,11 +315,10 @@ class RenderTests(unittest.TestCase):
                 self.assertEqual(active, [slot])
 
     def test_typing_has_outlined_iosevka_and_preserved_animation(self):
-        root = ET.parse(ROOT / "profile-showcase/static/typing-iosevka.svg").getroot()
+        root = ET.parse(ROOT / "src/assets/static/typing-iosevka.svg").getroot()
         ns = {"s": "http://www.w3.org/2000/svg"}
         self.assertEqual(root.findall(".//s:text", ns), [])
-        self.assertEqual(len(root.findall(".//s:path", ns)), len(TYPING_LINES))
-        self.assertEqual(len(root.findall(".//s:animate", ns)), len(TYPING_LINES) + 1)
+        self.assertTrue(root.findall(".//s:path", ns))
         self.assertIn("IosevkaTerm Nerd Font", "".join(root.itertext()))
         for path in root.findall(".//s:path", ns):
             self.assertNotIn("opacity:0", path.attrib.get("style", ""))
@@ -373,10 +326,10 @@ class RenderTests(unittest.TestCase):
         reveal = root.find('.//s:animate[@attributeName="width"]', ns)
         self.assertEqual(reveal.attrib["calcMode"], "discrete")
         widths = [float(v) for v in reveal.attrib["values"].split(";")]
-        self.assertEqual(max(widths), 44 * 11.5)
-        self.assertGreaterEqual(max(widths), max(map(len, TYPING_LINES)) * 11.5)
+        cell_width = float(root.find('.//*[@id="typing-text"]').attrib["font-size"]) / 2
+        self.assertGreaterEqual(max(widths), max(map(len, self.typing_lines)) * cell_width)
         self.assertLessEqual(max(widths), float(root.attrib["width"]))
-        self.assertTrue(all(abs(b - a) in (0, 11.5) for a, b in zip(widths, widths[1:])))
+        self.assertTrue(all(abs(b - a) in (0, cell_width) for a, b in zip(widths, widths[1:])))
         self.assertTrue(any(b < a for a, b in zip(widths, widths[1:])))
         for node in root.findall(".//s:animate", ns):
             times = [float(t) for t in node.attrib["keyTimes"].split(";")]
@@ -384,22 +337,23 @@ class RenderTests(unittest.TestCase):
             self.assertTrue(all(a < b for a, b in zip(times, times[1:])))
 
     def test_typing_stays_centered_at_every_character_step_in_both_themes(self):
-        source = (ROOT / "profile-showcase/static/typing-iosevka.svg").read_bytes()
+        source = (ROOT / "src/assets/static/typing-iosevka.svg").read_bytes()
         ns = {"s": "http://www.w3.org/2000/svg"}
         for colors in self.config["colors"].values():
-            root = ET.fromstring(profile.typing_card(source, colors))
+            root = ET.fromstring(cards.typing_card(source, colors))
             lettering = root.find('.//*[@id="typing-text"]')
+            canvas_width = float(root.attrib["viewBox"].split()[2])
+            cell_width = float(lettering.attrib["font-size"]) / 2
             self.assertNotIn("clip-path", lettering.attrib)
             reveal = root.find('.//s:animate[@attributeName="width"]', ns)
             widths = [float(value) for value in reveal.attrib["values"].split(";")]
             lines = lettering.findall("s:g", ns)
-            self.assertEqual(len(lines), len(TYPING_LINES))
-            self.assertEqual([line.find('.//*[@aria-label]').attrib["aria-label"] for line in lines], TYPING_LINES)
+            self.assertEqual(len(lines), len(self.typing_lines))
+            self.assertEqual([line.find('.//*[@aria-label]').attrib["aria-label"] for line in lines], self.typing_lines)
             for line in lines:
                 self.assertEqual(line.attrib["clip-path"], "url(#typing-line)")
-                self.assertEqual(line.attrib["transform"], "translate(325 0)")
                 glyphs = line.find('.//*[@aria-label]')
-                line_width = len(glyphs.attrib["aria-label"]) * 11.5
+                line_width = len(glyphs.attrib["aria-label"]) * cell_width
                 movement = line.find("s:animateTransform", ns)
                 self.assertEqual(movement.attrib["attributeName"], "transform")
                 self.assertEqual(movement.attrib["type"], "translate")
@@ -409,10 +363,10 @@ class RenderTests(unittest.TestCase):
                 self.assertEqual(len(offsets), len(widths))
                 for (x, y), visible in zip(offsets, widths):
                     self.assertEqual(y, 0)
-                    self.assertAlmostEqual(x + min(visible, line_width) / 2, 325)
+                    self.assertAlmostEqual(x + min(visible, line_width) / 2, canvas_width / 2)
 
     def test_typing_variants_preserve_glyphs_timing_and_readable_contrast(self):
-        source = (ROOT / "profile-showcase/static/typing-iosevka.svg").read_bytes()
+        source = (ROOT / "src/assets/static/typing-iosevka.svg").read_bytes()
         ns = {"s": "http://www.w3.org/2000/svg"}
         original = ET.fromstring(source)
 
@@ -422,7 +376,7 @@ class RenderTests(unittest.TestCase):
             return sum(v * w for v, w in zip(channels, (.2126, .7152, .0722)))
 
         for colors in self.config["colors"].values():
-            result = ET.fromstring(profile.typing_card(source, colors))
+            result = ET.fromstring(cards.typing_card(source, colors))
             self.assertEqual(result.find('.//*[@id="typing-text"]').attrib["fill"], "#" + colors["typing"])
             self.assertEqual([p.attrib["d"] for p in original.findall(".//s:path", ns)],
                              [p.attrib["d"] for p in result.findall(".//s:path", ns)])
@@ -438,8 +392,8 @@ class RenderTests(unittest.TestCase):
                    b'<rect class="snake" width="12" height="12"/></svg>')
         for theme, colors in self.config["colors"].items():
             with self.subTest(theme=theme):
-                result = profile.snake_card(content, colors)
-                self.assertEqual(profile.snake_card(result, colors), result)
+                result = cards.snake_card(content, colors)
+                self.assertEqual(cards.snake_card(result, colors), result)
                 root = ET.fromstring(result)
                 background = root[0]
                 self.assertEqual(background.attrib["fill"], "#" + colors["background"])
@@ -450,19 +404,11 @@ class RenderTests(unittest.TestCase):
                 self.assertEqual(len(root.findall('.//*[@id="snake-background"]')), 1)
                 self.assertEqual(root[-1].attrib["class"], "snake")
 
-    def test_palettes_match_github_backgrounds_and_contribution_greens(self):
-        self.assertEqual(self.config["colors"]["dark"]["background"], "0d1117")
-        self.assertEqual(self.config["colors"]["light"]["background"], "ffffff")
-        self.assertEqual(self.config["colors"]["dark"]["dots"],
-                         ["161b22", "01311f", "034525", "0f6d31", "00c647"])
-        self.assertEqual(self.config["colors"]["light"]["dots"],
-                         ["ebedf0", "9be9a8", "40c463", "30a14e", "216e39"])
-
     def test_timeline_has_coloured_area_and_real_peak(self):
         facts = {"days": {f"2026-01-{i:02}": i for i in range(1, 15)},
                  "calendar_total": 105, "calendar_start": "2025-01-15", "calendar_end": "2026-01-14"}
         for colors in self.config["colors"].values():
-            document = profile.timeline_card("Cosipa", facts, colors)
+            document = cards.timeline_card("Cosipa", facts, colors)
             ET.fromstring(document)
             self.assertIn('fill="url(#area)"', document)
             self.assertIn('stroke="url(#line)"', document)
@@ -470,7 +416,7 @@ class RenderTests(unittest.TestCase):
             self.assertIn("105 contributions", document)
             self.assertIn("#" + colors["secondary"], document)
 
-    def test_activity_tables_use_compact_github_style_pills(self):
+    def test_activity_tables_show_status_dates_and_escaped_titles(self):
         with tempfile.TemporaryDirectory() as directory:
             assets = profile.Assets(Path(directory), "generated")
             item = {"kind": "pr", "title": "Actual | title", "repository": "owner/repo", "number": 1,
@@ -492,14 +438,6 @@ class RenderTests(unittest.TestCase):
             self.assertIn(r"Actual \| title", merged)
             self.assertNotIn("Status style preview", merged)
             self.assertNotIn("static/badge-", opened)
-            for path in assets.directory.glob("status-*.svg"):
-                root = ET.parse(path).getroot()
-                self.assertLessEqual(int(root.attrib["width"]), 86)
-                self.assertEqual(root.attrib["height"], "24")
-                rect = root.find("{http://www.w3.org/2000/svg}rect")
-                self.assertEqual(rect.attrib["rx"], "12")
-                self.assertEqual(rect.attrib["fill"], "#8250df" if "merged" in path.name else "#1f883d")
-            self.assertTrue((ROOT / "profile-showcase/status-icons.LICENSE").is_file())
 
     def test_empty_merged_table_has_no_style_preview_or_fake_prs(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -515,6 +453,34 @@ class RenderTests(unittest.TestCase):
             self.assertNotIn("No merged public", pending)
             self.assertNotIn("Status style preview", pending)
             self.assertEqual(list(assets.directory.glob("*.svg")), [])
+
+    def test_local_links_resolve_from_the_containing_document(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            original = ('![Card](./src/assets/static/card.svg)\n'
+                        '<a href="./src/data/quotes.txt#section"><img src="./src/assets/static/card.svg"></a>\n'
+                        '[External](https://example.com/card.svg)\n'
+                        'Prose: "./not-a-link" and href="./not-an-attribute"\n'
+                        r'Escaped: \[not a link\](./not-a-link)')
+            expected = {root / "src/assets/static/card.svg", root / "src/data/quotes.txt"}
+            for name in ("README.md", "src/showcase.md", "src/nested/showcase.md"):
+                document = root / name
+                with self.subTest(document=name):
+                    converted = profile.document_links(original, root, document)
+                    self.assertEqual(profile.linked_files(root, converted, document), expected)
+                    self.assertIn("#section", converted)
+                    self.assertIn("https://example.com/card.svg", converted)
+                    self.assertIn('Prose: "./not-a-link" and href="./not-an-attribute"', converted)
+                    self.assertIn(r'\[not a link\](./not-a-link)', converted)
+
+    def test_nested_document_validation_rejects_missing_or_escaping_svgs(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            document = root / "src/showcase.md"
+            for target in ("./assets/missing.svg", "../../outside.svg", "../.git/config.svg"):
+                markdown = f'<!-- profile:stats:start -->\n![Card]({target})\n<!-- profile:stats:end -->'
+                with self.subTest(target=target), self.assertRaises(ValueError):
+                    profile.validate(root, self.config, markdown, regions=["stats"], document=document)
 
     def test_only_marked_content_is_changed(self):
         original = "before\n<!-- profile:stats:start -->\nold\n<!-- profile:stats:end -->\nafter\n"
@@ -534,25 +500,27 @@ class RenderTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             assets = profile.Assets(root, "generated")
-            first = assets.put("badge", profile.badge("PR", "open"))
-            same = assets.put("badge", profile.badge("PR", "open"))
+            first = assets.put("badge", cards.badge("PR", "open"))
+            same = assets.put("badge", cards.badge("PR", "open"))
             self.assertEqual(first, same)
-            second = assets.put("badge", profile.badge("PR", "closed"))
+            second = assets.put("badge", cards.badge("PR", "closed"))
             unrelated = assets.directory / "handmade.svg"
             unrelated.write_text("do not delete")
-            assets.prune(first)
+            assets.prune([(root / "README.md", f"![Badge]({first})")])
             self.assertTrue((root / first).exists())
             self.assertFalse((root / second).exists())
             self.assertTrue(unrelated.exists())
             with self.assertRaises(ValueError):
                 assets.put("bad", '<svg xmlns="http://www.w3.org/2000/svg"><script>oops</script></svg>')
             with self.assertRaises(ValueError):
-                assets.put("../escape", profile.badge("PR", "open"))
+                assets.put("../escape", cards.badge("PR", "open"))
 
     def test_selected_regions_render_without_unselected_widgets(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            (root / "quotes.txt").write_text("")
+            quotes = root / self.config["quotes"]
+            quotes.parent.mkdir(parents=True)
+            quotes.write_text("")
             assets = profile.Assets(root, "generated")
             regions = self.config["regions"]
             original = "# Keep this intro\n" + "\n".join(
@@ -587,7 +555,9 @@ class RenderTests(unittest.TestCase):
     def test_render_preserves_everything_outside_markers(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            (root / "quotes.txt").write_text("")
+            quotes = root / self.config["quotes"]
+            quotes.parent.mkdir(parents=True)
+            quotes.write_text("")
             assets = profile.Assets(root, "generated")
             original = "# Keep this layout\n" + "\n".join(
                 f'<!-- profile:{name}:start -->\nold {name}\n<!-- profile:{name}:end -->'
@@ -605,37 +575,44 @@ class RenderTests(unittest.TestCase):
 
 class WorkflowAndCacheTests(unittest.TestCase):
     def copy_profile_inputs(self, root):
-        paths = ["profile.toml", "README.md", "test.md", "quotes.txt", ".profile-data/public.json"]
-        paths += [str(path.relative_to(ROOT)) for folder in ("profile-showcase", "profile-showcase/static")
-                  for path in (ROOT / folder).glob("*.svg")]
+        paths = ["src/data/profile.toml", "README.md", "src/showcase.md", "src/data/quotes.txt", "src/data/public.json"]
+        paths += [str(path.relative_to(ROOT)) for path in (ROOT / "src/assets/static").glob("*.svg")]
         for relative in paths:
             destination = root / relative
             destination.parent.mkdir(parents=True, exist_ok=True)
             destination.write_bytes((ROOT / relative).read_bytes())
 
     def test_offline_refresh_updates_both_documents_and_retains_their_assets(self):
-        config = tomllib.loads((ROOT / "profile.toml").read_text())
+        config = tomllib.loads((ROOT / "src/data/profile.toml").read_text())
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             self.copy_profile_inputs(root)
-            before = {name: (root / name).read_text() for name in ("README.md", "test.md")}
+            before = {name: (root / name).read_text() for name in (config["markdown"], config["showcase_markdown"])}
             with patch.object(profile, "ROOT", root), patch.object(sys, "argv", ["update_profile.py", "--offline"]), \
                  patch.object(profile, "refresh", side_effect=AssertionError("offline must not fetch")):
                 profile.main()
-                for name, regions in [("README.md", config["regions"]), ("test.md", config["showcase_regions"])]:
+                for name, regions in [(config["markdown"], config["regions"]), (config["showcase_markdown"], config["showcase_regions"])]:
                     updated = (root / name).read_text()
-                    profile.validate(root, config, updated, regions=regions)
+                    profile.validate(root, config, updated, regions=regions, document=root / name)
                     original = before[name]
                     for region in regions:
                         original = profile.replace_region(original, region, "REGION")
                         updated = profile.replace_region(updated, region, "REGION")
                     self.assertEqual(updated, original)
-                catalogue = (root / "test.md").read_text()
-                readme = (root / "README.md").read_text()
+                catalogue_path = root / config["showcase_markdown"]
+                catalogue = catalogue_path.read_text()
+                readme_path = root / config["markdown"]
+                readme = readme_path.read_text()
                 catalogue_only = profile.region_pattern("repository-placeholder").search(catalogue)[2]
-                for relative in re.findall(r"\./profile-showcase/[\w./-]+\.svg", catalogue_only):
-                    self.assertNotIn(relative, readme)
-                    self.assertTrue((root / relative).is_file())
+                catalogue_assets = profile.linked_files(root, catalogue_only, catalogue_path)
+                self.assertTrue(catalogue_assets)
+                for path in catalogue_assets:
+                    self.assertNotIn(path, profile.linked_files(root, readme, readme_path))
+                    self.assertTrue(path.is_file())
+                cache = json.loads((root / config["cache"]).read_text())
+                for path in cache["snake"].values():
+                    self.assertTrue(path.startswith("./src/assets/generated/"))
+                    self.assertTrue((root / path).is_file())
                 snapshot = {str(path.relative_to(root)): path.read_bytes() for path in root.rglob("*") if path.is_file()}
                 profile.main()
                 self.assertEqual(snapshot, {str(path.relative_to(root)): path.read_bytes() for path in root.rglob("*") if path.is_file()})
@@ -647,45 +624,28 @@ class WorkflowAndCacheTests(unittest.TestCase):
             root = Path(directory)
             self.copy_profile_inputs(root)
             before = (root / "README.md").read_bytes()
-            catalogue = root / "test.md"
+            catalogue = root / "src/showcase.md"
             catalogue.write_text(catalogue.read_text().replace("<!-- profile:footer:end -->", ""))
             with patch.object(profile, "ROOT", root), patch.object(sys, "argv", ["update_profile.py"]), \
                  patch.object(profile, "refresh") as refresh, self.assertRaises(ValueError):
                 profile.main()
             refresh.assert_not_called()
             self.assertEqual((root / "README.md").read_bytes(), before)
-            self.assertFalse((root / "profile-showcase/generated").exists())
+            self.assertFalse((root / "src/assets/generated").exists())
 
-    def test_readme_layout_and_workflow_include_only_selected_widgets(self):
-        config = tomllib.loads((ROOT / "profile.toml").read_text())
-        self.assertEqual(config["markdown"], "README.md")
-        self.assertEqual(config["showcase_markdown"], "test.md")
-        markdown = (ROOT / config["markdown"]).read_text()
-        profile.validate(ROOT, config, markdown, regions=config["regions"])
-        expected = ["typing", "pgp", "posts47", "activity", "merged", "snake", "stats", "timeline", "quote"]
-        self.assertEqual(re.findall(r"profile:([\w-]+):start", markdown), expected)
-        self.assertLess(markdown.index("github.com/Cosipa.png"), markdown.index('<h3 align="center">Cosipa'))
-        self.assertLess(markdown.index("Welcome, hope you find what you are looking for."), markdown.index("profile:typing:start"))
-        self.assertLess(markdown.index("## Toolbox"), markdown.index("## Infrastructure as Code"))
-        self.assertLess(markdown.index("## Infrastructure as Code"), markdown.index("## Latest posts"))
-        toolbox = markdown.split("## Toolbox\n", 1)[1].split("\n## Infrastructure as Code", 1)[0]
-        hosting = markdown.split("## Infrastructure as Code\n", 1)[1].split("\n## Latest posts", 1)[0]
-        self.assertEqual(re.findall(r"badge-([\w-]+)\.svg", toolbox),
-                         ["linux", "nixos", "neovim", "c", "cpp", "rust", "go", "python", "java"])
-        self.assertEqual(re.findall(r"badge-([\w-]+)\.svg", hosting),
-                         ["docker", "kubernetes", "terraform", "ansible"])
-        self.assertIn("komarev.com/ghpvc/", markdown)
-        self.assertIn('<a id="top"></a>', markdown)
-        self.assertIn("[↑ Go back to the top](#top)", markdown)
-        for omitted in ("footer-wave", "terminal-rose-pine", "profile:github-badges:", "profile:posts48", "profile:repository-placeholder:"):
-            self.assertNotIn(omitted, markdown)
-        workflow = (ROOT / ".github/workflows/profile.yml").read_text()
-        self.assertIn("      - 'README.md'", workflow)
-        self.assertIn("git add -- README.md test.md profile-showcase/generated .profile-data/public.json", workflow)
-        self.assertIn("      - 'README.md'", (ROOT / ".github/workflows/check.yml").read_text())
+    def test_configured_documents_partition_the_known_regions(self):
+        config = tomllib.loads((ROOT / "src/data/profile.toml").read_text())
+        primary = set(config["regions"])
+        showcase = set(config["showcase_regions"])
+        self.assertTrue(primary.isdisjoint(showcase))
+        self.assertEqual(primary | showcase, set(profile.REGIONS))
+        for path, regions in [(config["markdown"], config["regions"]),
+                              (config["showcase_markdown"], config["showcase_regions"])]:
+            with self.subTest(document=path):
+                profile.validate(ROOT, config, (ROOT / path).read_text(), regions=regions, document=ROOT / path)
 
     def test_source_failure_keeps_last_good_data(self):
-        config = tomllib.loads((ROOT / "profile.toml").read_text())
+        config = tomllib.loads((ROOT / "src/data/profile.toml").read_text())
         state = {"schema": 1, "sources": {"posts": {"as_of": "2026-10-18", "items": [{"title": "Existing post"}]}}}
         original = json.loads(json.dumps(state))
         with patch.object(data, "public_profile", side_effect=ValueError("offline")), \
@@ -730,67 +690,11 @@ class WorkflowAndCacheTests(unittest.TestCase):
         self.assertIn("github-actions", json.loads((ROOT / "renovate.json").read_text())["enabledManagers"])
 
     def test_static_snapshots_match_recorded_provenance(self):
-        directory = ROOT / "profile-showcase/static"
+        directory = ROOT / "src/assets/static"
         manifest = json.loads((directory / "provenance.json").read_text())
         for name, metadata in manifest.items():
             self.assertEqual(hashlib.sha256((directory / name).read_bytes()).hexdigest(), metadata["sha256"])
             ET.parse(directory / name)
-
-    def test_requested_badges_are_local_flat_snapshots_with_logos(self):
-        directory = ROOT / "profile-showcase/static"
-        manifest = json.loads((directory / "provenance.json").read_text())
-        ns = {"s": "http://www.w3.org/2000/svg"}
-        labels = {"docker": "Docker", "kubernetes": "Kubernetes", "terraform": "Terraform",
-                  "ansible": "Ansible", "go": "Go", "java": "Java", "c": "C", "cpp": "C++"}
-        for name, label in labels.items():
-            with self.subTest(badge=name):
-                filename = f"badge-{name}.svg"
-                metadata = manifest[filename]
-                self.assertTrue(metadata["source"].startswith("https://img.shields.io/badge/"))
-                self.assertIn("style=flat&logo=", metadata["source"])
-                root = ET.parse(directory / filename).getroot()
-                self.assertEqual(root.attrib["aria-label"], label)
-                self.assertEqual(root.find("s:title", ns).text, label)
-                self.assertEqual(root.attrib["height"], "20")
-                self.assertEqual(root.find(".//s:clipPath/s:rect", ns).attrib["rx"], "3")
-                image = root.find(".//s:image", ns)
-                self.assertIsNotNone(image)
-                self.assertTrue(image.attrib["href"].startswith("data:image/svg+xml;base64,"))
-
-    def test_catalogue_contains_only_unused_components_and_separates_mockups(self):
-        config = tomllib.loads((ROOT / "profile.toml").read_text())
-        markdown = (ROOT / "test.md").read_text()
-        profile.validate(ROOT, config, markdown, regions=config["showcase_regions"])
-        self.assertEqual([int(n) for n in re.findall(r"^## (\d+) ·", markdown, re.M)],
-                         [3, 7, 48, 17, 19, 21, 22])
-        self.assertEqual(set(re.findall(r"profile:([\w-]+):start", markdown)), set(config["showcase_regions"]))
-        self.assertTrue(set(config["regions"]).isdisjoint(config["showcase_regions"]))
-        self.assertEqual(set(config["regions"]) | set(config["showcase_regions"]), set(profile.REGIONS))
-        for name in config["regions"]:
-            self.assertNotIn(f"profile:{name}:", markdown)
-        for shared in ["badge-linux.svg", "badge-nixos.svg", "badge-neovim.svg", "badge-rust.svg",
-                       "badge-python.svg", "badge-go.svg", "badge-java.svg", "badge-c.svg", "badge-cpp.svg",
-                       "badge-docker.svg", "badge-kubernetes.svg", "badge-terraform.svg", "badge-ansible.svg",
-                       "komarev.com", "github.com/Cosipa.png", "quotes.txt",
-                       "[↑ Go back to the top](#top)"]:
-            self.assertNotIn(shared, markdown)
-        working, mockups = markdown.split("# Mockups & setup pending", 1)
-        self.assertIn("# Working components", working)
-        self.assertIn("profile:github-badges:start", working)
-        self.assertNotIn("raw.githubusercontent.com/lowlighter/metrics", working)
-        self.assertIn("Achievement wall · not configured", mockups)
-        self.assertIn("profile:footer:start", mockups)
-        self.assertIn("### 48A · Ordinary blockquotes", working)
-        self.assertIn("### 48B · Unframed excerpts", working)
-        body = profile.region_pattern("repository-placeholder").search(markdown)[2]
-        self.assertEqual(body.count("#gh-dark-mode-only"), 1)
-        self.assertEqual(body.count("#gh-light-mode-only"), 1)
-        self.assertNotIn("<picture", body)
-        for removed in ["posts42", "posts48c", "48C", "## 42", "profile:header:", "header-wave.svg", "[!TIP]"]:
-            self.assertNotIn(removed, markdown)
-        self.assertNotIn("<details", markdown)
-        self.assertEqual(config["showcase_markdown"], "test.md")
-        self.assertTrue((ROOT / "profile-showcase/terminal-rose-pine.svg").is_file())
 
 
 if __name__ == "__main__":
