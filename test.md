@@ -58,11 +58,11 @@ Rosé Pine Moon, your two-line Fish/Starship prompt and branch symbol, no title 
 **Your public contribution data, with explicit calendar-year dates.** Commit contributions are GitHub-eligible public commits, not every Git commit on every branch. Any published private total is labeled contributions, never commits.
 
 <!-- profile:stats:start -->
-<a href="./profile-showcase/generated/stats-dark.7ea1df49c453.svg#gh-dark-mode-only">
-  <img src="./profile-showcase/generated/stats-dark.7ea1df49c453.svg" alt="Cosipa&#x27;s public GitHub contribution statistics" width="467">
+<a href="./profile-showcase/generated/stats-dark.713c756026a7.svg#gh-dark-mode-only">
+  <img src="./profile-showcase/generated/stats-dark.713c756026a7.svg" alt="Cosipa&#x27;s public GitHub contribution statistics" width="467">
 </a>
-<a href="./profile-showcase/generated/stats-light.48200e10da2b.svg#gh-light-mode-only">
-  <img src="./profile-showcase/generated/stats-light.48200e10da2b.svg" alt="Cosipa&#x27;s public GitHub contribution statistics" width="467">
+<a href="./profile-showcase/generated/stats-light.5e3c4a4270bf.svg#gh-light-mode-only">
+  <img src="./profile-showcase/generated/stats-light.5e3c4a4270bf.svg" alt="Cosipa&#x27;s public GitHub contribution statistics" width="467">
 </a>
 <!-- profile:stats:end -->
 
@@ -75,11 +75,11 @@ Rosé Pine Moon, your two-line Fish/Starship prompt and branch symbol, no title 
 **Your publicly visible contributions over an explicit 365-day window.** The headline is checked against the sum of the daily counts. A blue/green line and shaded area show weekly totals; the green dot marks the busiest week.
 
 <!-- profile:timeline:start -->
-<a href="./profile-showcase/generated/timeline-dark.f3416f11eecf.svg#gh-dark-mode-only">
-  <img src="./profile-showcase/generated/timeline-dark.f3416f11eecf.svg" alt="Cosipa&#x27;s 365-day contribution timeline">
+<a href="./profile-showcase/generated/timeline-dark.e8722b8fc2b1.svg#gh-dark-mode-only">
+  <img src="./profile-showcase/generated/timeline-dark.e8722b8fc2b1.svg" alt="Cosipa&#x27;s 365-day contribution timeline">
 </a>
-<a href="./profile-showcase/generated/timeline-light.313d2852c7f3.svg#gh-light-mode-only">
-  <img src="./profile-showcase/generated/timeline-light.313d2852c7f3.svg" alt="Cosipa&#x27;s 365-day contribution timeline">
+<a href="./profile-showcase/generated/timeline-light.ded74fbfe42a.svg#gh-light-mode-only">
+  <img src="./profile-showcase/generated/timeline-light.ded74fbfe42a.svg" alt="Cosipa&#x27;s 365-day contribution timeline">
 </a>
 <!-- profile:timeline:end -->
 
