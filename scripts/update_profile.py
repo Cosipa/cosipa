@@ -20,9 +20,9 @@ from urllib.parse import quote as url_quote
 import profile_data as data
 
 ROOT = Path(__file__).resolve().parent.parent
-REGIONS = ("header", "typing", "github-badges", "pgp", "stats", "timeline", "snake",
-           "repository-placeholder", "activity", "quote", "posts42", "posts47",
-           "posts48a", "posts48b", "posts48c", "footer")
+REGIONS = ("typing", "github-badges", "pgp", "stats", "timeline", "snake",
+           "repository-placeholder", "activity", "quote", "posts47",
+           "posts48a", "posts48b", "footer")
 SVG_NS = "{http://www.w3.org/2000/svg}"
 
 
@@ -65,13 +65,24 @@ def svg(width: int, height: int, title: str, body: str, background: str, descrip
     return document
 
 
-def badge(label: str, value: str, label_color="545454", color="313131") -> str:
+def badge(label: str, value: str, label_color="555555", color="313131") -> str:
     left = max(28, len(label) * 7 + 12)
     right = max(24, len(value) * 7 + 12)
-    body = (f'<path fill="#{color}" d="M{left} 0h{right}v20H{left}z"/>'
-            + text(left / 2, 14, label, "ffffff", 11, anchor="middle")
-            + text(left + right / 2, 14, value, "ffffff", 11, anchor="middle"))
-    return svg(left + right, 20, f"{label}: {value}", body, label_color)
+    width = left + right
+    # Match Shields' flat style: both ends clipped, subtle bevel, text shadow.
+    body = (f'<defs><linearGradient id="shade" x2="0" y2="100%">'
+            '<stop offset="0" stop-color="#bbb" stop-opacity=".1"/>'
+            '<stop offset="1" stop-opacity=".1"/></linearGradient>'
+            f'<clipPath id="badge"><rect width="{width}" height="20" rx="3"/></clipPath></defs>'
+            f'<g clip-path="url(#badge)"><rect width="{left}" height="20" fill="#{label_color}"/>'
+            f'<rect x="{left}" width="{right}" height="20" fill="#{color}"/>'
+            f'<rect width="{width}" height="20" fill="url(#shade)"/></g>')
+    for x, content in [(left / 2, label), (left + right / 2, value)]:
+        body += '<g opacity=".3">' + text(x, 15, content, "010101", 11, anchor="middle") + '</g>'
+        body += text(x, 14, content, "ffffff", 11, anchor="middle")
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="20" role="img">'
+            f'<title>{escape(label + ": " + value)}</title>'
+            f'<g font-family="Verdana,Geneva,DejaVu Sans,sans-serif">{body}</g></svg>\n')
 
 
 class Assets:
@@ -134,13 +145,19 @@ def stats_card(username: str, facts: dict | None, today: date, colors: dict) -> 
             ("Public issues opened", f'{facts["public_issues"]:,}'),
             ("Public PR reviews", f'{facts["public_reviews"]:,}'),
             ("Published restricted contributions", f"{private:,}" if private is not None else "Not published / none")]
-    body = text(20, 30, f"{username}'s GitHub stats", colors["title"], 18)
-    body += text(20, 52, f'{facts["year"]} YTD through {facts["as_of"]} (UTC)', colors["text"], 11)
-    for i, (label, count) in enumerate(rows):
-        body += text(20, 82 + i * 23, label, colors["text"], 12)
-        body += text(445, 82 + i * 23, count, colors["title"], 12, anchor="end")
-    body += text(20, 211, "Restricted private activity: all types, not just commits.", colors["text"], 10)
-    return svg(467, 229, f"{username}'s public contribution stats", body, colors["background"],
+    body = (f'<rect x=".5" y=".5" width="466" height="250" rx="5" fill="none" stroke="#{colors["border"]}"/>'
+            f'<path d="M20 23V49" stroke="#{colors["accent"]}" stroke-width="4" stroke-linecap="round"/>')
+    body += text(33, 32, f"{username}'s GitHub stats", colors["title"], 18, weight="bold")
+    body += text(33, 52, f'{facts["year"]} YTD through {facts["as_of"]} (UTC)', colors["text"], 11)
+    accents = [colors["accent"], colors["secondary"], colors["rose"], colors["secondary"], colors["accent"]]
+    for i, ((label, count), accent) in enumerate(zip(rows, accents)):
+        y = 84 + i * 29
+        body += f'<rect x="16" y="{y - 17}" width="435" height="26" rx="4" fill="#{colors["surface"]}"/>'
+        body += f'<circle cx="28" cy="{y - 4}" r="3" fill="#{accent}"/>'
+        body += text(40, y, label, colors["text"], 11)
+        body += text(439, y, count, accent, 12, anchor="end", weight="bold")
+    body += text(20, 236, "Restricted private activity: all types, not just commits.", colors["text"], 10)
+    return svg(467, 251, f"{username}'s public contribution stats", body, colors["background"],
                "Public commit contributions are eligible commits to public repositories, not every Git commit on every branch. Private counts are only anonymized totals published by GitHub.")
 
 
@@ -151,13 +168,24 @@ def timeline_card(username: str, facts: dict | None, colors: dict) -> str:
     values = [facts["days"][d] for d in sorted(facts["days"])]
     weeks = [sum(values[i:i + 7]) for i in range(0, len(values), 7)]
     maximum = max(max(weeks), 1)
-    points = " ".join(f"{24 + i * 798 / max(1, len(weeks) - 1):.1f},{160 - v * 78 / maximum:.1f}" for i, v in enumerate(weeks))
-    body = text(24, 31, username, colors["title"], 20)
-    body += text(822, 31, f'{facts["calendar_total"]:,} contributions', colors["title"], 19, anchor="end")
+    coordinates = [(24 + i * 798 / max(1, len(weeks) - 1), 166 - v * 90 / maximum) for i, v in enumerate(weeks)]
+    points = " ".join(f"{x:.1f},{y:.1f}" for x, y in coordinates)
+    body = (f'<defs><linearGradient id="line"><stop stop-color="#{colors["accent"]}"/>'
+            f'<stop offset="1" stop-color="#{colors["secondary"]}"/></linearGradient>'
+            f'<linearGradient id="area" x2="0" y2="1"><stop stop-color="#{colors["accent"]}" stop-opacity=".35"/>'
+            f'<stop offset="1" stop-color="#{colors["secondary"]}" stop-opacity=".02"/></linearGradient></defs>'
+            f'<rect x=".5" y=".5" width="845" height="207" rx="5" fill="none" stroke="#{colors["border"]}"/>')
+    body += text(24, 31, username, colors["title"], 20, weight="bold")
+    body += text(822, 31, f'{facts["calendar_total"]:,} contributions', colors["secondary"], 19, anchor="end", weight="bold")
     body += text(24, 54, f'365 days: {facts["calendar_start"]} – {facts["calendar_end"]}', colors["text"], 11)
-    body += f'<path d="M24 160H822" stroke="#{colors["text"]}" opacity=".25"/>'
-    body += f'<polyline points="{points}" fill="none" stroke="#{colors["accent"]}" stroke-width="2"/>'
-    body += text(24, 189, "Weekly totals · includes anonymized private activity only when publicly visible", colors["text"], 10)
+    for y in [76, 106, 136, 166]:
+        body += f'<path d="M24 {y}H822" stroke="#{colors["border"]}" stroke-dasharray="3 6"/>'
+    body += f'<polygon points="24,166 {points} 822,166" fill="url(#area)"/>'
+    body += f'<polyline points="{points}" fill="none" stroke="url(#line)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>'
+    peak = weeks.index(max(weeks))
+    x, y = coordinates[peak]
+    body += f'<circle cx="{x:.1f}" cy="{y:.1f}" r="4" fill="#{colors["rose"]}" stroke="#{colors["background"]}" stroke-width="2"><title>Peak week: {max(weeks):,} contributions</title></circle>'
+    body += text(24, 193, "Weekly totals · includes anonymized private activity only when publicly visible", colors["text"], 10)
     return svg(846, 208, f"{username}'s 365-day contribution timeline", body, colors["background"])
 
 
@@ -184,24 +212,26 @@ def quote_card(entries: list, today: date, colors: dict) -> str:
     return svg(600, height, "Quote from quotes.txt", body, colors["background"], quote + (f" — {author}" if author else ""))
 
 
-def typing_card(lines: list[str]) -> str:
-    if not lines:
-        raise ValueError("Configure at least one typing line")
-    duration = 5 * len(lines)
-    body = ""
-    for i, line in enumerate(lines):
-        start = i / len(lines)
-        end = (i + 1) / len(lines)
-        # Each frame has its own clipping rectangle; animation needs no JavaScript.
-        times = sorted(set([0.0, start, min(start + .001, 1), max(start, end - .001), end, 1.0]))
-        opacity = ["1" if start <= t < end else "0" for t in times]
-        body += (f'<defs><clipPath id="line{i}"><rect width="0" height="70">'
-                 f'<animate attributeName="width" values="0;0;950;950;0" keyTimes="0;{start:.6f};{min(start + .55 / len(lines), 1):.6f};{end:.6f};1" dur="{duration}s" repeatCount="indefinite"/>'
-                 '</rect></clipPath></defs>'
-                 f'<g opacity="0" clip-path="url(#line{i})">'
-                 f'<animate attributeName="opacity" values="{";".join(opacity)}" keyTimes="{";".join(f"{t:.6f}" for t in times)}" calcMode="discrete" dur="{duration}s" repeatCount="indefinite"/>'
-                 + text(0, 41, line, "c4a7e7", 23) + '</g>')
-    return svg(950, 70, "Typing introduction", body, "00000000", " / ".join(lines))
+def snake_card(content: bytes, colors: dict) -> bytes:
+    """Theme fresh or cached snk output without changing its animation or data."""
+    ET.register_namespace("", SVG_NS[1:-1])
+    root = ET.fromstring(content)
+    style = root.find(SVG_NS + "style")
+    if style is None or not style.text:
+        raise ValueError("Snake SVG is missing its palette")
+    palette = {"cb": colors["border"], "cs": colors["rose"], "ce": colors["dots"][0],
+               **{f"c{i}": color for i, color in enumerate(colors["dots"])}}
+    for name, color in palette.items():
+        style.text, count = re.subn(r"--" + name + r":[^;}]+", f"--{name}:#{color}", style.text, count=1)
+        if count != 1:
+            raise ValueError(f"Snake SVG is missing palette entry {name}")
+    background = root.find(f'{SVG_NS}rect[@id="snake-background"]')
+    if background is None:
+        background = ET.Element(SVG_NS + "rect", {"id": "snake-background"})
+        root.insert(0, background)
+    x, y, width, height = root.attrib["viewBox"].split()
+    background.attrib.update(x=x, y=y, width=width, height=height, rx="8", fill="#" + colors["background"])
+    return ET.tostring(root, encoding="utf-8")
 
 
 def post_date(post: dict, short=False) -> str:
@@ -218,18 +248,6 @@ def quoted(excerpt: str) -> str:
     return "\n".join("> " + line for line in textwrap.wrap(md(excerpt), 86, break_long_words=False, break_on_hyphens=False))
 
 
-def post_cards(posts: list[dict]) -> str:
-    parts = ["<table>"]
-    for i in range(0, len(posts), 2):
-        parts.append("<tr>")
-        for post in posts[i:i + 2]:
-            parts.append('<td width="50%" valign="top">\n\n'
-                         f'### {post_link(post)}\n\n<sub>{post_date(post)}</sub>\n\n'
-                         f'{quoted(post["excerpt"])}\n\n</td>')
-        parts.append("</tr>")
-    return "\n".join(parts + ["</table>"])
-
-
 def post_rows(posts: list[dict]) -> str:
     parts = ["<table>"]
     for post in posts:
@@ -244,9 +262,10 @@ def post_excerpts(posts: list[dict], kind: str) -> str:
         heading = f'**{post_link(post)}** · <sub>{post_date(post, short=True)}</sub>'
         if kind == "plain":
             parts.append(heading + "\n\n" + "\n".join(textwrap.wrap(md(post["excerpt"]), 86, break_long_words=False, break_on_hyphens=False)))
+        elif kind == "quote":
+            parts.append("> " + heading + "\n>\n" + quoted(post["excerpt"]))
         else:
-            prefix = "> [!TIP]\n" if kind == "tip" else ""
-            parts.append(prefix + "> " + heading + "\n>\n" + quoted(post["excerpt"]))
+            raise ValueError(f"Unknown excerpt layout: {kind}")
     return ("\n\n---\n\n" if kind == "plain" else "\n\n<!-- -->\n\n").join(parts)
 
 
@@ -266,9 +285,8 @@ def render(markdown: str, config: dict, state: dict, assets: Assets, today: date
     sources = state["sources"]
     colors = config["colors"]
     replacements = {
-        "header": '![Cosipa profile shortlist](./profile-showcase/static/header-wave.svg)',
         "footer": '![Decorative waving footer](./profile-showcase/static/footer-wave.svg)',
-        "typing": f'![Typing introduction]({assets.put("typing", typing_card(config["typing"]["lines"]))})',
+        "typing": f'![Typing introduction — outlined Iosevka]({assets.put("typing-iosevka", (ROOT / "profile-showcase/static/typing-iosevka.svg").read_bytes())})',
     }
     profile = sources.get("github")
     if profile:
@@ -297,11 +315,15 @@ def render(markdown: str, config: dict, state: dict, assets: Assets, today: date
     snake_paths = state.get("snake", {})
     for theme in colors:
         candidate = snake_dir / f"snake-{theme}.svg" if snake_dir else None
+        cached = inside(assets.root, snake_paths[theme]) if snake_paths.get(theme) else None
         if candidate and candidate.is_file():
-            snake_paths[theme] = assets.put(f"snake-{theme}", candidate.read_bytes())
-        elif (not snake_paths.get(theme) or f"/snake-{theme}-pending." in snake_paths[theme]
-              or not inside(assets.root, snake_paths[theme]).is_file()):
+            content = candidate.read_bytes()
+        elif cached and cached.is_file() and f"/snake-{theme}-pending." not in snake_paths[theme]:
+            content = cached.read_bytes()
+        else:
             snake_paths[theme] = assets.put(f"snake-{theme}-pending", pending("Contribution snake", colors[theme], "The pinned Action generates your public grid once this profile repository is public. No other account's data is shown.", width=880))
+            continue
+        snake_paths[theme] = assets.put(f"snake-{theme}", snake_card(content, colors[theme]))
     state["snake"] = snake_paths
     replacements["snake"] = picture(snake_paths, f"{user}'s contribution snake", width=1000)
     if "activity" in sources:
@@ -310,9 +332,8 @@ def render(markdown: str, config: dict, state: dict, assets: Assets, today: date
         replacements["activity"] = "| Status | Repository | Title |\n| :-- | :-- | :-- |\n| — | — | Awaiting a successful public GitHub API fetch. |"
     if "posts" in sources:
         posts = sources["posts"]["items"]
-        replacements["posts42"] = post_cards(posts[:config["blog"]["cards"]])
         replacements["posts47"] = post_rows(posts[:config["blog"]["rows"]])
-        for region, kind in [("posts48a", "quote"), ("posts48b", "plain"), ("posts48c", "tip")]:
+        for region, kind in [("posts48a", "quote"), ("posts48b", "plain")]:
             replacements[region] = post_excerpts(posts[:config["blog"]["excerpts"]], kind)
     for name, value in replacements.items():
         markdown = replace_region(markdown, name, value)

@@ -4,6 +4,11 @@ The existing `test.md` layout is hand-maintained. Only content between
 `<!-- profile:NAME:start -->` / `<!-- profile:NAME:end -->` markers is generated.
 The terminal image is unchanged. `README.md` is not an output.
 
+`test.md` separates **Working components** from **Mockups & setup pending**.
+The latter includes Metrics/achievements (not configured), project placeholders,
+sample intro/tool copy, and quotes awaiting your content. Blog alternatives 47,
+48A, and 48B are automated; the old cards and TIP-callout alternatives are removed.
+
 ## What runs
 
 `.github/workflows/profile.yml` runs every six hours, on relevant pushes to
@@ -16,7 +21,10 @@ The terminal image is unchanged. `README.md` is not an output.
    repository so that its repository token cannot accidentally expose non-public activity.
 4. Fetch public GitHub API data, the unauthenticated public contribution calendar,
    and `https://cosipa.dev/rss` using Python's standard library.
-5. Generate local SVGs and refresh only the marked Markdown blocks.
+5. Generate local SVGs and refresh only the marked Markdown blocks. Apply the
+   Rosé Pine Moon / Dawn palettes from `profile.toml` to stats, timeline, and snake.
+   Snake backgrounds and contrasting rose heads are themed locally, including
+   cached animations when the Action cannot produce a fresh one.
 6. Commit changed generated files using GitHub's built-in `GITHUB_TOKEN`.
 
 No PAT, package installation, separate account, or rendering server is needed.
@@ -25,9 +33,16 @@ labeled as demos for you to configure separately.
 
 The only separately hosted widget is **Komarev**. GitHub serves the avatar,
 PGP key, upstream Metrics examples, and all local assets. Your blog supplies RSS.
-Static tool badges and waves are vendored SVG snapshots; source URLs and SHA-256
-checksums are in `profile-showcase/static/provenance.json`. Those hosts are not
-queried by the workflow or by visitors. The typing header is generated locally.
+Static tool badges and the footer wave are vendored SVG snapshots; source URLs
+and SHA-256 checksums are in `profile-showcase/static/provenance.json`. Those hosts
+are not queried by the workflow or by visitors. Locally generated badges use the
+same rounded clipping, subtle gradient, and text-shadow treatment as Shields flat.
+The decorative header wave is removed.
+
+The typing introduction is a local SVG exported with **outlined IosevkaTerm Nerd
+Font** glyphs. Merely specifying a font family does not make that font available
+inside a GitHub image. Outlining prevents fallback without adding a font/tool
+installation to Actions. Its animation is preserved.
 
 Generated SVG filenames include their content hash. Updating data changes the
 image URL to avoid displaying an older image through GitHub's cache. The
@@ -87,8 +102,19 @@ A truncated API response is treated as a failure rather than an incomplete total
 
 ## Edit your content
 
-- `profile.toml`: username, palette, feed URL, displayed post counts, public PGP
-  fingerprint, and typing-header lines. The tool-badge stack is still demo copy.
+- `profile.toml`: username, light/dark palettes, feed URL, displayed post counts,
+  and public PGP fingerprint. Each palette includes five snake contribution
+  levels in `dots`; `rose` colours its head. The tool-badge stack is still demo copy.
+- `profile-showcase/typing-iosevka.source.svg`: editable typing-introduction copy.
+  After changing it, export with the exact **IosevkaTerm Nerd Font** installed:
+  ```sh
+  inkscape profile-showcase/typing-iosevka.source.svg --export-text-to-path \
+    --export-plain-svg --export-filename=profile-showcase/static/typing-iosevka.svg
+  sha256sum profile-showcase/static/typing-iosevka.svg
+  ```
+  Update its SHA-256 in `profile-showcase/static/provenance.json`, then run the
+  offline generator. Font outlining is a one-time authoring step, not a workflow
+  dependency. Ensure the exported SVG retains animation and has no `<text>` nodes.
 - `quotes.txt`: one quote per line; optional attribution after a literal **TAB**.
   Blank lines and lines starting with `#` are ignored. Selection is deterministic
   for a UTC day. There are no supplied/random quotes or invented attributions.

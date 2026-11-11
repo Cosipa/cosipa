@@ -185,16 +185,69 @@ class RenderTests(unittest.TestCase):
 
     def test_posts_keep_the_selected_layouts(self):
         posts = data.parse_posts(rss(), "https://cosipa.dev/rss")
-        cards = profile.post_cards(posts)
-        self.assertIn('width="50%" valign="top"', cards)
-        self.assertIn("### [Exact title &amp; spelling]", cards)
-        self.assertEqual(cards.count("https://cosipa.dev/posts/test/"), 1)
         rows = profile.post_rows(posts)
         self.assertIn('width="20%" valign="top">October 18, 2026', rows)
         self.assertIn("> Exact first sentence.", rows)
         self.assertNotIn("<img", rows)
         self.assertNotIn("[!", profile.post_excerpts(posts, "quote"))
-        self.assertIn("[!TIP]", profile.post_excerpts(posts, "tip"))
+        self.assertIn("Exact first sentence.", profile.post_excerpts(posts, "plain"))
+        with self.assertRaises(ValueError):
+            profile.post_excerpts(posts, "tip")
+
+    def test_badges_match_shields_flat_shape_and_shading(self):
+        document = profile.badge("pgp", "0xA8523AE122FE6E85")
+        root = ET.fromstring(document)
+        ns = {"s": "http://www.w3.org/2000/svg"}
+        clip = root.find(".//s:clipPath/s:rect", ns)
+        self.assertEqual(clip.attrib["rx"], "3")
+        self.assertEqual(clip.attrib["width"], root.attrib["width"])
+        self.assertEqual(len(root.findall(".//s:linearGradient/s:stop", ns)), 2)
+        self.assertEqual(len(root.findall(".//s:text", ns)), 4)
+        self.assertIn('clip-path="url(#badge)"', document)
+        self.assertIn('opacity=".3"', document)
+
+    def test_typing_has_outlined_iosevka_and_preserved_animation(self):
+        root = ET.parse(ROOT / "profile-showcase/static/typing-iosevka.svg").getroot()
+        ns = {"s": "http://www.w3.org/2000/svg"}
+        self.assertEqual(root.findall(".//s:text", ns), [])
+        self.assertEqual(len(root.findall(".//s:path", ns)), 3)
+        self.assertEqual(len(root.findall(".//s:animate", ns)), 4)
+        self.assertIn("IosevkaTerm Nerd Font", "".join(root.itertext()))
+        for node in root.findall(".//s:animate", ns):
+            times = [float(t) for t in node.attrib["keyTimes"].split(";")]
+            self.assertEqual(len(times), len(node.attrib["values"].split(";")))
+            self.assertTrue(all(a < b for a, b in zip(times, times[1:])))
+
+    def test_snake_themes_cached_or_fresh_animation_without_changing_data(self):
+        content = (b'<svg xmlns="http://www.w3.org/2000/svg" viewBox="-16 -32 880 192">'
+                   b'<style>:root{--cb:#000;--cs:#fff;--ce:#000;--c0:#000;--c1:#111;--c2:#222;--c3:#333;--c4:#444}'
+                   b'@keyframes travel{100%{transform:translate(10px,0)}}</style>'
+                   b'<rect class="snake" width="12" height="12"/></svg>')
+        for theme, colors in self.config["colors"].items():
+            with self.subTest(theme=theme):
+                result = profile.snake_card(content, colors)
+                self.assertEqual(profile.snake_card(result, colors), result)
+                root = ET.fromstring(result)
+                background = root[0]
+                self.assertEqual(background.attrib["fill"], "#" + colors["background"])
+                self.assertEqual(background.attrib["x"], "-16")
+                self.assertIn(("--cs:#" + colors["rose"]).encode(), result)
+                self.assertIn(("--c4:#" + colors["dots"][4]).encode(), result)
+                self.assertIn(b"@keyframes travel{100%{transform:translate(10px,0)}}", result)
+                self.assertEqual(len(root.findall('.//*[@id="snake-background"]')), 1)
+                self.assertEqual(root[-1].attrib["class"], "snake")
+
+    def test_timeline_has_coloured_area_and_real_peak(self):
+        facts = {"days": {f"2026-01-{i:02}": i for i in range(1, 15)},
+                 "calendar_total": 105, "calendar_start": "2025-01-15", "calendar_end": "2026-01-14"}
+        for colors in self.config["colors"].values():
+            document = profile.timeline_card("Cosipa", facts, colors)
+            ET.fromstring(document)
+            self.assertIn('fill="url(#area)"', document)
+            self.assertIn('stroke="url(#line)"', document)
+            self.assertIn("Peak week: 77 contributions", document)
+            self.assertIn("105 contributions", document)
+            self.assertIn("#" + colors["secondary"], document)
 
     def test_only_marked_content_is_changed(self):
         original = "before\n<!-- profile:stats:start -->\nold\n<!-- profile:stats:end -->\nafter\n"
@@ -300,13 +353,21 @@ class WorkflowAndCacheTests(unittest.TestCase):
             self.assertEqual(hashlib.sha256((directory / name).read_bytes()).hexdigest(), metadata["sha256"])
             ET.parse(directory / name)
 
-    def test_layout_and_terminal_are_not_redesigned(self):
+    def test_working_components_are_separate_from_mockups(self):
         markdown = (ROOT / "test.md").read_text()
         self.assertEqual([int(n) for n in re.findall(r"^## (\d+) ·", markdown, re.M)],
-                         [1, 3, 4, 5, 7, 18, 9, 12, 14, 17, 19, 21, 22, 24, 37, 42, 47, 48])
-        self.assertIn("### 48A · Ordinary blockquotes", markdown)
-        self.assertIn("### 48B · Unframed excerpts", markdown)
-        self.assertIn("### 48C · Green TIP callouts, for comparison", markdown)
+                         [1, 3, 7, 18, 9, 12, 14, 24, 47, 48, 4, 5, 17, 19, 21, 22, 37])
+        working, mockups = markdown.split("# Mockups & setup pending", 1)
+        self.assertIn("# Working components", working)
+        self.assertIn("profile:stats:start", working)
+        self.assertIn("profile:posts47:start", working)
+        self.assertNotIn("raw.githubusercontent.com/lowlighter/metrics", working)
+        self.assertIn("Achievement wall · not configured", mockups)
+        self.assertIn("profile:quote:start", mockups)
+        self.assertIn("### 48A · Ordinary blockquotes", working)
+        self.assertIn("### 48B · Unframed excerpts", working)
+        for removed in ["posts42", "posts48c", "48C", "## 42", "profile:header:", "header-wave.svg", "[!TIP]"]:
+            self.assertNotIn(removed, markdown)
         self.assertNotIn("<details", markdown)
         self.assertEqual(tomllib.loads((ROOT / "profile.toml").read_text())["markdown"], "test.md")
         self.assertTrue((ROOT / "profile-showcase/terminal-rose-pine.svg").is_file())

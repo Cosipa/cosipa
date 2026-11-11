@@ -1,27 +1,23 @@
 <!-- Profile shortlist. Layout stays hand-edited; marked regions are refreshed by GitHub Actions. -->
 
-<!-- profile:header:start -->
-![Cosipa profile shortlist](./profile-showcase/static/header-wave.svg)
-<!-- profile:header:end -->
-
 # Profile shortlist
 
-[Headers](#headers) · [Badges](#badges) · [GitHub data](#github-data) · [Projects & activity](#projects) · [Other experiments](#other) · [Blog layouts](#real-posts)
+[Working components](#working) · [Mockups & setup pending](#mockups) · [Blog layouts](#real-posts)
 
 Original numbers are kept so we can keep referring to them. Everything is visible—no expanding sections.
 
-GitHub Actions refreshes marked sections using public GitHub data and your RSS. Assets are hosted in this repository; Komarev is the only separate widget service. Metrics remains an explicitly labeled upstream demo. Project placeholders remain placeholders.
+<a id="working"></a>
 
-<a id="headers"></a>
+# Working components
 
-# Headers
+These components already render or refresh successfully. GitHub Actions updates the marked regions using public GitHub data and your RSS. Assets are repository-hosted; Komarev is the only separate widget service. Sample introduction copy is still yours to edit.
 
 ## 01 · Animated typing introduction
 
-**Local animated SVG · sample copy.** Edit `profile.toml` to choose the text.
+**Outlined Iosevka · sample copy.** The glyphs are paths, not a font-family suggestion, so GitHub cannot substitute another font. Editable source: [`typing-iosevka.source.svg`](./profile-showcase/typing-iosevka.source.svg).
 
 <!-- profile:typing:start -->
-![Typing introduction](./profile-showcase/generated/typing.df90041eefdc.svg)
+![Typing introduction — outlined Iosevka](./profile-showcase/generated/typing-iosevka.de12f0647ce2.svg)
 <!-- profile:typing:end -->
 
 ## 03 · Your terminal styling
@@ -30,177 +26,73 @@ Rosé Pine Moon, your two-line Fish/Starship prompt and branch symbol, no title 
 
 ![Undecorated Rosé Pine Moon terminal with Cosipa's two-line Starship prompt](./profile-showcase/terminal-rose-pine.svg)
 
-<sub>Styling recreation, not a screenshot. Uses the installed IosevkaTerm Nerd Font from your Kitty/Foot setup. Glyphs are rendered as paths so font fallback cannot change the image. New asset URL to avoid reusing the old cached illustration.</sub>
+<sub>Styling recreation, not a screenshot. Uses the installed IosevkaTerm Nerd Font from your Kitty/Foot setup. Glyphs are rendered as paths so font fallback cannot change the image.</sub>
 
-## 04 · Native avatar + a centered intro
+## 07 · Live GitHub badges
 
-**Live avatar · sample introduction.**
-
-<p align="center">
-  <img src="https://github.com/Cosipa.png?size=160" alt="Cosipa's GitHub avatar" width="96" height="96">
-</p>
-<h3 align="center">Cosipa</h3>
-<p align="center">A short sentence about what you build, what you care about, and why someone should stick around.</p>
-<p align="center">
-  <a href="https://github.com/Cosipa?tab=repositories">Projects</a> ·
-  <a href="https://github.com/Cosipa?tab=stars">Things I find interesting</a> ·
-  <a href="https://cosipa.dev/">Writing</a>
-</p>
-
-<a id="badges"></a>
-
-# Badges
-
-## 05 · Flat tool badges
-
-**Sample stack, not an inventory of your skills.** Only the flat style remains.
-
-![Linux](./profile-showcase/static/badge-linux.svg)
-![NixOS](./profile-showcase/static/badge-nixos.svg)
-![Neovim](./profile-showcase/static/badge-neovim.svg)
-![Rust](./profile-showcase/static/badge-rust.svg)
-![Python](./profile-showcase/static/badge-python.svg)
-
-## 07 · Muted live GitHub badges
-
-**Public GitHub data, rendered locally.** One flat style, neutral colors, no social counters or plastic effects.
+**Public GitHub data, rendered locally.** Rounded ends, subtle shading, and text shadows matching the other flat badges.
 
 <!-- profile:github-badges:start -->
-[![followers](./profile-showcase/generated/followers.cb6fd6e4b032.svg)](https://github.com/Cosipa?tab=followers)
-[![stars](./profile-showcase/generated/stars.d02da7b05e04.svg)](https://github.com/Cosipa/cosipa/stargazers)
-[![updated](./profile-showcase/generated/updated.4215ace9c6ac.svg)](https://github.com/Cosipa/cosipa/commits)
-[![repos](./profile-showcase/generated/repos.8db37c30ffca.svg)](https://github.com/Cosipa?tab=repositories)
+[![followers](./profile-showcase/generated/followers.a87d08cffa2a.svg)](https://github.com/Cosipa?tab=followers)
+[![stars](./profile-showcase/generated/stars.f9acc8113ad5.svg)](https://github.com/Cosipa/cosipa/stargazers)
+[![updated](./profile-showcase/generated/updated.95461ae2d9db.svg)](https://github.com/Cosipa/cosipa/commits)
+[![repos](./profile-showcase/generated/repos.a442213d917b.svg)](https://github.com/Cosipa?tab=repositories)
 <!-- profile:github-badges:end -->
 
 ## 18 · PGP + profile views
 
 <!-- profile:pgp:start -->
-[![PGP key](./profile-showcase/generated/pgp.b53196d8618a.svg)](https://github.com/Cosipa.gpg)
+[![PGP key](./profile-showcase/generated/pgp.b2241cd047a4.svg)](https://github.com/Cosipa.gpg)
 <!-- profile:pgp:end -->
 [![Profile views](https://komarev.com/ghpvc/?username=Cosipa&style=flat&color=313131&label=views)](https://github.com/Cosipa)
 
 <sub>The key ID is from the primary public key served by your GitHub `.gpg` URL. Views are approximate image requests, not unique visitors.</sub>
 
-<a id="github-data"></a>
-
-# GitHub data
-
-## 09 · Classic stats card
+## 09 · Public stats card
 
 **Your public contribution data, with explicit calendar-year dates.** Commit contributions are GitHub-eligible public commits, not every Git commit on every branch. Any published private total is labeled contributions, never commits.
 
 <!-- profile:stats:start -->
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./profile-showcase/generated/stats-dark.6c1fc22175f3.svg">
-  <source media="(prefers-color-scheme: light)" srcset="./profile-showcase/generated/stats-light.8a875d9445b6.svg">
-  <img src="./profile-showcase/generated/stats-light.8a875d9445b6.svg" alt="Cosipa&#x27;s public GitHub contribution statistics" width="467">
+  <source media="(prefers-color-scheme: dark)" srcset="./profile-showcase/generated/stats-dark.f6ae2065e796.svg">
+  <source media="(prefers-color-scheme: light)" srcset="./profile-showcase/generated/stats-light.1b7768143c69.svg">
+  <img src="./profile-showcase/generated/stats-light.1b7768143c69.svg" alt="Cosipa&#x27;s public GitHub contribution statistics" width="467">
 </picture>
 <!-- profile:stats:end -->
 
-<sub>Neutral gray palette. Separate light/dark images selected by the color-scheme media query. Missing data is not presented as zero.</sub>
+<sub>Rosé Pine Moon / Dawn palettes, with separate light/dark images. Missing data is not presented as zero.</sub>
 
 [Local generator](./scripts/update_profile.py) · [Counting definitions](./PROFILE_SETUP.md#counting-definitions)
 
-## 12 · Wide contribution timeline
+## 12 · Contribution timeline
 
-**Your publicly visible contributions over an explicit 365-day window.** The headline is checked against the sum of the daily counts.
+**Your publicly visible contributions over an explicit 365-day window.** The headline is checked against the sum of the daily counts. A violet-to-teal line and shaded area show weekly totals; the rose dot marks the busiest week.
 
 <!-- profile:timeline:start -->
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./profile-showcase/generated/timeline-dark.fd9b69f6e14f.svg">
-  <source media="(prefers-color-scheme: light)" srcset="./profile-showcase/generated/timeline-light.b12c0aa382b0.svg">
-  <img src="./profile-showcase/generated/timeline-light.b12c0aa382b0.svg" alt="Cosipa&#x27;s 365-day contribution timeline">
+  <source media="(prefers-color-scheme: dark)" srcset="./profile-showcase/generated/timeline-dark.10c948690040.svg">
+  <source media="(prefers-color-scheme: light)" srcset="./profile-showcase/generated/timeline-light.603ccb5c38b0.svg">
+  <img src="./profile-showcase/generated/timeline-light.603ccb5c38b0.svg" alt="Cosipa&#x27;s 365-day contribution timeline">
 </picture>
 <!-- profile:timeline:end -->
 
-<sub>GitHub-native light/dark palettes, selected by the color-scheme media query. Publicly published private activity may be included in the graph.</sub>
+<sub>Publicly published private activity may be included in the graph. Light/dark colours are selected by the color-scheme media query.</sub>
 
 [GitHub's own contribution calendar](https://github.com/users/Cosipa/contributions)
 
 ## 14 · Contribution snake
 
-**Your contribution grid.** Generated by the SHA-pinned snake Action; the animation is a repository-hosted SVG, not a live widget.
+**Your contribution grid.** A rose-coloured snake over violet/teal contribution cells, with an explicit background for each theme. The pinned Action generates the animation; the local renderer applies the palette from `profile.toml`.
 
 <!-- profile:snake:start -->
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./profile-showcase/generated/snake-dark.a5c6fb75c99c.svg">
-  <source media="(prefers-color-scheme: light)" srcset="./profile-showcase/generated/snake-light.94fa7a69b456.svg">
-  <img src="./profile-showcase/generated/snake-light.94fa7a69b456.svg" alt="Cosipa&#x27;s contribution snake" width="1000">
+  <source media="(prefers-color-scheme: dark)" srcset="./profile-showcase/generated/snake-dark.4aa832f16bc6.svg">
+  <source media="(prefers-color-scheme: light)" srcset="./profile-showcase/generated/snake-light.56d69acd8dd0.svg">
+  <img src="./profile-showcase/generated/snake-light.56d69acd8dd0.svg" alt="Cosipa&#x27;s contribution snake" width="1000">
 </picture>
 <!-- profile:snake:end -->
 
 [Generator](https://github.com/Platane/snk)
-
-## 17 · Metrics panels
-
-**Upstream demos · not your account.** All panels are visible, not hidden behind a toggle.
-
-[![Metrics example: classic profile dashboard](https://raw.githubusercontent.com/lowlighter/metrics/examples/metrics.classic.svg)](https://github.com/lowlighter/metrics)
-
-### Achievement wall
-
-![Metrics example: achievements](https://raw.githubusercontent.com/lowlighter/metrics/examples/metrics.plugin.achievements.compact.svg)
-
-<a id="projects"></a>
-
-# Projects & activity
-
-## 19 · Repository preview card
-
-**Placeholder.** No featured repository is selected yet.
-
-<!-- profile:repository-placeholder:start -->
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./profile-showcase/generated/repository-placeholder-dark.a543fce88cf0.svg">
-  <source media="(prefers-color-scheme: light)" srcset="./profile-showcase/generated/repository-placeholder-light.35e31349540e.svg">
-  <img src="./profile-showcase/generated/repository-placeholder-light.35e31349540e.svg" alt="Repository preview placeholder" width="400">
-</picture>
-<!-- profile:repository-placeholder:end -->
-
-<sub>Same neutral light/dark palette as #09.</sub>
-
-## 21 · Two-column project gallery
-
-**Illustrative copy, not actual project descriptions.**
-
-<table>
-<tr>
-<td width="50%" valign="top">
-
-### 🛠️ The useful thing
-
-One sentence explaining the problem it solves, not just the language it's written in.
-
-![CLI](./profile-showcase/static/badge-cli.svg)
-![Local first](./profile-showcase/static/badge-local-first.svg)
-
-[Source](https://github.com/Cosipa?tab=repositories)
-
-</td>
-<td width="50%" valign="top">
-
-### 🧪 The weird experiment
-
-The one that exists because you wanted to understand how something works.
-
-![Experiment](./profile-showcase/static/badge-experiment.svg)
-![Work in progress](./profile-showcase/static/badge-work-in-progress.svg)
-
-[Source](https://github.com/Cosipa?tab=repositories)
-
-</td>
-</tr>
-</table>
-
-## 22 · Release board
-
-**Mockup · fictional projects and versions.**
-
-| Project | Latest | What's new |
-| :-- | :-- | :-- |
-| `sidequest` | ![Demo version 1.4.0](./profile-showcase/static/badge-demo-version-1-4-0.svg) | Startup is no longer a coffee break. |
-| `tiny-parser` | ![Demo version 0.8.2](./profile-showcase/static/badge-demo-version-0-8-2.svg) | Error messages now attempt to help. |
-| `homelab-notes` | ![Demo rolling release](./profile-showcase/static/badge-demo-rolling-release.svg) | Another diagram of the same server. |
 
 ## 24 · Open pull requests and issues
 
@@ -215,85 +107,11 @@ The one that exists because you wanted to understand how something works.
 | ![issue open](./profile-showcase/static/badge-issue-open.svg) | `maxdorninger/MediaManager` | [\[BUG\] Prowlarr magnet redirect is discarded before Transmission grab](https://github.com/maxdorninger/MediaManager/issues/574) · #574 |
 <!-- profile:activity:end -->
 
-<a id="other"></a>
-
-# Other experiments
-
-## 37 · Your own quote card
-
-**Your quotes only.** Edit [`quotes.txt`](./quotes.txt); the workflow selects one deterministically each UTC day and renders both themes. An empty file shows an explicit setup notice, not a fabricated quote.
-
-<!-- profile:quote:start -->
-<a href="./quotes.txt">
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./profile-showcase/generated/quote-dark.9d2f86009c46.svg">
-  <source media="(prefers-color-scheme: light)" srcset="./profile-showcase/generated/quote-light.869ca8b01aa4.svg">
-  <img src="./profile-showcase/generated/quote-light.869ca8b01aa4.svg" alt="Quote card from quotes.txt">
-</picture>
-</a>
-<!-- profile:quote:end -->
-
 <a id="real-posts"></a>
 
-# Writing · cosipa.dev
-
-Only **42**, **47**, and **48** remain. Actions refreshes all three from [your RSS feed](https://cosipa.dev/rss), retaining exact titles, dates, and first-sentence excerpts. No rewritten headlines or generated article images.
-
-[42 · Cards](#42--two-column-text-cards) · [47 · Rows](#47--compact-magazine-rows) · [48 · Quieter excerpt layouts](#48--quieter-excerpt-layouts)
-
-## 42 · Two-column text cards
-
-<!-- profile:posts42:start -->
-<table>
-<tr>
-<td width="50%" valign="top">
-
-### [A user in the Docker group can become root](https://cosipa.dev/posts/docker-group-security-risk/)
-
-<sub>October 18, 2026</sub>
-
-> This is a well-known (very old) Docker security risk, that everybody knows exists, yet
-> sometimes we underestimate the impact of it.
-
-</td>
-<td width="50%" valign="top">
-
-### [How to setup a pull-through Docker registry](https://cosipa.dev/posts/docker-registry-cache-setup/)
-
-<sub>August 5, 2026</sub>
-
-> A pull-through Docker registry is basically just a cached proxy to DockerHub, instead
-> of having your servers pulling images from DockerHub directly, they could pull them
-> from your own registry.
-
-</td>
-</tr>
-<tr>
-<td width="50%" valign="top">
-
-### [How to speed up Linux disk encryption](https://cosipa.dev/posts/full-disk-encryption-tweaks/)
-
-<sub>July 25, 2026</sub>
-
-> What is dm-crypt: Device-Mapper’s crypt provides transparent encryption of block
-> devices using the kernel crypto API.
-
-</td>
-<td width="50%" valign="top">
-
-### [First post ever](https://cosipa.dev/posts/first-post-ever/)
-
-<sub>October 2, 2025</sub>
-
-> Welcome to my tech blog, this post just serves as a placeholder until I write a full
-> post.
-
-</td>
-</tr>
-</table>
-<!-- profile:posts42:end -->
-
 ## 47 · Compact magazine rows
+
+**Live writing · cosipa.dev.** Actions refreshes this and both excerpt alternatives from [your RSS feed](https://cosipa.dev/rss), retaining exact titles, dates, and first-sentence excerpts. No rewritten headlines or generated article images.
 
 <!-- profile:posts47:start -->
 <table>
@@ -336,7 +154,7 @@ Only **42**, **47**, and **48** remain. Actions refreshes all three from [your R
 
 ## 48 · Quieter excerpt layouts
 
-The same three latest posts, with identical RSS titles and excerpts. No NOTE alerts.
+Both alternatives below are already automated. Choose 47, 48A, or 48B for the final README.
 
 ### 48A · Ordinary blockquotes
 
@@ -386,36 +204,117 @@ What is dm-crypt: Device-Mapper’s crypt provides transparent encryption of blo
 devices using the kernel crypto API.
 <!-- profile:posts48b:end -->
 
-### 48C · Green TIP callouts, for comparison
+---
 
-These still introduce a colored label. Compare with the quieter versions above.
+<a id="mockups"></a>
 
-<!-- profile:posts48c:start -->
-> [!TIP]
-> **[A user in the Docker group can become root](https://cosipa.dev/posts/docker-group-security-risk/)** · <sub>Oct 18, 2026</sub>
->
-> This is a well-known (very old) Docker security risk, that everybody knows exists, yet
-> sometimes we underestimate the impact of it.
+# Mockups & setup pending
 
-<!-- -->
+These are **not finished personal content**. Some are visual mockups; others have working rendering but still need your content or configuration. They are kept separate from the working data above.
 
-> [!TIP]
-> **[How to setup a pull-through Docker registry](https://cosipa.dev/posts/docker-registry-cache-setup/)** · <sub>Aug 05, 2026</sub>
->
-> A pull-through Docker registry is basically just a cached proxy to DockerHub, instead
-> of having your servers pulling images from DockerHub directly, they could pull them
-> from your own registry.
+## 04 · Native avatar + a centered intro
 
-<!-- -->
+**Live avatar · introduction copy still a mockup.**
 
-> [!TIP]
-> **[How to speed up Linux disk encryption](https://cosipa.dev/posts/full-disk-encryption-tweaks/)** · <sub>Jul 25, 2026</sub>
->
-> What is dm-crypt: Device-Mapper’s crypt provides transparent encryption of block
-> devices using the kernel crypto API.
-<!-- profile:posts48c:end -->
+<p align="center">
+  <img src="https://github.com/Cosipa.png?size=160" alt="Cosipa's GitHub avatar" width="96" height="96">
+</p>
+<h3 align="center">Cosipa</h3>
+<p align="center">A short sentence about what you build, what you care about, and why someone should stick around.</p>
+<p align="center">
+  <a href="https://github.com/Cosipa?tab=repositories">Projects</a> ·
+  <a href="https://github.com/Cosipa?tab=stars">Things I find interesting</a> ·
+  <a href="https://cosipa.dev/">Writing</a>
+</p>
 
-[cosipa.dev](https://cosipa.dev/) · [RSS](https://cosipa.dev/rss) · [↑ Back to top](#profile-shortlist)
+## 05 · Flat tool badges
+
+**Sample stack, not an inventory of your skills.** The assets work; the list still needs your selection.
+
+![Linux](./profile-showcase/static/badge-linux.svg)
+![NixOS](./profile-showcase/static/badge-nixos.svg)
+![Neovim](./profile-showcase/static/badge-neovim.svg)
+![Rust](./profile-showcase/static/badge-rust.svg)
+![Python](./profile-showcase/static/badge-python.svg)
+
+## 17 · Metrics panels
+
+**Unimplemented · upstream demos, not your account.** Metrics was explicitly excluded from the earlier Actions implementation because you planned to configure it yourself. That includes the achievement wall: no personal Metrics output or Metrics workflow has been configured here. These images are examples, not evidence of your stats or achievements.
+
+[![Metrics example: classic profile dashboard](https://raw.githubusercontent.com/lowlighter/metrics/examples/metrics.classic.svg)](https://github.com/lowlighter/metrics)
+
+### Achievement wall · not configured
+
+![Metrics example: achievements, not Cosipa's achievements](https://raw.githubusercontent.com/lowlighter/metrics/examples/metrics.plugin.achievements.compact.svg)
+
+## 19 · Repository preview card
+
+**Placeholder.** No featured repository is selected yet.
+
+<!-- profile:repository-placeholder:start -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./profile-showcase/generated/repository-placeholder-dark.63491c529c60.svg">
+  <source media="(prefers-color-scheme: light)" srcset="./profile-showcase/generated/repository-placeholder-light.f71a307711a6.svg">
+  <img src="./profile-showcase/generated/repository-placeholder-light.f71a307711a6.svg" alt="Repository preview placeholder" width="400">
+</picture>
+<!-- profile:repository-placeholder:end -->
+
+## 21 · Two-column project gallery
+
+**Illustrative copy, not actual project descriptions.**
+
+<table>
+<tr>
+<td width="50%" valign="top">
+
+### 🛠️ The useful thing
+
+One sentence explaining the problem it solves, not just the language it's written in.
+
+![CLI](./profile-showcase/static/badge-cli.svg)
+![Local first](./profile-showcase/static/badge-local-first.svg)
+
+[Source](https://github.com/Cosipa?tab=repositories)
+
+</td>
+<td width="50%" valign="top">
+
+### 🧪 The weird experiment
+
+The one that exists because you wanted to understand how something works.
+
+![Experiment](./profile-showcase/static/badge-experiment.svg)
+![Work in progress](./profile-showcase/static/badge-work-in-progress.svg)
+
+[Source](https://github.com/Cosipa?tab=repositories)
+
+</td>
+</tr>
+</table>
+
+## 22 · Release board
+
+**Mockup · fictional projects and versions.**
+
+| Project | Latest | What's new |
+| :-- | :-- | :-- |
+| `sidequest` | ![Demo version 1.4.0](./profile-showcase/static/badge-demo-version-1-4-0.svg) | Startup is no longer a coffee break. |
+| `tiny-parser` | ![Demo version 0.8.2](./profile-showcase/static/badge-demo-version-0-8-2.svg) | Error messages now attempt to help. |
+| `homelab-notes` | ![Demo rolling release](./profile-showcase/static/badge-demo-rolling-release.svg) | Another diagram of the same server. |
+
+## 37 · Your own quote card
+
+**Renderer works · your quotes are not configured.** Edit [`quotes.txt`](./quotes.txt); the workflow selects one deterministically each UTC day and renders both themes. An empty file shows an explicit setup notice, not a fabricated quote.
+
+<!-- profile:quote:start -->
+<a href="./quotes.txt">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./profile-showcase/generated/quote-dark.f206b2e7c327.svg">
+  <source media="(prefers-color-scheme: light)" srcset="./profile-showcase/generated/quote-light.0b0b62bf9b5d.svg">
+  <img src="./profile-showcase/generated/quote-light.0b0b62bf9b5d.svg" alt="Quote card from quotes.txt">
+</picture>
+</a>
+<!-- profile:quote:end -->
 
 <!-- profile:footer:start -->
 ![Decorative waving footer](./profile-showcase/static/footer-wave.svg)

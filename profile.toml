@@ -7,26 +7,35 @@ quotes = "quotes.txt"
 
 [blog]
 feed = "https://cosipa.dev/rss"
-cards = 4
 rows = 3
 excerpts = 3
 
+# Rosé Pine Moon / Dawn: coloured charts, readable in both themes.
 [colors.dark]
-background = "0d1117"
-title = "c9d1d9"
-text = "8b949e"
-accent = "8b949e"
+background = "232136"
+surface = "2a273f"
+border = "44415a"
+title = "e0def4"
+text = "b8b5ce"
+accent = "c4a7e7"
+secondary = "9ccfd8"
+rose = "eb6f92"
+dots = ["2a273f", "524f67", "908caa", "c4a7e7", "9ccfd8"]
 
 [colors.light]
-background = "ffffff"
-title = "24292f"
-text = "57606a"
-accent = "57606a"
+background = "faf4ed"
+surface = "f2e9e1"
+border = "d4cbd0"
+title = "575279"
+text = "6e6a86"
+accent = "907aa9"
+secondary = "286983"
+rose = "b4637a"
+dots = ["f2e9e1", "c9bfd2", "aa95bd", "907aa9", "286983"]
 
 [pgp]
 # Verified against https://github.com/Cosipa.gpg. Update after rotating your key.
 fingerprint = "2C92F4C9475DE7B8A84380E9A8523AE122FE6E85"
 
-[typing]
-# Existing demo copy; edit these yourself when choosing your introduction.
-lines = ["Hello, I'm Cosipa.", "Building, breaking, and figuring things out.", "Probably starting another side project."]
+# Typing copy lives in profile-showcase/typing-iosevka.source.svg.
+# Its exported SVG uses outlined glyphs, so GitHub cannot substitute the font.

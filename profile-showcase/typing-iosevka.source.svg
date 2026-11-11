@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="650" height="70" viewBox="0 0 650 70" role="img" aria-labelledby="title desc">
+  <title id="title">Typing introduction</title>
+  <desc id="desc">Hello, I'm Cosipa. Building, breaking, and figuring things out. Probably starting another side project. IosevkaTerm Nerd Font, outlined for consistent rendering on GitHub.</desc>
+  <!-- Edit this source, then export text as paths. GitHub image rendering cannot load custom fonts. -->
+  <defs>
+    <clipPath id="typing-line">
+      <rect width="0" height="70">
+        <animate attributeName="width" values="0;580;580;0" keyTimes="0;0.65;0.88;1" dur="5s" repeatCount="indefinite"/>
+      </rect>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#typing-line)" font-family="IosevkaTerm Nerd Font" font-size="23" fill="#c4a7e7">
+    <g opacity="1">
+      <animate attributeName="opacity" values="1;0;0" keyTimes="0;0.333333;1" calcMode="discrete" dur="15s" repeatCount="indefinite"/>
+      <text x="0" y="41">Hello, I'm Cosipa.</text>
+    </g>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;1;0;0" keyTimes="0;0.333333;0.666667;1" calcMode="discrete" dur="15s" repeatCount="indefinite"/>
+      <text x="0" y="41">Building, breaking, and figuring things out.</text>
+    </g>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;1;0" keyTimes="0;0.666667;1" calcMode="discrete" dur="15s" repeatCount="indefinite"/>
+      <text x="0" y="41">Probably starting another side project.</text>
+    </g>
+  </g>
+</svg>
