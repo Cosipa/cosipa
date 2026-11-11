@@ -67,9 +67,9 @@ Rosé Pine Moon, your two-line Fish/Starship prompt and branch symbol, no title 
 
 <!-- profile:github-badges:start -->
 [![followers](./profile-showcase/generated/followers.cb6fd6e4b032.svg)](https://github.com/Cosipa?tab=followers)
-[![stars](./profile-showcase/generated/stars.a2ab9fd35350.svg)](https://github.com/Cosipa/cosipa/stargazers)
-[![updated](./profile-showcase/generated/updated.23474683be3b.svg)](https://github.com/Cosipa/cosipa/commits)
-[![repos](./profile-showcase/generated/repos.7b71176cfa0f.svg)](https://github.com/Cosipa?tab=repositories)
+[![stars](./profile-showcase/generated/stars.d02da7b05e04.svg)](https://github.com/Cosipa/cosipa/stargazers)
+[![updated](./profile-showcase/generated/updated.4215ace9c6ac.svg)](https://github.com/Cosipa/cosipa/commits)
+[![repos](./profile-showcase/generated/repos.8db37c30ffca.svg)](https://github.com/Cosipa?tab=repositories)
 <!-- profile:github-badges:end -->
 
 ## 18 · PGP + profile views
@@ -91,9 +91,9 @@ Rosé Pine Moon, your two-line Fish/Starship prompt and branch symbol, no title 
 
 <!-- profile:stats:start -->
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./profile-showcase/generated/stats-dark.9b85f3b3800b.svg">
-  <source media="(prefers-color-scheme: light)" srcset="./profile-showcase/generated/stats-light.c609fce36dcf.svg">
-  <img src="./profile-showcase/generated/stats-light.c609fce36dcf.svg" alt="Cosipa&#x27;s public GitHub contribution statistics" width="467">
+  <source media="(prefers-color-scheme: dark)" srcset="./profile-showcase/generated/stats-dark.6c1fc22175f3.svg">
+  <source media="(prefers-color-scheme: light)" srcset="./profile-showcase/generated/stats-light.8a875d9445b6.svg">
+  <img src="./profile-showcase/generated/stats-light.8a875d9445b6.svg" alt="Cosipa&#x27;s public GitHub contribution statistics" width="467">
 </picture>
 <!-- profile:stats:end -->
 
@@ -107,9 +107,9 @@ Rosé Pine Moon, your two-line Fish/Starship prompt and branch symbol, no title 
 
 <!-- profile:timeline:start -->
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./profile-showcase/generated/timeline-dark.66c204f57809.svg">
-  <source media="(prefers-color-scheme: light)" srcset="./profile-showcase/generated/timeline-light.a9aa123f05d1.svg">
-  <img src="./profile-showcase/generated/timeline-light.a9aa123f05d1.svg" alt="Cosipa&#x27;s 365-day contribution timeline">
+  <source media="(prefers-color-scheme: dark)" srcset="./profile-showcase/generated/timeline-dark.fd9b69f6e14f.svg">
+  <source media="(prefers-color-scheme: light)" srcset="./profile-showcase/generated/timeline-light.b12c0aa382b0.svg">
+  <img src="./profile-showcase/generated/timeline-light.b12c0aa382b0.svg" alt="Cosipa&#x27;s 365-day contribution timeline">
 </picture>
 <!-- profile:timeline:end -->
 
@@ -123,9 +123,9 @@ Rosé Pine Moon, your two-line Fish/Starship prompt and branch symbol, no title 
 
 <!-- profile:snake:start -->
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./profile-showcase/generated/snake-dark-pending.042e9c9fd6d1.svg">
-  <source media="(prefers-color-scheme: light)" srcset="./profile-showcase/generated/snake-light-pending.eb8b9bf05507.svg">
-  <img src="./profile-showcase/generated/snake-light-pending.eb8b9bf05507.svg" alt="Cosipa&#x27;s contribution snake" width="1000">
+  <source media="(prefers-color-scheme: dark)" srcset="./profile-showcase/generated/snake-dark.a5c6fb75c99c.svg">
+  <source media="(prefers-color-scheme: light)" srcset="./profile-showcase/generated/snake-light.94fa7a69b456.svg">
+  <img src="./profile-showcase/generated/snake-light.94fa7a69b456.svg" alt="Cosipa&#x27;s contribution snake" width="1000">
 </picture>
 <!-- profile:snake:end -->
 

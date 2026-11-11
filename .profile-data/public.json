@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "snake": {
-    "dark": "./profile-showcase/generated/snake-dark-pending.042e9c9fd6d1.svg",
-    "light": "./profile-showcase/generated/snake-light-pending.eb8b9bf05507.svg"
+    "dark": "./profile-showcase/generated/snake-dark.a5c6fb75c99c.svg",
+    "light": "./profile-showcase/generated/snake-light.94fa7a69b456.svg"
   },
   "sources": {
     "activity": {
@@ -46,7 +46,7 @@
       "as_of": "2026-11-11",
       "calendar_end": "2026-11-11",
       "calendar_start": "2025-11-12",
-      "calendar_total": 1090,
+      "calendar_total": 1091,
       "days": {
         "2025-11-12": 30,
         "2025-11-13": 23,
@@ -412,18 +412,27 @@
         "2026-11-08": 3,
         "2026-11-09": 6,
         "2026-11-10": 1,
-        "2026-11-11": 7
+        "2026-11-11": 8
       },
-      "source_calendar_total": 1109
+      "source_calendar_total": 1110
+    },
+    "contributions": {
+      "as_of": "2026-11-11",
+      "public_commits": 64,
+      "public_issues": 1,
+      "public_prs": 3,
+      "public_reviews": 1,
+      "published_private": 834,
+      "year": 2026
     },
     "github": {
       "as_of": "2026-11-11",
       "created_at": "2025-07-05T13:10:08Z",
       "followers": 1,
       "login": "Cosipa",
-      "public_repos": 4,
-      "repository_stars": null,
-      "repository_updated": null
+      "public_repos": 5,
+      "repository_stars": 0,
+      "repository_updated": "2026-11-11"
     },
     "posts": {
       "as_of": "2026-11-11",
