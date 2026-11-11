@@ -114,11 +114,11 @@
 ### Public contribution stats
 
 <!-- profile:stats:start -->
-<a href="./profile-showcase/generated/stats-dark.e78c955c0c2b.svg#gh-dark-mode-only">
-  <img src="./profile-showcase/generated/stats-dark.e78c955c0c2b.svg" alt="Cosipa&#x27;s public GitHub contribution statistics" width="467">
+<a href="./profile-showcase/generated/stats-dark.b52165d00244.svg#gh-dark-mode-only">
+  <img src="./profile-showcase/generated/stats-dark.b52165d00244.svg" alt="Cosipa&#x27;s public GitHub contribution statistics" width="467">
 </a>
-<a href="./profile-showcase/generated/stats-light.e2f4f1548ac6.svg#gh-light-mode-only">
-  <img src="./profile-showcase/generated/stats-light.e2f4f1548ac6.svg" alt="Cosipa&#x27;s public GitHub contribution statistics" width="467">
+<a href="./profile-showcase/generated/stats-light.05445d2d115e.svg#gh-light-mode-only">
+  <img src="./profile-showcase/generated/stats-light.05445d2d115e.svg" alt="Cosipa&#x27;s public GitHub contribution statistics" width="467">
 </a>
 <!-- profile:stats:end -->
 
@@ -127,11 +127,11 @@
 ### The last 365 days
 
 <!-- profile:timeline:start -->
-<a href="./profile-showcase/generated/timeline-dark.5d172158a42e.svg#gh-dark-mode-only">
-  <img src="./profile-showcase/generated/timeline-dark.5d172158a42e.svg" alt="Cosipa&#x27;s 365-day contribution timeline">
+<a href="./profile-showcase/generated/timeline-dark.9f267333cd70.svg#gh-dark-mode-only">
+  <img src="./profile-showcase/generated/timeline-dark.9f267333cd70.svg" alt="Cosipa&#x27;s 365-day contribution timeline">
 </a>
-<a href="./profile-showcase/generated/timeline-light.23b39a45a761.svg#gh-light-mode-only">
-  <img src="./profile-showcase/generated/timeline-light.23b39a45a761.svg" alt="Cosipa&#x27;s 365-day contribution timeline">
+<a href="./profile-showcase/generated/timeline-light.ca844c352e2a.svg#gh-light-mode-only">
+  <img src="./profile-showcase/generated/timeline-light.ca844c352e2a.svg" alt="Cosipa&#x27;s 365-day contribution timeline">
 </a>
 <!-- profile:timeline:end -->
 
