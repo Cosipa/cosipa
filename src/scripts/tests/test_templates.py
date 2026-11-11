@@ -20,7 +20,7 @@ class TemplateTests(unittest.TestCase):
     def test_text_and_attribute_values_cannot_insert_markup(self):
         value = '<script>alert("$value & test")</script>'
         color = 'fff" onclick="alert(1)'
-        document = cards.text(10, 20, value, color)
+        document = cards.render_text(10, 20, value, color)
         element = ET.fromstring(document)
         self.assertEqual(element.text, value)
         self.assertEqual(element.attrib["fill"], "#" + color)
@@ -34,7 +34,7 @@ class TemplateTests(unittest.TestCase):
     def test_badge_preserves_special_characters_as_text(self):
         label = 'Label <&> "$label"'
         value = 'Value <&> "$value"'
-        root = ET.fromstring(cards.badge(label, value))
+        root = ET.fromstring(cards.render_badge(label, value))
         self.assertEqual(root.find(cards.SVG_NS + "title").text, f"{label}: {value}")
         self.assertEqual(
             [node.text for node in root.iter(cards.SVG_NS + "text")],
@@ -51,14 +51,14 @@ class TemplateTests(unittest.TestCase):
         config = tomllib.loads((ROOT / "src/data/profile.toml").read_text())
         for palette in config["colors"].values():
             with self.subTest(background=palette["background"]):
-                document = cards.timeline_card("Cosipa", {"days": {}}, palette)
+                document = cards.render_timeline_card("Cosipa", {"days": {}}, palette)
                 ET.fromstring(document)
                 self.assertIn("Awaiting the first successful", document)
                 self.assertNotIn("Peak week", document)
 
     def test_quote_without_author_has_no_attribution(self):
         config = tomllib.loads((ROOT / "src/data/profile.toml").read_text())
-        document = cards.quote_card(
+        document = cards.render_quote_card(
             [("Exact text", "")], date(2026, 11, 12), config["colors"]["dark"]
         )
         root = ET.fromstring(document)
@@ -73,7 +73,7 @@ class TemplateTests(unittest.TestCase):
                 patch.object(data, "fetch", return_value=content),
                 self.assertRaisesRegex(ValueError, "non-object"),
             ):
-                data.api("/users/Cosipa")
+                data.fetch_github_api("/users/Cosipa")
 
 
 if __name__ == "__main__":

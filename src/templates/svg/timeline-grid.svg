@@ -1,1 +1,1 @@
-<path d="M24 ${y}H822" stroke="#$border" stroke-dasharray="3 6"/>
+<path d="M${left} ${y}H$right" stroke="#$border" stroke-dasharray="3 6"/>

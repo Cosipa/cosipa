@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import json
-import re
 import time as clock
 import xml.etree.ElementTree as ET
 from datetime import UTC, date, datetime, timedelta
@@ -15,7 +14,59 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import quote, urlencode, urljoin, urlsplit
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 
+if __package__:
+    from .profile_text import (
+        calendar_total,
+        daily_contribution_count,
+        first_sentence,
+        normalized_whitespace,
+    )
+else:
+    from profile_text import (
+        calendar_total,
+        daily_contribution_count,
+        first_sentence,
+        normalized_whitespace,
+    )
+
 MAX_RESPONSE = 4 * 1024 * 1024
+REQUEST_TIMEOUT_SECONDS = 30
+FETCH_ATTEMPTS = 3
+RETRY_BACKOFF_BASE_SECONDS = 2
+RETRYABLE_HTTP_STATUSES = {429, 500, 502, 503, 504}
+GITHUB_API_URL = "https://api.github.com"
+GITHUB_API_HOST = "api.github.com"
+GITHUB_API_VERSION = "2022-11-28"
+GITHUB_PAGE_SIZE = 100
+GITHUB_SEARCH_LIMIT = 1000
+GITHUB_SEARCH_PAGES = GITHUB_SEARCH_LIMIT // GITHUB_PAGE_SIZE
+CONTRIBUTION_REPOSITORY_LIMIT = 100  # Matches maxRepositories in profile.graphql.
+CALENDAR_DAYS = 365
+ACTIVITY_DISPLAY_LIMIT = 12
+MERGED_DISPLAY_LIMIT = 6
+RSS_CONTENT_TAG = "{http://purl.org/rss/1.0/modules/content/}encoded"
+CONTRIBUTION_BREAKDOWNS = (
+    (
+        "public_commits",
+        "commitContributionsByRepository",
+        "totalRepositoriesWithContributedCommits",
+    ),
+    (
+        "public_prs",
+        "pullRequestContributionsByRepository",
+        "totalRepositoriesWithContributedPullRequests",
+    ),
+    (
+        "public_issues",
+        "issueContributionsByRepository",
+        "totalRepositoriesWithContributedIssues",
+    ),
+    (
+        "public_reviews",
+        "pullRequestReviewContributionsByRepository",
+        "totalRepositoriesWithContributedPullRequestReviews",
+    ),
+)
 
 
 class SafeRedirect(HTTPRedirectHandler):
@@ -28,42 +79,53 @@ class SafeRedirect(HTTPRedirectHandler):
         return redirected
 
 
-def fetch(url: str, *, token: str = "", payload: dict | None = None) -> bytes:
+def build_request_headers(url: str, token: str, *, has_payload: bool) -> dict[str, str]:
     target = urlsplit(url)
     if target.scheme != "https":
         raise ValueError("Only HTTPS data sources are allowed")
     headers = {
         "User-Agent": "Cosipa-profile",
-        "Accept": "application/json" if target.netloc == "api.github.com" else "*/*",
+        "Accept": "application/json" if target.netloc == GITHUB_API_HOST else "*/*",
     }
-    if target.netloc == "api.github.com":
-        headers["X-GitHub-Api-Version"] = "2022-11-28"
+    if target.netloc == GITHUB_API_HOST:
+        headers["X-GitHub-Api-Version"] = GITHUB_API_VERSION
         if token:
             headers["Authorization"] = f"Bearer {token}"
-    body = json.dumps(payload).encode() if payload is not None else None
-    if body is not None:
+    if has_payload:
         headers["Content-Type"] = "application/json"
-    for attempt in range(3):
+    return headers
+
+
+def read_response(request: Request) -> bytes:
+    with build_opener(SafeRedirect()).open(
+        request, timeout=REQUEST_TIMEOUT_SECONDS
+    ) as response:
+        content = response.read(MAX_RESPONSE + 1)
+    if len(content) > MAX_RESPONSE:
+        raise ValueError("Data source exceeded the response size limit")
+    return content
+
+
+def fetch(url: str, *, token: str = "", payload: dict | None = None) -> bytes:
+    headers = build_request_headers(url, token, has_payload=payload is not None)
+    body = json.dumps(payload).encode() if payload is not None else None
+    host = urlsplit(url).netloc
+    for attempt in range(FETCH_ATTEMPTS):
+        last_attempt = attempt == FETCH_ATTEMPTS - 1
         try:
-            with build_opener(SafeRedirect()).open(
-                Request(url, data=body, headers=headers), timeout=30
-            ) as response:
-                data = response.read(MAX_RESPONSE + 1)
-                if len(data) > MAX_RESPONSE:
-                    raise ValueError("Data source exceeded the response size limit")
-                return data
+            return read_response(Request(url, data=body, headers=headers))
         except HTTPError as exc:
-            if attempt == 2 or exc.code not in (429, 500, 502, 503, 504):
-                raise ValueError(f"HTTP {exc.code} from {target.netloc}") from exc
+            if last_attempt or exc.code not in RETRYABLE_HTTP_STATUSES:
+                raise ValueError(f"HTTP {exc.code} from {host}") from exc
         except (URLError, TimeoutError) as exc:
-            if attempt == 2:
-                raise ValueError(f"Network failure contacting {target.netloc}") from exc
-        clock.sleep(2**attempt)
+            if last_attempt:
+                raise ValueError(f"Network failure contacting {host}") from exc
+        clock.sleep(RETRY_BACKOFF_BASE_SECONDS**attempt)
     raise RuntimeError("Unreachable retry state")
 
 
-def api(path: str, token: str = "") -> dict:
-    document = json.loads(fetch("https://api.github.com" + path, token=token))
+def fetch_github_api(path: str, token: str = "") -> dict:
+    document = json.loads(fetch(GITHUB_API_URL + path, token=token))
     if not isinstance(document, dict):
         raise ValueError("GitHub API returned a non-object response")
     return document
@@ -74,7 +136,7 @@ QUERY = (Path(__file__).resolve().parents[1] / "queries/profile.graphql").read_t
 )
 
 
-def contribution_variables(username: str, now: datetime) -> dict:
+def build_contribution_variables(username: str, now: datetime) -> dict:
     now = now.astimezone(UTC).replace(microsecond=0)
     return {
         "login": username,
@@ -83,21 +145,26 @@ def contribution_variables(username: str, now: datetime) -> dict:
     }
 
 
-def nonnegative(value: object) -> int:
+def require_nonnegative_integer(value: object) -> int:
     if type(value) is not int or value < 0:
         raise ValueError("Invalid contribution count")
     return value
 
 
-def public_count(year: dict, connection: str, repository_count: str) -> int:
+def count_public_contributions(
+    year: dict, connection: str, repository_count: str
+) -> int:
     repositories = year[connection]
-    reported = nonnegative(year[repository_count])
-    if reported > len(repositories) and len(repositories) >= 100:
+    reported = require_nonnegative_integer(year[repository_count])
+    if (
+        reported > len(repositories)
+        and len(repositories) >= CONTRIBUTION_REPOSITORY_LIMIT
+    ):
         raise ValueError(
             "GitHub truncated a contribution breakdown; refusing an incomplete total"
         )
     return sum(
-        nonnegative(repository["contributions"]["totalCount"])
+        require_nonnegative_integer(repository["contributions"]["totalCount"])
         for repository in repositories
         if repository["repository"]["isPrivate"] is False
     )
@@ -112,38 +179,33 @@ def normalize_contributions(document: dict, now: datetime) -> dict:
     year = user["year"]
 
     today = now.astimezone(UTC).date()
-    private = nonnegative(year["restrictedContributionsCount"])
+    private = require_nonnegative_integer(year["restrictedContributionsCount"])
+    public_counts = {
+        name: count_public_contributions(year, connection, repository_count)
+        for name, connection, repository_count in CONTRIBUTION_BREAKDOWNS
+    }
     return {
         "as_of": today.isoformat(),
         "year": today.year,
-        "public_commits": public_count(
-            year, "commitContributionsByRepository", "totalRepositoriesWithContributedCommits"
-        ),
-        "public_prs": public_count(
-            year, "pullRequestContributionsByRepository", "totalRepositoriesWithContributedPullRequests"
-        ),
-        "public_issues": public_count(
-            year, "issueContributionsByRepository", "totalRepositoriesWithContributedIssues"
-        ),
-        "public_reviews": public_count(
-            year, "pullRequestReviewContributionsByRepository",
-            "totalRepositoriesWithContributedPullRequestReviews",
-        ),
+        **public_counts,
         # Restricted means inaccessible to this token, not necessarily every private contribution.
         "published_private": private if private else None,
     }
 
 
-def contributions(username: str, now: datetime, token: str) -> dict:
+def fetch_contributions(username: str, now: datetime, token: str) -> dict:
     if not token:
         raise ValueError(
             "Contribution stats await the workflow's built-in GITHUB_TOKEN; no guessed totals"
         )
     document = json.loads(
         fetch(
-            "https://api.github.com/graphql",
+            GITHUB_API_URL + "/graphql",
             token=token,
-            payload={"query": QUERY, "variables": contribution_variables(username, now)},
+            payload={
+                "query": QUERY,
+                "variables": build_contribution_variables(username, now),
+            },
         )
     )
     return normalize_contributions(document, now)
@@ -172,37 +234,37 @@ class CalendarHTML(HTMLParser):
             self.label.append(data)
 
     def handle_endtag(self, tag):
-        if tag == "tool-tip" and self.target:
-            label = " ".join("".join(self.label).split())
-            if re.match(r"No contributions? on ", label, re.IGNORECASE):
-                self.counts[self.target] = 0
-            else:
-                match = re.match(r"([\d,]+) contributions? on ", label, re.IGNORECASE)
-                if match:
-                    self.counts[self.target] = int(match[1].replace(",", ""))
-            self.target = None
+        if tag != "tool-tip" or not self.target:
+            return
+        count = daily_contribution_count(normalized_whitespace("".join(self.label)))
+        if count is not None:
+            self.counts[self.target] = count
+        self.target = None
+
+
+def extract_calendar_days(
+    parser: CalendarHTML, start: date, today: date
+) -> dict[str, int]:
+    """Require a count for every date in the rolling window, including zero days."""
+    days = {}
+    for cell_id, value in parser.cells.items():
+        day = date.fromisoformat(value)
+        if start <= day <= today and cell_id in parser.counts:
+            days[value] = require_nonnegative_integer(parser.counts[cell_id])
+    expected = {(start + timedelta(days=i)).isoformat() for i in range(CALENDAR_DAYS)}
+    if set(days) != expected:
+        raise ValueError(
+            "Incomplete public contribution calendar; refusing to fill missing days with zero"
+        )
+    return dict(sorted(days.items()))
 
 
 def normalize_calendar(content: bytes, today: date) -> dict:
     parser = CalendarHTML()
     parser.feed(content.decode())
-    start = today - timedelta(days=364)
-    days = {}
-    for cell_id, value in parser.cells.items():
-        day = date.fromisoformat(value)
-        if start <= day <= today and cell_id in parser.counts:
-            days[value] = nonnegative(parser.counts[cell_id])
-    expected = {(start + timedelta(days=i)).isoformat() for i in range(365)}
-    if set(days) != expected:
-        raise ValueError(
-            "Incomplete public contribution calendar; refusing to fill missing days with zero"
-        )
-    heading = re.search(
-        r"([\d,]+) contributions? in ", " ".join(" ".join(parser.all).split()), re.IGNORECASE
-    )
-    if not heading:
-        raise ValueError("Public contribution calendar has no recognizable total")
-    source_total = int(heading[1].replace(",", ""))
+    start = today - timedelta(days=CALENDAR_DAYS - 1)
+    days = extract_calendar_days(parser, start, today)
+    source_total = calendar_total(" ".join(parser.all))
     if (
         set(parser.cells) - set(parser.counts)
         or sum(parser.counts[cell_id] for cell_id in parser.cells) != source_total
@@ -216,103 +278,114 @@ def normalize_calendar(content: bytes, today: date) -> dict:
         "calendar_end": today.isoformat(),
         "calendar_total": sum(days.values()),
         "source_calendar_total": source_total,
-        "days": dict(sorted(days.items())),
+        "days": days,
     }
 
 
-def public_calendar(username: str, today: date) -> dict:
+def fetch_public_calendar(username: str, today: date) -> dict:
     # No token: respect public privacy settings, even in a private preview repo.
     # GitHub's from/to URL parameters select calendar years, not arbitrary windows;
     # fetch the rolling grid and select the exact dates locally instead.
     return normalize_calendar(
-        fetch(f"https://github.com/users/{quote(username, safe='')}/contributions"), today
+        fetch(f"https://github.com/users/{quote(username, safe='')}/contributions"),
+        today,
     )
 
 
-def activity(username: str, today: date, token: str = "") -> dict:
+def search_issues(filters: str, token: str, *, page: int | None = None) -> dict:
+    # Always request public results, even with a more privileged token.
+    parameters = {
+        "q": filters + " is:public",
+        "sort": "updated",
+        "order": "desc",
+        "per_page": GITHUB_PAGE_SIZE,
+    }
+    if page is not None:
+        parameters["page"] = page
+    return fetch_github_api("/search/issues?" + urlencode(parameters), token)
+
+
+def normalize_activity_fields(item: dict, kind: str, *, merged: bool = False) -> dict:
+    """Normalize the common fields after validating the source GitHub URL."""
+    url = urlsplit(item["html_url"])
+    parts = url.path.strip("/").split("/")
+    valid_host = url.scheme == "https" and url.netloc == "github.com"
+    if not merged and not valid_host:
+        raise ValueError("Unexpected GitHub activity URL")
+    if merged and (
+        not valid_host
+        or len(parts) != 4
+        or parts[2] != "pull"
+        or not parts[3].isdigit()
+    ):
+        raise ValueError("Unexpected merged pull request URL")
+    return {
+        "kind": kind,
+        "title": item["title"],
+        "url": item["html_url"],
+        "repository": "/".join(parts[:2]),
+        "number": item["number"],
+    }
+
+
+def fetch_open_activity(username: str, today: date, token: str = "") -> dict:
     result = []
     for kind in ("pr", "issue"):
-        # Explicit public filter even if someone later supplies a more privileged token.
-        query = urlencode({
-            "q": f"author:{username} is:{kind} is:open is:public",
-            "sort": "updated",
-            "order": "desc",
-            "per_page": 100,
-        })
-        page = api("/search/issues?" + query, token)
+        page = search_issues(f"author:{username} is:{kind} is:open", token)
         if page.get("incomplete_results"):
             raise ValueError("GitHub returned incomplete activity search results")
         for item in page["items"]:
             if item["state"] != "open":
                 continue
-            path = urlsplit(item["html_url"])
-            if path.scheme != "https" or path.netloc != "github.com":
-                raise ValueError("Unexpected GitHub activity URL")
-            parts = path.path.strip("/").split("/")
-            result.append({
-                "kind": kind,
-                "title": item["title"],
-                "url": item["html_url"],
-                "repository": "/".join(parts[:2]),
-                "number": item["number"],
-                "updated_at": item["updated_at"],
-            })
+            result.append(
+                {
+                    **normalize_activity_fields(item, kind),
+                    "updated_at": item["updated_at"],
+                }
+            )
     result.sort(key=itemgetter("updated_at"), reverse=True)
-    return {"as_of": today.isoformat(), "items": result[:12]}
+    return {"as_of": today.isoformat(), "items": result[:ACTIVITY_DISPLAY_LIMIT]}
 
 
-def recently_merged(username: str, today: date, token: str = "") -> dict:
-    # Search cannot sort by merge time. Read every result (up to GitHub's 1,000
-    # result limit), then sort actual merged_at timestamps, not update/close dates.
+def fetch_merged_search_items(username: str, token: str) -> list[dict]:
+    """Read all search pages; a partial list cannot establish the latest merges."""
     items = []
-    for page_number in range(1, 11):
-        query = urlencode({
-            "q": f"author:{username} is:pr is:merged is:public",
-            "sort": "updated",
-            "order": "desc",
-            "per_page": 100,
-            "page": page_number,
-        })
-        page = api("/search/issues?" + query, token)
-        total = nonnegative(page["total_count"])
-        if page.get("incomplete_results") or total > 1000:
-            raise ValueError("GitHub truncated merged PR search; refusing an incomplete list")
+    for page_number in range(1, GITHUB_SEARCH_PAGES + 1):
+        page = search_issues(
+            f"author:{username} is:pr is:merged", token, page=page_number
+        )
+        total = require_nonnegative_integer(page["total_count"])
+        if page.get("incomplete_results") or total > GITHUB_SEARCH_LIMIT:
+            raise ValueError(
+                "GitHub truncated merged PR search; refusing an incomplete list"
+            )
         batch = page["items"]
         items.extend(batch)
         if len(items) >= total:
-            break
+            return items
         if not batch:
             raise ValueError("GitHub returned an incomplete merged PR search page")
-    else:
-        raise ValueError("GitHub truncated merged PR search pagination")
+    raise ValueError("GitHub truncated merged PR search pagination")
+
+
+def fetch_recently_merged_prs(username: str, today: date, token: str = "") -> dict:
+    # Search cannot sort by merge time. Sort actual merged_at timestamps after
+    # reading every result, not update/close dates from the first search page.
     merged = {}
-    for item in items:
+    for item in fetch_merged_search_items(username, token):
         timestamp = (item.get("pull_request") or {}).get("merged_at")
         if item["state"] != "closed" or not timestamp:
             continue  # Never equate closed with merged.
-        url = urlsplit(item["html_url"])
-        parts = url.path.strip("/").split("/")
-        if (
-            url.scheme != "https"
-            or url.netloc != "github.com"
-            or len(parts) != 4
-            or parts[2] != "pull"
-            or not parts[3].isdigit()
-        ):
-            raise ValueError("Unexpected merged pull request URL")
+        fields = normalize_activity_fields(item, "pr", merged=True)
         when = datetime.fromisoformat(timestamp)
         if when.tzinfo is None:
             raise ValueError("Merged pull request timestamp is missing its timezone")
         merged[item["html_url"]] = {
-            "kind": "pr",
-            "title": item["title"],
-            "url": item["html_url"],
-            "repository": "/".join(parts[:2]),
-            "number": item["number"],
+            **fields,
             "merged_at": when.astimezone(UTC).isoformat(),
         }
     result = sorted(merged.values(), key=itemgetter("merged_at"), reverse=True)
-    return {"as_of": today.isoformat(), "items": result[:6]}
+    return {"as_of": today.isoformat(), "items": result[:MERGED_DISPLAY_LIMIT]}
 
 
 class FeedText(HTMLParser):
@@ -338,53 +411,56 @@ class FeedText(HTMLParser):
             self.ignore -= 1
             return
         if tag == "p" and self.current is not None:
-            text = " ".join("".join(self.current).split())
+            text = normalized_whitespace("".join(self.current))
             if text:
                 self.paragraphs.append(text)
             self.current = None
 
     def handle_data(self, data: str) -> None:
-        if not self.ignore:
-            self.all.append(data)
-            if self.current is not None:
-                self.current.append(data)
+        if self.ignore:
+            return
+        self.all.append(data)
+        if self.current is not None:
+            self.current.append(data)
+
+
+def extract_post_excerpt(item: ET.Element) -> str:
+    parser = FeedText()
+    parser.feed(item.findtext("description") or item.findtext(RSS_CONTENT_TAG) or "")
+    paragraph = next(
+        iter(parser.paragraphs), normalized_whitespace("".join(parser.all))
+    )
+    excerpt = first_sentence(paragraph)
+    if not excerpt:
+        raise ValueError("RSS item has no usable excerpt")
+    return excerpt
+
+
+def parse_post(item: ET.Element, feed_url: str) -> dict:
+    title = normalized_whitespace(item.findtext("title") or "")
+    raw_link = (item.findtext("link") or "").strip()
+    if not raw_link:
+        raise ValueError("RSS item has no article URL")
+    link = urljoin(feed_url, raw_link)
+    url = urlsplit(link)
+    if not title or url.scheme != "https" or url.netloc != urlsplit(feed_url).netloc:
+        raise ValueError("RSS item has an invalid title or article URL")
+    published = parsedate_to_datetime(item.findtext("pubDate") or "")
+    if published.tzinfo is None:
+        raise ValueError("RSS item date has no timezone")
+    return {
+        "title": title,
+        "url": link,
+        "published": published.isoformat(),
+        "excerpt": extract_post_excerpt(item),
+    }
 
 
 def parse_posts(content: bytes, feed_url: str) -> list[dict]:
     if b"<!DOCTYPE" in content.upper() or b"<!ENTITY" in content.upper():
         raise ValueError("RSS declarations/entities are not allowed")
     root = ET.fromstring(content)
-    result = []
-    for item in root.findall("./channel/item"):
-        title = " ".join((item.findtext("title") or "").split())
-        raw_link = (item.findtext("link") or "").strip()
-        if not raw_link:
-            raise ValueError("RSS item has no article URL")
-        link = urljoin(feed_url, raw_link)
-        url = urlsplit(link)
-        if not title or url.scheme != "https" or url.netloc != urlsplit(feed_url).netloc:
-            raise ValueError("RSS item has an invalid title or article URL")
-        published = parsedate_to_datetime(item.findtext("pubDate") or "")
-        if published.tzinfo is None:
-            raise ValueError("RSS item date has no timezone")
-        parser = FeedText()
-        parser.feed(
-            item.findtext("description")
-            or item.findtext("{http://purl.org/rss/1.0/modules/content/}encoded")
-            or ""
-        )
-        paragraph = next(iter(parser.paragraphs), " ".join("".join(parser.all).split()))
-        # A contiguous first-sentence excerpt, never a paraphrase or generated summary.
-        sentence = re.match(r"^(.+?[.!?])(?=\s|$)", paragraph, re.DOTALL)
-        excerpt = sentence.group(1) if sentence else paragraph
-        if not excerpt:
-            raise ValueError("RSS item has no usable excerpt")
-        result.append({
-            "title": title,
-            "url": link,
-            "published": published.isoformat(),
-            "excerpt": excerpt,
-        })
+    result = [parse_post(item, feed_url) for item in root.findall("./channel/item")]
     if not result:
         raise ValueError("RSS feed is empty; refusing to erase the previous posts")
     result.sort(key=publication_time, reverse=True)
@@ -395,5 +471,5 @@ def publication_time(post: dict) -> datetime:
     return datetime.fromisoformat(post["published"])
 
 
-def posts(feed_url: str, today: date) -> dict:
+def fetch_posts(feed_url: str, today: date) -> dict:
     return {"as_of": today.isoformat(), "items": parse_posts(fetch(feed_url), feed_url)}

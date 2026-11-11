@@ -71,7 +71,7 @@ def rss(title="Exact title &amp; spelling", link="https://cosipa.dev/posts/test/
 
 class ContributionTests(unittest.TestCase):
     def test_explicit_year_and_365_day_bounds(self):
-        variables = data.contribution_variables("Cosipa", NOW)
+        variables = data.build_contribution_variables("Cosipa", NOW)
         self.assertEqual(variables["yearFrom"], "2026-01-01T00:00:00+00:00")
         self.assertEqual(variables["to"], "2026-11-12T15:30:00+00:00")
         self.assertIn("from: $yearFrom, to: $to", data.QUERY)
@@ -108,7 +108,7 @@ class ContributionTests(unittest.TestCase):
 
     def test_calendar_is_fetched_without_an_auth_token(self):
         with patch.object(data, "fetch", return_value=calendar_html()) as fetch:
-            result = data.public_calendar("Cosipa", NOW.date())
+            result = data.fetch_public_calendar("Cosipa", NOW.date())
         fetch.assert_called_once_with("https://github.com/users/Cosipa/contributions")
         self.assertEqual(result["calendar_total"], 3)
 
@@ -127,14 +127,14 @@ class ContributionTests(unittest.TestCase):
 
     def test_missing_token_and_graphql_errors_do_not_produce_zero(self):
         with self.assertRaisesRegex(ValueError, "(?i)token"):
-            data.contributions("Cosipa", NOW, "")
+            data.fetch_contributions("Cosipa", NOW, "")
         with self.assertRaises(ValueError):
             data.normalize_contributions({"errors": [{"message": "denied"}]}, NOW)
 
     def test_bad_counts_are_rejected(self):
         for count in [-1, True, "62", None]:
             with self.subTest(count=count), self.assertRaises(ValueError):
-                data.nonnegative(count)
+                data.require_nonnegative_integer(count)
 
 
 class FeedTests(unittest.TestCase):
@@ -177,8 +177,8 @@ class MergedActivityTests(unittest.TestCase):
         items = [self.item(1, "2026-11-01T12:00:00Z"), self.item(2, "2026-11-11T12:00:00Z"),
                  self.item(3, None), self.item(4, "2026-11-12T00:00:00Z", state="open")]
         page = {"incomplete_results": False, "total_count": 4, "items": items}
-        with patch.object(data, "api", return_value=page) as api:
-            result = data.recently_merged("Cosipa", NOW.date(), "token")
+        with patch.object(data, "fetch_github_api", return_value=page) as api:
+            result = data.fetch_recently_merged_prs("Cosipa", NOW.date(), "token")
         calls = [call.args[0] for call in api.call_args_list]
         self.assertEqual([i["number"] for i in result["items"]], [2, 1])
         self.assertIn("is%3Amerged", calls[0])
@@ -190,8 +190,8 @@ class MergedActivityTests(unittest.TestCase):
         pages = [{"incomplete_results": False, "total_count": 7, "items": old},
                  {"incomplete_results": False, "total_count": 7,
                   "items": [self.item(7, "2026-11-07T00:00:00Z")]}]
-        with patch.object(data, "api", side_effect=pages) as api:
-            result = data.recently_merged("Cosipa", NOW.date())
+        with patch.object(data, "fetch_github_api", side_effect=pages) as api:
+            result = data.fetch_recently_merged_prs("Cosipa", NOW.date())
         self.assertEqual([i["number"] for i in result["items"]], [7, 6, 5, 4, 3, 2])
         self.assertIn("page=2", api.call_args_list[1].args[0])
 
@@ -199,20 +199,20 @@ class MergedActivityTests(unittest.TestCase):
         for page in [{"incomplete_results": True, "total_count": 0, "items": []},
                      {"incomplete_results": False, "total_count": 1001, "items": []},
                      {"incomplete_results": False, "total_count": 1, "items": []}]:
-            with self.subTest(page=page), patch.object(data, "api", return_value=page), self.assertRaises(ValueError):
-                data.recently_merged("Cosipa", NOW.date())
+            with self.subTest(page=page), patch.object(data, "fetch_github_api", return_value=page), self.assertRaises(ValueError):
+                data.fetch_recently_merged_prs("Cosipa", NOW.date())
 
     def test_merged_urls_and_timestamps_are_validated(self):
         for item in [self.item(1, "2026-11-11T00:00:00Z", html_url="https://example.com/a/b/pull/1"),
                      self.item(1, "2026-11-11T00:00:00Z", html_url="https://github.com/a/b/issues/1"),
                      self.item(1, "2026-11-11T00:00:00")]:
             page = {"incomplete_results": False, "total_count": 1, "items": [item]}
-            with self.subTest(item=item), patch.object(data, "api", return_value=page), self.assertRaises(ValueError):
-                data.recently_merged("Cosipa", NOW.date())
+            with self.subTest(item=item), patch.object(data, "fetch_github_api", return_value=page), self.assertRaises(ValueError):
+                data.fetch_recently_merged_prs("Cosipa", NOW.date())
 
     def test_no_merged_prs_produces_an_honest_empty_list(self):
-        with patch.object(data, "api", return_value={"total_count": 0, "incomplete_results": False, "items": []}):
-            self.assertEqual(data.recently_merged("Cosipa", NOW.date())["items"], [])
+        with patch.object(data, "fetch_github_api", return_value={"total_count": 0, "incomplete_results": False, "items": []}):
+            self.assertEqual(data.fetch_recently_merged_prs("Cosipa", NOW.date())["items"], [])
 
 
 class RenderTests(unittest.TestCase):
@@ -223,21 +223,21 @@ class RenderTests(unittest.TestCase):
         self.typing_lines = [node.text for node in source.iter("{http://www.w3.org/2000/svg}text")]
 
     def test_quotes_preserve_supplied_text_and_choose_deterministically(self):
-        entries = cards.quote_entries("# ignored\n\nAn exact quote\tIts author\nAnother exact quote\n")
+        entries = cards.parse_quote_entries("# ignored\n\nAn exact quote\tIts author\nAnother exact quote\n")
         self.assertEqual(entries, [("An exact quote", "Its author"), ("Another exact quote", "")])
-        first = cards.quote_card(entries, NOW.date(), self.palette)
-        self.assertEqual(first, cards.quote_card(entries, NOW.date(), self.palette))
-        supplied = cards.quote_card([("An exact quote", "Its author")], NOW.date(), self.palette)
+        first = cards.render_quote_card(entries, NOW.date(), self.palette)
+        self.assertEqual(first, cards.render_quote_card(entries, NOW.date(), self.palette))
+        supplied = cards.render_quote_card([("An exact quote", "Its author")], NOW.date(), self.palette)
         self.assertIn("An exact quote", supplied)
         self.assertIn("— Its author", supplied)
-        empty = cards.quote_card([], NOW.date(), self.palette)
+        empty = cards.render_quote_card([], NOW.date(), self.palette)
         self.assertIn("No quotes configured", empty)
 
     def test_theme_selection_uses_github_anchor_markers_not_os_media(self):
         paths = {"dark": "./dark.svg", "light": "./light.svg"}
         alt = 'A "quote" & <card>'
         for link in (None, "./quotes.txt"):
-            markup = profile.themed_images(paths, alt, width=467, link=link)
+            markup = profile.render_themed_images(paths, alt, width=467, link=link)
             parsed = Images()
             parsed.feed(markup)
             self.assertEqual(len(parsed.anchors), 2)
@@ -249,35 +249,35 @@ class RenderTests(unittest.TestCase):
                 self.assertEqual(parsed.images[i], {"src": paths[theme], "alt": alt, "width": "467"})
 
     def test_svg_and_markdown_text_are_escaped(self):
-        document = cards.quote_card([('<script>&"', '<author>')], NOW.date(), self.palette)
+        document = cards.render_quote_card([('<script>&"', '<author>')], NOW.date(), self.palette)
         ET.fromstring(document)
         self.assertNotIn("<script>", document)
         self.assertIn("&lt;script&gt;", document)
-        self.assertEqual(profile.md("[x] | <b>"), r"\[x\] \| &lt;b&gt;")
-        self.assertEqual(profile.md("# heading"), r"\# heading")
-        self.assertEqual(profile.md("1. item"), r"1\. item")
-        self.assertEqual(profile.md("- item"), r"\- item")
-        self.assertEqual(profile.md("pull-through"), "pull-through")
+        self.assertEqual(profile.escape_markdown("[x] | <b>"), r"\[x\] \| &lt;b&gt;")
+        self.assertEqual(profile.escape_markdown("# heading"), r"\# heading")
+        self.assertEqual(profile.escape_markdown("1. item"), r"1\. item")
+        self.assertEqual(profile.escape_markdown("- item"), r"\- item")
+        self.assertEqual(profile.escape_markdown("pull-through"), "pull-through")
 
     def test_public_stats_have_no_grade_or_private_commit_guess(self):
         facts = data.normalize_contributions(contribution_document(), NOW)
-        document = cards.stats_card("Cosipa", facts, NOW.date(), self.palette)
+        document = cards.render_stats_card("Cosipa", facts, NOW.date(), self.palette)
         self.assertIn("Public commit contributions", document)
         self.assertIn("Published restricted contributions", document)
         self.assertNotIn("Private commits", document)
         self.assertIn("2026 YTD", document)
-        stale = cards.stats_card("Cosipa", facts, date(2027, 1, 1), self.palette)
+        stale = cards.render_stats_card("Cosipa", facts, date(2027, 1, 1), self.palette)
         self.assertIn("await", stale)
         self.assertNotIn("2026 YTD", stale)
 
     def test_article_urls_cannot_break_markdown_links(self):
-        link = profile.post_link({"title": "Exact title", "url": "https://cosipa.dev/posts/a)b(|c/"})
+        link = profile.render_post_link({"title": "Exact title", "url": "https://cosipa.dev/posts/a)b(|c/"})
         self.assertIn("a%29b%28%7Cc/", link)
         self.assertEqual(link.count(")"), 1)
 
     def test_posts_keep_the_readme_layout(self):
         posts = data.parse_posts(rss(), "https://cosipa.dev/rss")
-        rows = profile.post_rows(posts)
+        rows = profile.render_posts_table(posts)
         self.assertIn('width="20%" valign="top">October 18, 2026', rows)
         self.assertIn("> Exact first sentence.", rows)
         self.assertNotIn("<img", rows)
@@ -286,7 +286,7 @@ class RenderTests(unittest.TestCase):
         ns = {"s": "http://www.w3.org/2000/svg"}
         for label, value in [("pgp", "0xA8523AE122FE6E85"), ("pgp", "0x1234")]:
             with self.subTest(label=label):
-                root = ET.fromstring(cards.badge(label, value))
+                root = ET.fromstring(cards.render_badge(label, value))
                 segments = root.findall('.//s:g[@clip-path="url(#badge)"]/s:rect', ns)[:2]
                 foreground = root.findall(".//s:text", ns)[1::2]
                 for segment, node in zip(segments, foreground):
@@ -347,7 +347,7 @@ class RenderTests(unittest.TestCase):
         source = (ROOT / "src/assets/static/typing-iosevka.svg").read_bytes()
         ns = {"s": "http://www.w3.org/2000/svg"}
         for colors in self.config["colors"].values():
-            root = ET.fromstring(cards.typing_card(source, colors))
+            root = ET.fromstring(cards.render_typing_card(source, colors))
             lettering = root.find('.//*[@id="typing-text"]')
             canvas_width = float(root.attrib["viewBox"].split()[2])
             cell_width = float(lettering.attrib["font-size"]) / 2
@@ -378,7 +378,7 @@ class RenderTests(unittest.TestCase):
         original = ET.fromstring(source)
 
         for colors in self.config["colors"].values():
-            result = ET.fromstring(cards.typing_card(source, colors))
+            result = ET.fromstring(cards.render_typing_card(source, colors))
             self.assertEqual(result.find('.//*[@id="typing-text"]').attrib["fill"], "#" + colors["typing"])
             self.assertEqual([p.attrib["d"] for p in original.findall(".//s:path", ns)],
                              [p.attrib["d"] for p in result.findall(".//s:path", ns)])
@@ -394,8 +394,8 @@ class RenderTests(unittest.TestCase):
                    b'<rect class="snake" width="12" height="12"/></svg>')
         for theme, colors in self.config["colors"].items():
             with self.subTest(theme=theme):
-                result = cards.snake_card(content, colors)
-                self.assertEqual(cards.snake_card(result, colors), result)
+                result = cards.render_snake_card(content, colors)
+                self.assertEqual(cards.render_snake_card(result, colors), result)
                 root = ET.fromstring(result)
                 background = root[0]
                 self.assertEqual(background.attrib["fill"], "#" + colors["background"])
@@ -410,7 +410,7 @@ class RenderTests(unittest.TestCase):
         facts = {"days": {f"2026-01-{i:02}": i for i in range(1, 15)},
                  "calendar_total": 105, "calendar_start": "2025-01-15", "calendar_end": "2026-01-14"}
         for colors in self.config["colors"].values():
-            document = cards.timeline_card("Cosipa", facts, colors)
+            document = cards.render_timeline_card("Cosipa", facts, colors)
             ET.fromstring(document)
             self.assertIn('fill="url(#area)"', document)
             self.assertIn('stroke="url(#line)"', document)
@@ -423,8 +423,8 @@ class RenderTests(unittest.TestCase):
             assets = profile.Assets(Path(directory), "generated")
             item = {"kind": "pr", "title": "Actual | title", "repository": "owner/repo", "number": 1,
                     "url": "https://github.com/owner/repo/pull/1", "merged_at": "2026-11-11T12:00:00+00:00"}
-            opened = profile.activity_table({"items": [item, {**item, "kind": "issue"}]}, assets)
-            merged = profile.activity_table({"items": [item]}, assets, merged=True)
+            opened = profile.render_activity_table({"items": [item, {**item, "kind": "issue"}]}, assets)
+            merged = profile.render_activity_table({"items": [item]}, assets, merged=True)
             self.assertEqual(opened.splitlines()[1], "| :---: | :-- | :-- |")
             self.assertEqual(merged.splitlines()[1], "| :---: | :-- | :-- | :-- |")
             self.assertEqual(opened.count('align="top"'), 2)
@@ -444,13 +444,13 @@ class RenderTests(unittest.TestCase):
     def test_empty_merged_table_has_no_style_preview_or_fake_prs(self):
         with tempfile.TemporaryDirectory() as directory:
             assets = profile.Assets(Path(directory), "generated")
-            rendered = profile.activity_table({"items": []}, assets, merged=True)
+            rendered = profile.render_activity_table({"items": []}, assets, merged=True)
             self.assertTrue(rendered.startswith("| Status | Repository | Title | Merged (UTC) |"))
             self.assertNotIn("Status style preview", rendered)
             self.assertNotIn("status-pr-merged", rendered)
             self.assertIn("No merged public pull requests found.", rendered)
             self.assertNotIn("https://github.com/", rendered)
-            pending = profile.activity_table({"items": [], "pending": True}, assets, merged=True)
+            pending = profile.render_activity_table({"items": [], "pending": True}, assets, merged=True)
             self.assertIn("Awaiting a successful", pending)
             self.assertNotIn("No merged public", pending)
             self.assertNotIn("Status style preview", pending)
@@ -468,8 +468,8 @@ class RenderTests(unittest.TestCase):
             for name in ("README.md", "src/example.md", "src/nested/example.md"):
                 document = root / name
                 with self.subTest(document=name):
-                    converted = profile.document_links(original, root, document)
-                    self.assertEqual(profile.linked_files(root, converted, document), expected)
+                    converted = profile.rewrite_document_links(original, root, document)
+                    self.assertEqual(profile.resolve_linked_files(root, converted, document), expected)
                     self.assertIn("#section", converted)
                     self.assertIn("https://example.com/card.svg", converted)
                     self.assertIn('Prose: "./not-a-link" and href="./not-an-attribute"', converted)
@@ -482,7 +482,7 @@ class RenderTests(unittest.TestCase):
             'Prose: href="./not-a-link"\n'
             r'Escaped: \[not a link\](./not-a-link)'
         )
-        links = list(profile.local_links(markdown))
+        links = list(profile.iter_local_links(markdown))
         self.assertEqual(
             [path for _, _, path in links],
             ["./src/data/quotes.txt", "./README.md", "./src/assets/static/card.svg"],
@@ -497,7 +497,7 @@ class RenderTests(unittest.TestCase):
             for target in ("./assets/missing.svg", "../../outside.svg", "../.git/config.svg"):
                 markdown = f'<!-- profile:stats:start -->\n![Card]({target})\n<!-- profile:stats:end -->'
                 with self.subTest(target=target), self.assertRaises(ValueError):
-                    profile.validate(root, self.config, markdown, regions=["stats"], document=document)
+                    profile.validate_profile(root, self.config, markdown, regions=["stats"], document=document)
 
     def test_only_marked_content_is_changed(self):
         original = "before\n<!-- profile:stats:start -->\nold\n<!-- profile:stats:end -->\nafter\n"
@@ -511,16 +511,16 @@ class RenderTests(unittest.TestCase):
             root = Path(directory)
             for path in ["../outside.svg", ".git/config"]:
                 with self.subTest(path=path), self.assertRaises(ValueError):
-                    profile.inside(root, path)
+                    profile.resolve_repository_path(root, path)
 
     def test_hashed_assets_are_deterministic_and_pruned_safely(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             assets = profile.Assets(root, "generated")
-            first = assets.put("badge", cards.badge("PR", "open"))
-            same = assets.put("badge", cards.badge("PR", "open"))
+            first = assets.put("badge", cards.render_badge("PR", "open"))
+            same = assets.put("badge", cards.render_badge("PR", "open"))
             self.assertEqual(first, same)
-            second = assets.put("badge", cards.badge("PR", "closed"))
+            second = assets.put("badge", cards.render_badge("PR", "closed"))
             unrelated = assets.directory / "handmade.svg"
             unrelated.write_text("do not delete")
             assets.prune(f"![Badge]({first})", root / "README.md")
@@ -530,7 +530,7 @@ class RenderTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 assets.put("bad", '<svg xmlns="http://www.w3.org/2000/svg"><script>oops</script></svg>')
             with self.assertRaises(ValueError):
-                assets.put("../escape", cards.badge("PR", "open"))
+                assets.put("../escape", cards.render_badge("PR", "open"))
 
     def test_selected_regions_render_without_unselected_widgets(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -544,8 +544,8 @@ class RenderTests(unittest.TestCase):
                 f'<!-- profile:{name}:start -->\nold {name}\n<!-- profile:{name}:end -->'
                 for name in regions) + "\nKeep this ending.\n"
             state = {"schema": 1, "sources": {"posts": {"items": data.parse_posts(rss(), "https://cosipa.dev/rss")}}}
-            rendered = profile.render(original, self.config, state, assets, NOW.date(), None, regions=regions)
-            profile.validate(root, self.config, rendered, regions=regions)
+            rendered = profile.render_profile(original, self.config, state, assets, NOW.date(), None, regions=regions)
+            profile.validate_profile(root, self.config, rendered, regions=regions)
             self.assertEqual(set(re.findall(r"profile:([\w-]+):start", rendered)), set(regions))
             for name in regions:
                 self.assertNotIn(f"old {name}", rendered)
@@ -580,7 +580,7 @@ class RenderTests(unittest.TestCase):
                 f'<!-- profile:{name}:start -->\nold {name}\n<!-- profile:{name}:end -->'
                 for name in profile.REGIONS) + "\nfooter prose\n"
             state = {"schema": 1, "sources": {"posts": {"items": data.parse_posts(rss(), "https://cosipa.dev/rss")}}}
-            rendered = profile.render(original, self.config, state, assets, NOW.date(), None)
+            rendered = profile.render_profile(original, self.config, state, assets, NOW.date(), None)
             self.assertEqual(outside_regions(original), outside_regions(rendered))
             self.assertNotIn("Platane/snk/output", rendered)
             self.assertNotIn("Repository preview placeholder", rendered)
@@ -603,12 +603,12 @@ class WorkflowAndCacheTests(unittest.TestCase):
             readme_path = root / config["markdown"]
             before = readme_path.read_text()
             with patch.object(profile, "ROOT", root), patch.object(sys, "argv", ["update_profile.py", "--offline"]), \
-                 patch.object(profile, "refresh", side_effect=AssertionError("offline must not fetch")):
+                 patch.object(profile, "refresh_sources", side_effect=AssertionError("offline must not fetch")):
                 profile.main()
                 readme = readme_path.read_text()
-                profile.validate(root, config, readme, regions=config["regions"], document=readme_path)
+                profile.validate_profile(root, config, readme, regions=config["regions"], document=readme_path)
                 self.assertEqual(outside_regions(readme), outside_regions(before))
-                for path in profile.linked_files(root, readme, readme_path):
+                for path in profile.resolve_linked_files(root, readme, readme_path):
                     self.assertTrue(path.is_file())
                 names = [path.name for path in (root / config["generated_dir"]).glob("*.svg")]
                 for prefix in ("followers.", "stars.", "updated.", "repos.", "repository-placeholder-"):
@@ -633,7 +633,7 @@ class WorkflowAndCacheTests(unittest.TestCase):
             readme.write_text(readme.read_text().replace("<!-- profile:typing:end -->", ""))
             before = readme.read_bytes()
             with patch.object(profile, "ROOT", root), patch.object(sys, "argv", ["update_profile.py"]), \
-                 patch.object(profile, "refresh") as refresh, self.assertRaises(ValueError):
+                 patch.object(profile, "refresh_sources") as refresh, self.assertRaises(ValueError):
                 profile.main()
             refresh.assert_not_called()
             self.assertEqual(readme.read_bytes(), before)
@@ -644,18 +644,18 @@ class WorkflowAndCacheTests(unittest.TestCase):
         self.assertEqual(set(config["regions"]), set(profile.REGIONS))
         self.assertNotIn("showcase_markdown", config)
         path = ROOT / config["markdown"]
-        profile.validate(ROOT, config, path.read_text(), regions=config["regions"], document=path)
+        profile.validate_profile(ROOT, config, path.read_text(), regions=config["regions"], document=path)
 
     def test_source_failure_keeps_last_good_data(self):
         config = tomllib.loads((ROOT / "src/data/profile.toml").read_text())
         state = {"schema": 1, "sources": {"posts": {"as_of": "2026-10-18", "items": [{"title": "Existing post"}]}}}
         original = json.loads(json.dumps(state))
-        with patch.object(data, "contributions", side_effect=ValueError("offline")), \
-             patch.object(data, "public_calendar", side_effect=ValueError("offline")), \
-             patch.object(data, "activity", side_effect=ValueError("offline")), \
-             patch.object(data, "recently_merged", side_effect=ValueError("offline")), \
-             patch.object(data, "posts", side_effect=ValueError("offline")):
-            warnings = profile.refresh(config, state, NOW)
+        with patch.object(data, "fetch_contributions", side_effect=ValueError("offline")), \
+             patch.object(data, "fetch_public_calendar", side_effect=ValueError("offline")), \
+             patch.object(data, "fetch_open_activity", side_effect=ValueError("offline")), \
+             patch.object(data, "fetch_recently_merged_prs", side_effect=ValueError("offline")), \
+             patch.object(data, "fetch_posts", side_effect=ValueError("offline")):
+            warnings = profile.refresh_sources(config, state, NOW)
         self.assertEqual(len(warnings), 5)
         self.assertEqual(state, original)
 
@@ -664,8 +664,8 @@ class WorkflowAndCacheTests(unittest.TestCase):
             {"state": "open", "html_url": "https://github.com/owner/repo/pull/1", "title": "Actual title", "number": 1, "updated_at": "2026-11-12T00:00:00Z"},
             {"state": "closed", "html_url": "https://github.com/owner/repo/pull/2", "title": "Closed", "number": 2, "updated_at": "2026-11-12T00:00:00Z"},
         ]}
-        with patch.object(data, "api", return_value=page) as api:
-            activity = data.activity("Cosipa", NOW.date(), "token")
+        with patch.object(data, "fetch_github_api", return_value=page) as api:
+            activity = data.fetch_open_activity("Cosipa", NOW.date(), "token")
         calls = [call.args[0] for call in api.call_args_list]
         self.assertTrue(all("is%3Aopen" in c and "is%3Apublic" in c for c in calls))
         self.assertTrue(all(item["number"] == 1 for item in activity["items"]))
