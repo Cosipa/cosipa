@@ -628,9 +628,14 @@ class WorkflowAndCacheTests(unittest.TestCase):
         self.assertEqual(re.findall(r"profile:([\w-]+):start", markdown), expected)
         self.assertLess(markdown.index("github.com/Cosipa.png"), markdown.index('<h3 align="center">Cosipa'))
         self.assertLess(markdown.index("Welcome, hope you find what you are looking for."), markdown.index("profile:typing:start"))
-        self.assertLess(markdown.index("## Toolbox"), markdown.index("## Latest posts"))
-        for tool in ("linux", "nixos", "neovim", "rust", "python"):
-            self.assertIn(f"badge-{tool}.svg", markdown)
+        self.assertLess(markdown.index("## Toolbox"), markdown.index("## Self-hosting"))
+        self.assertLess(markdown.index("## Self-hosting"), markdown.index("## Latest posts"))
+        toolbox = markdown.split("## Toolbox\n", 1)[1].split("\n## Self-hosting", 1)[0]
+        hosting = markdown.split("## Self-hosting\n", 1)[1].split("\n## Latest posts", 1)[0]
+        self.assertEqual(re.findall(r"badge-([\w-]+)\.svg", toolbox),
+                         ["linux", "nixos", "neovim", "rust", "python", "go", "java", "c", "cpp"])
+        self.assertEqual(re.findall(r"badge-([\w-]+)\.svg", hosting),
+                         ["docker", "kubernetes", "terraform", "ansible"])
         self.assertIn("komarev.com/ghpvc/", markdown)
         self.assertIn('<a id="top"></a>', markdown)
         self.assertIn("[↑ Go back to the top](#top)", markdown)
@@ -693,6 +698,27 @@ class WorkflowAndCacheTests(unittest.TestCase):
             self.assertEqual(hashlib.sha256((directory / name).read_bytes()).hexdigest(), metadata["sha256"])
             ET.parse(directory / name)
 
+    def test_requested_badges_are_local_flat_snapshots_with_logos(self):
+        directory = ROOT / "profile-showcase/static"
+        manifest = json.loads((directory / "provenance.json").read_text())
+        ns = {"s": "http://www.w3.org/2000/svg"}
+        labels = {"docker": "Docker", "kubernetes": "Kubernetes", "terraform": "Terraform",
+                  "ansible": "Ansible", "go": "Go", "java": "Java", "c": "C", "cpp": "C++"}
+        for name, label in labels.items():
+            with self.subTest(badge=name):
+                filename = f"badge-{name}.svg"
+                metadata = manifest[filename]
+                self.assertTrue(metadata["source"].startswith("https://img.shields.io/badge/"))
+                self.assertIn("style=flat&logo=", metadata["source"])
+                root = ET.parse(directory / filename).getroot()
+                self.assertEqual(root.attrib["aria-label"], label)
+                self.assertEqual(root.find("s:title", ns).text, label)
+                self.assertEqual(root.attrib["height"], "20")
+                self.assertEqual(root.find(".//s:clipPath/s:rect", ns).attrib["rx"], "3")
+                image = root.find(".//s:image", ns)
+                self.assertIsNotNone(image)
+                self.assertTrue(image.attrib["href"].startswith("data:image/svg+xml;base64,"))
+
     def test_catalogue_contains_only_unused_components_and_separates_mockups(self):
         config = tomllib.loads((ROOT / "profile.toml").read_text())
         markdown = (ROOT / "test.md").read_text()
@@ -705,7 +731,9 @@ class WorkflowAndCacheTests(unittest.TestCase):
         for name in config["regions"]:
             self.assertNotIn(f"profile:{name}:", markdown)
         for shared in ["badge-linux.svg", "badge-nixos.svg", "badge-neovim.svg", "badge-rust.svg",
-                       "badge-python.svg", "komarev.com", "github.com/Cosipa.png", "quotes.txt",
+                       "badge-python.svg", "badge-go.svg", "badge-java.svg", "badge-c.svg", "badge-cpp.svg",
+                       "badge-docker.svg", "badge-kubernetes.svg", "badge-terraform.svg", "badge-ansible.svg",
+                       "komarev.com", "github.com/Cosipa.png", "quotes.txt",
                        "[↑ Go back to the top](#top)"]:
             self.assertNotIn(shared, markdown)
         working, mockups = markdown.split("# Mockups & setup pending", 1)

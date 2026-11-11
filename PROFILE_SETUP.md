@@ -9,15 +9,16 @@ Both documents refresh from the same public-data fetch, and asset cleanup keeps
 SVGs referenced by either document. The terminal image is unchanged.
 
 The README leads with the avatar, subtitle, typing introduction, links and PGP/views.
-The provisional toolbox and magazine-style blog rows come next, followed by open
-and merged activity, contribution stats/timeline/snake, a quote and a back-to-top
+The toolbox (including Go, Java, C and C++), self-hosting tools (Docker,
+Kubernetes, Terraform and Ansible), and magazine-style blog rows come next,
+followed by open and merged activity, contribution stats/timeline/snake, a quote and a back-to-top
 link. Catalogue-only badges, mockups, alternative blog layouts and the decorative
 footer are not included in the README.
 
 `test.md` separates **Working components** from **Mockups & setup pending**.
 It retains terminal styling (03), live badges (07), blog alternatives (48A/48B),
 Metrics/achievements (17, not configured), repository/project/release placeholders
-(19/21/22), and the unused decorative footer. The intro, toolbox, PGP/views,
+(19/21/22), and the unused decorative footer. The intro, toolbox, self-hosting, PGP/views,
 contribution cards, open/merged activity, blog rows (47), quote and back-to-top link
 live only in the README. Both blog alternatives remain automated.
 

@@ -44,6 +44,17 @@
 ![Neovim](./profile-showcase/static/badge-neovim.svg)
 ![Rust](./profile-showcase/static/badge-rust.svg)
 ![Python](./profile-showcase/static/badge-python.svg)
+![Go](./profile-showcase/static/badge-go.svg)
+![Java](./profile-showcase/static/badge-java.svg)
+![C](./profile-showcase/static/badge-c.svg)
+![C++](./profile-showcase/static/badge-cpp.svg)
+
+## Self-hosting
+
+![Docker](./profile-showcase/static/badge-docker.svg)
+![Kubernetes](./profile-showcase/static/badge-kubernetes.svg)
+![Terraform](./profile-showcase/static/badge-terraform.svg)
+![Ansible](./profile-showcase/static/badge-ansible.svg)
 
 ## Latest posts
 

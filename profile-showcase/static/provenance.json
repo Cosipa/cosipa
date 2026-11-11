@@ -1,4 +1,44 @@
 {
+  "badge-docker.svg": {
+    "source": "https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white",
+    "sha256": "d5c01834b69c1554c23bab5bc1bb21e7ee0368acaa674162f5bb4c0f25623913",
+    "note": "One-time SVG snapshot; never requested by the scheduled workflow or profile visitors."
+  },
+  "badge-kubernetes.svg": {
+    "source": "https://img.shields.io/badge/Kubernetes-326CE5?style=flat&logo=kubernetes&logoColor=white",
+    "sha256": "f9be8e2053e4c6b59c12a14f56d3104a36e62c3ca4f9946dfe731ba4b2d15522",
+    "note": "One-time SVG snapshot; never requested by the scheduled workflow or profile visitors."
+  },
+  "badge-terraform.svg": {
+    "source": "https://img.shields.io/badge/Terraform-844FBA?style=flat&logo=terraform&logoColor=white",
+    "sha256": "9c6328911d8409f50a1f6e292a05f9b8d2082a4adf855002b88a4109608aef86",
+    "note": "One-time SVG snapshot; never requested by the scheduled workflow or profile visitors."
+  },
+  "badge-ansible.svg": {
+    "source": "https://img.shields.io/badge/Ansible-EE0000?style=flat&logo=ansible&logoColor=white",
+    "sha256": "c492530f24785d04dd74eb1c7983de410b2fc9b0046c4e7d69f58237c651d0d5",
+    "note": "One-time SVG snapshot; never requested by the scheduled workflow or profile visitors."
+  },
+  "badge-go.svg": {
+    "source": "https://img.shields.io/badge/Go-00ADD8?style=flat&logo=go&logoColor=white",
+    "sha256": "c9266534336cbd6c6b53ca8f212fc8e2b0245dc39c8cdcd6b0a7321462da1155",
+    "note": "One-time SVG snapshot; never requested by the scheduled workflow or profile visitors."
+  },
+  "badge-java.svg": {
+    "source": "https://img.shields.io/badge/Java-ED8B00?style=flat&logo=openjdk&logoColor=white",
+    "sha256": "bf7372349eb3398f603597dc646ae3f1e1a23287075d52199fee33d77902c8c9",
+    "note": "One-time SVG snapshot; never requested by the scheduled workflow or profile visitors."
+  },
+  "badge-c.svg": {
+    "source": "https://img.shields.io/badge/C-A8B9CC?style=flat&logo=c&logoColor=black",
+    "sha256": "66603f8a8da203457742e81258b5fdb21802d34c6107e9d83203effec8c62279",
+    "note": "One-time SVG snapshot; never requested by the scheduled workflow or profile visitors."
+  },
+  "badge-cpp.svg": {
+    "source": "https://img.shields.io/badge/C%2B%2B-00599C?style=flat&logo=cplusplus&logoColor=white",
+    "sha256": "db38219292b6e58b2d05503e3c31e70c69522d23b39c8a6da6dfcacddccdc6ee",
+    "note": "One-time SVG snapshot; never requested by the scheduled workflow or profile visitors."
+  },
   "badge-linux.svg": {
     "source": "https://img.shields.io/badge/Linux-FCC624?style=flat&logo=linux&logoColor=black",
     "sha256": "66b0c8e0c9f91dea6f6bb6dba4800d8de22b817daf9a3e0a4675aba000f0e387",
