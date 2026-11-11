@@ -3,7 +3,7 @@ name: Refresh profile README
 on:
   workflow_dispatch:
   schedule:
-    - cron: "17 */6 * * *"
+    - cron: "17 */12 * * *"
   push:
     branches: [main]
     paths:
@@ -30,7 +30,7 @@ jobs:
   refresh:
     name: Refresh and publish profile
     if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-slim
     timeout-minutes: 15
     permissions:
       contents: write
