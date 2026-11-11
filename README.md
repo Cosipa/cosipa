@@ -6,7 +6,7 @@
   <img src="https://github.com/Cosipa.png?size=160" alt="Cosipa's GitHub avatar" width="96" height="96">
 </p>
 <h3 align="center">Cosipa</h3>
-<p align="center">Code, experiments, and notes along the way.</p>
+<p align="center">Welcome, hope you find what you are looking for.</p>
 
 <div align="center">
 
@@ -30,22 +30,24 @@
 <div align="center">
 
 <!-- profile:pgp:start -->
+
 [![PGP key](./profile-showcase/generated/pgp.d5297abf483e.svg)](https://github.com/Cosipa.gpg)
+
 <!-- profile:pgp:end -->
+
 [![Profile views](https://komarev.com/ghpvc/?username=Cosipa&style=flat&color=313131&label=views)](https://github.com/Cosipa)
 
 </div>
 
 ## Toolbox
 
-<!-- Provisional stack; badges will be revised once the tools are selected. -->
 ![Linux](./profile-showcase/static/badge-linux.svg)
 ![NixOS](./profile-showcase/static/badge-nixos.svg)
 ![Neovim](./profile-showcase/static/badge-neovim.svg)
 ![Rust](./profile-showcase/static/badge-rust.svg)
 ![Python](./profile-showcase/static/badge-python.svg)
 
-## Latest writing
+## Latest posts
 
 <!-- profile:posts47:start -->
 <table>
@@ -55,8 +57,8 @@
 
 **[A user in the Docker group can become root](https://cosipa.dev/posts/docker-group-security-risk/)**
 
-> This is a well-known (very old) Docker security risk, that everybody knows exists, yet
-> sometimes we underestimate the impact of it.
+> This is a well-known (very old) Docker security risk, that everybody knows
+> exists, yet sometimes we underestimate the impact of it.
 
 </td>
 </tr>
@@ -66,9 +68,9 @@
 
 **[How to setup a pull-through Docker registry](https://cosipa.dev/posts/docker-registry-cache-setup/)**
 
-> A pull-through Docker registry is basically just a cached proxy to DockerHub, instead
-> of having your servers pulling images from DockerHub directly, they could pull them
-> from your own registry.
+> A pull-through Docker registry is basically just a cached proxy to DockerHub,
+> instead of having your servers pulling images from DockerHub directly, they
+> could pull them from your own registry.
 
 </td>
 </tr>
@@ -78,38 +80,51 @@
 
 **[How to speed up Linux disk encryption](https://cosipa.dev/posts/full-disk-encryption-tweaks/)**
 
-> What is dm-crypt: Device-Mapper’s crypt provides transparent encryption of block
-> devices using the kernel crypto API.
+> What is dm-crypt: Device-Mapper’s crypt provides transparent encryption of
+> block devices using the kernel crypto API.
 
 </td>
 </tr>
 </table>
 <!-- profile:posts47:end -->
 
-[More on the blog →](https://cosipa.dev/)
+[More on my blog →](https://cosipa.dev/)
 
 ## Open source
 
 ### Open pull requests & issues
 
 <!-- profile:activity:start -->
-| Status | Repository | Title |
-| :---: | :-- | :-- |
-| <img src="./profile-showcase/generated/status-pr-open.05cacbdfd7d3.svg" alt="PR open" align="top"> | `NixOS/nixpkgs` | [zap: install desktop icons](https://github.com/NixOS/nixpkgs/pull/585770) · #585770 |
-| <img src="./profile-showcase/generated/status-pr-open.05cacbdfd7d3.svg" alt="PR open" align="top"> | `NixOS/nixpkgs` | [fido2-manage: update to 0.2.2](https://github.com/NixOS/nixpkgs/pull/585745) · #585745 |
-| <img src="./profile-showcase/generated/status-pr-open.05cacbdfd7d3.svg" alt="PR open" align="top"> | `NixOS/nixpkgs` | [iproute2: 7.2.0 \-&gt; 7.3.0](https://github.com/NixOS/nixpkgs/pull/585573) · #585573 |
+
+|                                                  Status                                                  | Repository                  | Title                                                                                                                                    |
+| :------------------------------------------------------------------------------------------------------: | :-------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------- |
+|    <img src="./profile-showcase/generated/status-pr-open.05cacbdfd7d3.svg" alt="PR open" align="top">    | `NixOS/nixpkgs`             | [zap: install desktop icons](https://github.com/NixOS/nixpkgs/pull/585770) · #585770                                                     |
+|    <img src="./profile-showcase/generated/status-pr-open.05cacbdfd7d3.svg" alt="PR open" align="top">    | `NixOS/nixpkgs`             | [fido2-manage: update to 0.2.2](https://github.com/NixOS/nixpkgs/pull/585745) · #585745                                                  |
+|    <img src="./profile-showcase/generated/status-pr-open.05cacbdfd7d3.svg" alt="PR open" align="top">    | `NixOS/nixpkgs`             | [iproute2: 7.2.0 \-&gt; 7.3.0](https://github.com/NixOS/nixpkgs/pull/585573) · #585573                                                   |
 | <img src="./profile-showcase/generated/status-issue-open.de17ea530027.svg" alt="Issue open" align="top"> | `maxdorninger/MediaManager` | [\[BUG\] Prowlarr magnet redirect is discarded before Transmission grab](https://github.com/maxdorninger/MediaManager/issues/574) · #574 |
+
 <!-- profile:activity:end -->
 
 ### Recently merged pull requests
 
 <!-- profile:merged:start -->
-| Status | Repository | Title | Merged (UTC) |
-| :---: | :-- | :-- | :-- |
-| — | — | No merged public pull requests found. | — |
+
+| Status | Repository | Title                                 | Merged (UTC) |
+| :----: | :--------- | :------------------------------------ | :----------- |
+|   —    | —          | No merged public pull requests found. | —            |
+
 <!-- profile:merged:end -->
 
 ## GitHub activity
+
+<!-- profile:snake:start -->
+<a href="./profile-showcase/generated/snake-dark.a206315f4fc5.svg#gh-dark-mode-only">
+  <img src="./profile-showcase/generated/snake-dark.a206315f4fc5.svg" alt="Cosipa&#x27;s contribution snake" width="1000">
+</a>
+<a href="./profile-showcase/generated/snake-light.59a1d16f1a34.svg#gh-light-mode-only">
+  <img src="./profile-showcase/generated/snake-light.59a1d16f1a34.svg" alt="Cosipa&#x27;s contribution snake" width="1000">
+</a>
+<!-- profile:snake:end -->
 
 ### Public contribution stats
 
@@ -122,9 +137,7 @@
 </a>
 <!-- profile:stats:end -->
 
-<sub>Calendar-year public contribution counts, not every Git commit. [Counting definitions](./PROFILE_SETUP.md#counting-definitions).</sub>
-
-### The last 365 days
+### This year's weekly line graph
 
 <!-- profile:timeline:start -->
 <a href="./profile-showcase/generated/timeline-dark.9f267333cd70.svg#gh-dark-mode-only">
@@ -135,20 +148,7 @@
 </a>
 <!-- profile:timeline:end -->
 
-<sub>Publicly visible activity; GitHub may include published private contribution totals.</sub>
-
-### A different view of the grid
-
-<!-- profile:snake:start -->
-<a href="./profile-showcase/generated/snake-dark.a206315f4fc5.svg#gh-dark-mode-only">
-  <img src="./profile-showcase/generated/snake-dark.a206315f4fc5.svg" alt="Cosipa&#x27;s contribution snake" width="1000">
-</a>
-<a href="./profile-showcase/generated/snake-light.59a1d16f1a34.svg#gh-light-mode-only">
-  <img src="./profile-showcase/generated/snake-light.59a1d16f1a34.svg" alt="Cosipa&#x27;s contribution snake" width="1000">
-</a>
-<!-- profile:snake:end -->
-
-## A thought to leave with
+## One of my personally favorite quotes
 
 <!-- profile:quote:start -->
 <a href="./quotes.txt#gh-dark-mode-only">
