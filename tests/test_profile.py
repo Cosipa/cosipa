@@ -346,7 +346,34 @@ class RenderTests(unittest.TestCase):
             self.assertEqual(len(times), len(node.attrib["values"].split(";")))
             self.assertTrue(all(a < b for a, b in zip(times, times[1:])))
 
-    def test_typing_variants_change_only_colour_and_have_readable_contrast(self):
+    def test_typing_stays_centered_at_every_character_step_in_both_themes(self):
+        source = (ROOT / "profile-showcase/static/typing-iosevka.svg").read_bytes()
+        ns = {"s": "http://www.w3.org/2000/svg"}
+        for colors in self.config["colors"].values():
+            root = ET.fromstring(profile.typing_card(source, colors))
+            lettering = root.find('.//*[@id="typing-text"]')
+            self.assertNotIn("clip-path", lettering.attrib)
+            reveal = root.find('.//s:animate[@attributeName="width"]', ns)
+            widths = [float(value) for value in reveal.attrib["values"].split(";")]
+            lines = lettering.findall("s:g", ns)
+            self.assertEqual(len(lines), 3)
+            for line in lines:
+                self.assertEqual(line.attrib["clip-path"], "url(#typing-line)")
+                self.assertEqual(line.attrib["transform"], "translate(325 0)")
+                glyphs = line.find('.//*[@aria-label]')
+                line_width = len(glyphs.attrib["aria-label"]) * 11.5
+                movement = line.find("s:animateTransform", ns)
+                self.assertEqual(movement.attrib["attributeName"], "transform")
+                self.assertEqual(movement.attrib["type"], "translate")
+                for key in ("calcMode", "keyTimes", "dur", "repeatCount"):
+                    self.assertEqual(movement.attrib[key], reveal.attrib[key])
+                offsets = [list(map(float, value.split())) for value in movement.attrib["values"].split(";")]
+                self.assertEqual(len(offsets), len(widths))
+                for (x, y), visible in zip(offsets, widths):
+                    self.assertEqual(y, 0)
+                    self.assertAlmostEqual(x + min(visible, line_width) / 2, 325)
+
+    def test_typing_variants_preserve_glyphs_timing_and_readable_contrast(self):
         source = (ROOT / "profile-showcase/static/typing-iosevka.svg").read_bytes()
         ns = {"s": "http://www.w3.org/2000/svg"}
         original = ET.fromstring(source)
@@ -436,16 +463,20 @@ class RenderTests(unittest.TestCase):
                 self.assertEqual(rect.attrib["fill"], "#8250df" if "merged" in path.name else "#1f883d")
             self.assertTrue((ROOT / "profile-showcase/status-icons.LICENSE").is_file())
 
-    def test_empty_merged_table_previews_style_without_fake_prs(self):
+    def test_empty_merged_table_has_no_style_preview_or_fake_prs(self):
         with tempfile.TemporaryDirectory() as directory:
             assets = profile.Assets(Path(directory), "generated")
             rendered = profile.activity_table({"items": []}, assets, merged=True)
-            self.assertIn("Status style preview", rendered)
+            self.assertTrue(rendered.startswith("| Status | Repository | Title | Merged (UTC) |"))
+            self.assertNotIn("Status style preview", rendered)
+            self.assertNotIn("status-pr-merged", rendered)
             self.assertIn("No merged public pull requests found.", rendered)
             self.assertNotIn("https://github.com/", rendered)
             pending = profile.activity_table({"items": [], "pending": True}, assets, merged=True)
             self.assertIn("Awaiting a successful", pending)
             self.assertNotIn("No merged public", pending)
+            self.assertNotIn("Status style preview", pending)
+            self.assertEqual(list(assets.directory.glob("*.svg")), [])
 
     def test_only_marked_content_is_changed(self):
         original = "before\n<!-- profile:stats:start -->\nold\n<!-- profile:stats:end -->\nafter\n"

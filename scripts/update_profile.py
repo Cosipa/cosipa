@@ -234,13 +234,35 @@ def quote_card(entries: list, today: date, colors: dict) -> str:
 
 
 def typing_card(content: bytes, colors: dict) -> bytes:
-    """Recolour outlined glyphs; never change character steps or line timing."""
+    """Theme and center visible glyph cells without changing typing/line timing."""
     ET.register_namespace("", SVG_NS[1:-1])
     root = ET.fromstring(content)
     lettering = root.find('.//*[@id="typing-text"]')
     if lettering is None:
         raise ValueError("Outlined typing SVG is missing its lettering group")
     lettering.set("fill", "#" + colors["typing"])
+    reveal = root.find(f'.//{SVG_NS}animate[@attributeName="width"]')
+    if reveal is None:
+        raise ValueError("Outlined typing SVG is missing its reveal animation")
+    width = float(root.attrib["viewBox"].split()[2])
+    cell = float(lettering.attrib["font-size"]) / 2
+    revealed_widths = [float(value) for value in reveal.attrib["values"].split(";")]
+    # Move each line and its local clip together, keeping the currently visible
+    # text centered during typing, pauses and erasing (not just the SVG box).
+    clip = lettering.attrib.pop("clip-path")
+    for line in lettering.findall(SVG_NS + "g"):
+        glyphs = line.find('.//*[@aria-label]')
+        if glyphs is None:
+            raise ValueError("Outlined typing line is missing its accessible text")
+        line_width = len(glyphs.attrib["aria-label"]) * cell
+        offsets = [(width - min(visible, line_width)) / 2 for visible in revealed_widths]
+        line.set("clip-path", clip)
+        line.set("transform", f"translate({offsets[0]:g} 0)")
+        ET.SubElement(line, SVG_NS + "animateTransform", {
+            "attributeName": "transform", "type": "translate",
+            "values": ";".join(f"{offset:g} 0" for offset in offsets),
+            **{key: reveal.attrib[key] for key in ("calcMode", "keyTimes", "dur", "repeatCount")},
+        })
     return ET.tostring(root, encoding="utf-8")
 
 
@@ -326,11 +348,7 @@ def activity_table(facts: dict, assets: Assets, *, merged=False) -> str:
                    "No merged public pull requests found." if merged else "No open public pull requests or issues.")
         cells = ["—", "—", message] + (["—"] if merged else [])
         parts.append("| " + " | ".join(cells) + " |")
-    table = "\n".join(parts)
-    if merged and not facts["items"]:
-        # Preview the requested style without fabricating a merged PR row.
-        table = f'<sub>Status style preview:</sub> ![Merged]({status_image("pr")})\n\n' + table
-    return table
+    return "\n".join(parts)
 
 
 def render(markdown: str, config: dict, state: dict, assets: Assets, today: date, snake_dir: Path | None, *, regions=REGIONS) -> str:

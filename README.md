@@ -11,11 +11,11 @@
 <div align="center">
 
 <!-- profile:typing:start -->
-<a href="./profile-showcase/generated/typing-iosevka-dark.f9e360945313.svg#gh-dark-mode-only">
-  <img src="./profile-showcase/generated/typing-iosevka-dark.f9e360945313.svg" alt="Typing introduction — outlined Iosevka">
+<a href="./profile-showcase/generated/typing-iosevka-dark.825615e7d14d.svg#gh-dark-mode-only">
+  <img src="./profile-showcase/generated/typing-iosevka-dark.825615e7d14d.svg" alt="Typing introduction — outlined Iosevka">
 </a>
-<a href="./profile-showcase/generated/typing-iosevka-light.f7fdbaaf1430.svg#gh-light-mode-only">
-  <img src="./profile-showcase/generated/typing-iosevka-light.f7fdbaaf1430.svg" alt="Typing introduction — outlined Iosevka">
+<a href="./profile-showcase/generated/typing-iosevka-light.393fd6b2bf22.svg#gh-light-mode-only">
+  <img src="./profile-showcase/generated/typing-iosevka-light.393fd6b2bf22.svg" alt="Typing introduction — outlined Iosevka">
 </a>
 <!-- profile:typing:end -->
 
@@ -104,8 +104,6 @@
 ### Recently merged pull requests
 
 <!-- profile:merged:start -->
-<sub>Status style preview:</sub> ![Merged](./profile-showcase/generated/status-pr-merged.adbe82d6dab5.svg)
-
 | Status | Repository | Title | Merged (UTC) |
 | :---: | :-- | :-- | :-- |
 | — | — | No merged public pull requests found. | — |

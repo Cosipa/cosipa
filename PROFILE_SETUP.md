@@ -56,6 +56,9 @@ Font** glyphs. Merely specifying a font family does not make that font available
 inside a GitHub image. Outlining prevents fallback without adding a font/tool
 installation to Actions. Its animation advances and erases in discrete 11.5px
 character cells, with pauses, rather than sliding a clipping edge through glyphs.
+The renderer centers the currently visible characters at every typing/erasing
+step by translating each line with its clipping region. Glyph paths and the
+original character/line timings are unchanged.
 Separate light/dark variants recolour the same outlined paths; `typing` in each
 palette controls the text colour. Keep source groups visible when outlining:
 SMIL handles visibility at runtime, otherwise Inkscape can bake `opacity:0` into
@@ -133,8 +136,8 @@ schedules in inactive public repositories; manual runs still work.
   Closed-but-unmerged PRs are never counted as merged. GitHub search cannot order
   by merge time, so the fetcher paginates all results before selecting the latest
   six; incomplete responses or more than GitHub's 1,000-result search limit fail
-  safely and retain the last cached list. An empty list includes a clearly labelled
-  status-style preview, not fabricated activity. Both tables refresh via Actions.
+  safely and retain the last cached list. An empty list shows only an empty-state
+  message, without style previews or fabricated activity. Both tables refresh via Actions.
   The local pill artwork uses MIT-licensed Octicons; attribution/license is in
   `profile-showcase/status-icons.LICENSE`. No icon service is contacted at runtime.
 - **Views:** Komarev's approximate image requests, not unique visitors. An Actions

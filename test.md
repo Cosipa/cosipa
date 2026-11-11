@@ -19,11 +19,11 @@ These components already render or refresh successfully. GitHub Actions updates 
 **Outlined Iosevka · sample copy.** Whole characters appear one at a time, pause, then erase one at a time. Separate light/dark lettering follows GitHub's selected theme. The glyphs are paths, so GitHub cannot substitute another font. Editable source: [`typing-iosevka.source.svg`](./profile-showcase/typing-iosevka.source.svg).
 
 <!-- profile:typing:start -->
-<a href="./profile-showcase/generated/typing-iosevka-dark.f9e360945313.svg#gh-dark-mode-only">
-  <img src="./profile-showcase/generated/typing-iosevka-dark.f9e360945313.svg" alt="Typing introduction — outlined Iosevka">
+<a href="./profile-showcase/generated/typing-iosevka-dark.825615e7d14d.svg#gh-dark-mode-only">
+  <img src="./profile-showcase/generated/typing-iosevka-dark.825615e7d14d.svg" alt="Typing introduction — outlined Iosevka">
 </a>
-<a href="./profile-showcase/generated/typing-iosevka-light.f7fdbaaf1430.svg#gh-light-mode-only">
-  <img src="./profile-showcase/generated/typing-iosevka-light.f7fdbaaf1430.svg" alt="Typing introduction — outlined Iosevka">
+<a href="./profile-showcase/generated/typing-iosevka-light.393fd6b2bf22.svg#gh-light-mode-only">
+  <img src="./profile-showcase/generated/typing-iosevka-light.393fd6b2bf22.svg" alt="Typing introduction — outlined Iosevka">
 </a>
 <!-- profile:typing:end -->
 
@@ -122,8 +122,6 @@ Rosé Pine Moon, your two-line Fish/Starship prompt and branch symbol, no title 
 **Actual public merged PRs, refreshed by Actions.** Up to six, ordered by their merge timestamp—not when they were last updated or closed. Closed-but-unmerged PRs are excluded. The compact purple pill uses GitHub's merge icon.
 
 <!-- profile:merged:start -->
-<sub>Status style preview:</sub> ![Merged](./profile-showcase/generated/status-pr-merged.adbe82d6dab5.svg)
-
 | Status | Repository | Title | Merged (UTC) |
 | :---: | :-- | :-- | :-- |
 | — | — | No merged public pull requests found. | — |
