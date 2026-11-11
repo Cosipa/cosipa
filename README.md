@@ -134,22 +134,22 @@
 ### Public contribution stats
 
 <!-- profile:stats:start -->
-<a href="./src/assets/generated/stats-dark.4c3a55032213.svg#gh-dark-mode-only">
-  <img src="./src/assets/generated/stats-dark.4c3a55032213.svg" alt="Cosipa&#x27;s public GitHub contribution statistics" width="467">
+<a href="./src/assets/generated/stats-dark.e9fbd66f7bd2.svg#gh-dark-mode-only">
+  <img src="./src/assets/generated/stats-dark.e9fbd66f7bd2.svg" alt="Cosipa&#x27;s public GitHub contribution statistics" width="467">
 </a>
-<a href="./src/assets/generated/stats-light.322a23674dcd.svg#gh-light-mode-only">
-  <img src="./src/assets/generated/stats-light.322a23674dcd.svg" alt="Cosipa&#x27;s public GitHub contribution statistics" width="467">
+<a href="./src/assets/generated/stats-light.9e9c33b0f52f.svg#gh-light-mode-only">
+  <img src="./src/assets/generated/stats-light.9e9c33b0f52f.svg" alt="Cosipa&#x27;s public GitHub contribution statistics" width="467">
 </a>
 <!-- profile:stats:end -->
 
 ### This year's weekly line graph
 
 <!-- profile:timeline:start -->
-<a href="./src/assets/generated/timeline-dark.e945984059c9.svg#gh-dark-mode-only">
-  <img src="./src/assets/generated/timeline-dark.e945984059c9.svg" alt="Cosipa&#x27;s 365-day contribution timeline">
+<a href="./src/assets/generated/timeline-dark.ad5ce3ba9ca6.svg#gh-dark-mode-only">
+  <img src="./src/assets/generated/timeline-dark.ad5ce3ba9ca6.svg" alt="Cosipa&#x27;s 365-day contribution timeline">
 </a>
-<a href="./src/assets/generated/timeline-light.1760cf1ea261.svg#gh-light-mode-only">
-  <img src="./src/assets/generated/timeline-light.1760cf1ea261.svg" alt="Cosipa&#x27;s 365-day contribution timeline">
+<a href="./src/assets/generated/timeline-light.78678bf8d103.svg#gh-light-mode-only">
+  <img src="./src/assets/generated/timeline-light.78678bf8d103.svg" alt="Cosipa&#x27;s 365-day contribution timeline">
 </a>
 <!-- profile:timeline:end -->
 
