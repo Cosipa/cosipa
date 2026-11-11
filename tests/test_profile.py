@@ -412,6 +412,8 @@ class RenderTests(unittest.TestCase):
                     "url": "https://github.com/owner/repo/pull/1", "merged_at": "2026-11-11T12:00:00+00:00"}
             opened = profile.activity_table({"items": [item, {**item, "kind": "issue"}]}, assets)
             merged = profile.activity_table({"items": [item]}, assets, merged=True)
+            self.assertEqual(opened.splitlines()[1], "| :---: | :-- | :-- |")
+            self.assertEqual(merged.splitlines()[1], "| :---: | :-- | :-- | :-- |")
             self.assertIn("status-pr-open.", opened)
             self.assertIn("status-issue-open.", opened)
             self.assertIn("status-pr-merged.", merged)

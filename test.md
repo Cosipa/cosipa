@@ -110,7 +110,7 @@ Rosé Pine Moon, your two-line Fish/Starship prompt and branch symbol, no title 
 
 <!-- profile:activity:start -->
 | Status | Repository | Title |
-| :-- | :-- | :-- |
+| :---: | :-- | :-- |
 | ![PR open](./profile-showcase/generated/status-pr-open.05cacbdfd7d3.svg) | `NixOS/nixpkgs` | [zap: install desktop icons](https://github.com/NixOS/nixpkgs/pull/585770) · #585770 |
 | ![PR open](./profile-showcase/generated/status-pr-open.05cacbdfd7d3.svg) | `NixOS/nixpkgs` | [fido2-manage: update to 0.2.2](https://github.com/NixOS/nixpkgs/pull/585745) · #585745 |
 | ![PR open](./profile-showcase/generated/status-pr-open.05cacbdfd7d3.svg) | `NixOS/nixpkgs` | [iproute2: 7.2.0 \-&gt; 7.3.0](https://github.com/NixOS/nixpkgs/pull/585573) · #585573 |
@@ -125,7 +125,7 @@ Rosé Pine Moon, your two-line Fish/Starship prompt and branch symbol, no title 
 <sub>Status style preview:</sub> ![Merged](./profile-showcase/generated/status-pr-merged.adbe82d6dab5.svg)
 
 | Status | Repository | Title | Merged (UTC) |
-| :-- | :-- | :-- | :-- |
+| :---: | :-- | :-- | :-- |
 | — | — | No merged public pull requests found. | — |
 <!-- profile:merged:end -->
 

@@ -309,7 +309,7 @@ def activity_table(facts: dict, assets: Assets, *, merged=False) -> str:
         return assets.put(name, (ROOT / f"profile-showcase/static/{name}.svg").read_bytes())
 
     headers = ["Status", "Repository", "Title"] + (["Merged (UTC)"] if merged else [])
-    parts = ["| " + " | ".join(headers) + " |", "| " + " | ".join([":--"] * len(headers)) + " |"]
+    parts = ["| " + " | ".join(headers) + " |", "| " + " | ".join([":---:"] + [":--"] * (len(headers) - 1)) + " |"]
     for item in facts["items"]:
         kind = "pr" if merged or item["kind"] == "pr" else "issue"
         label = "PR" if kind == "pr" else "Issue"
@@ -382,7 +382,7 @@ def render(markdown: str, config: dict, state: dict, assets: Assets, today: date
     if "activity" in sources:
         replacements["activity"] = activity_table(sources["activity"], assets)
     else:
-        replacements["activity"] = "| Status | Repository | Title |\n| :-- | :-- | :-- |\n| — | — | Awaiting a successful public GitHub API fetch. |"
+        replacements["activity"] = activity_table({"items": [], "pending": True}, assets)
     replacements["merged"] = activity_table(sources.get("merged", {"items": [], "pending": True}), assets, merged=True)
     if "posts" in sources:
         posts = sources["posts"]["items"]
