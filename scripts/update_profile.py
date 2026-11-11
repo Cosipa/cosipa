@@ -313,7 +313,10 @@ def activity_table(facts: dict, assets: Assets, *, merged=False) -> str:
     for item in facts["items"]:
         kind = "pr" if merged or item["kind"] == "pr" else "issue"
         label = "PR" if kind == "pr" else "Issue"
-        cells = [f'![{label} {status}]({status_image(kind)})', f'`{item["repository"]}`',
+        # The cell is vertically middle-aligned. Align the image to its line-box
+        # top (not the cell top) to remove the inline baseline/descender gap.
+        image = f'<img src="{escape(status_image(kind), quote=True)}" alt="{label} {status}" align="top">'
+        cells = [image, f'`{item["repository"]}`',
                  f'{post_link({"title": item["title"], "url": item["url"]})} · #{item["number"]}']
         if merged:
             cells.append(datetime.fromisoformat(item["merged_at"]).date().isoformat())
