@@ -10,16 +10,17 @@
       </rect>
     </clipPath>
   </defs>
-  <g clip-path="url(#typing-line)" font-family="IosevkaTerm Nerd Font" font-size="23" fill="#c4a7e7">
+  <g id="typing-text" clip-path="url(#typing-line)" font-family="IosevkaTerm Nerd Font" font-size="23" fill="#c4a7e7">
     <g opacity="1">
       <animate attributeName="opacity" values="1;0;0" keyTimes="0;0.333333;1" calcMode="discrete" dur="15s" repeatCount="indefinite"/>
       <text x="0" y="41">Hello, I'm Cosipa.</text>
     </g>
-    <g opacity="0">
+    <!-- Keep source groups visible for outlining; SMIL controls their visibility at runtime. -->
+    <g opacity="1">
       <animate attributeName="opacity" values="0;1;0;0" keyTimes="0;0.333333;0.666667;1" calcMode="discrete" dur="15s" repeatCount="indefinite"/>
       <text x="0" y="41">Building, breaking, and figuring things out.</text>
     </g>
-    <g opacity="0">
+    <g opacity="1">
       <animate attributeName="opacity" values="0;1;0" keyTimes="0;0.666667;1" calcMode="discrete" dur="15s" repeatCount="indefinite"/>
       <text x="0" y="41">Probably starting another side project.</text>
     </g>

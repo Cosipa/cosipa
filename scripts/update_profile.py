@@ -137,14 +137,17 @@ class Assets:
                     path.unlink()
 
 
-def picture(paths: dict, alt: str, *, width: int | None = None, link: str | None = None) -> str:
+def themed_images(paths: dict, alt: str, *, width: int | None = None, link: str | None = None) -> str:
     width_attr = f' width="{width}"' if width else ""
-    result = (f'<picture>\n'
-              f'  <source media="(prefers-color-scheme: dark)" srcset="{escape(paths["dark"], quote=True)}">\n'
-              f'  <source media="(prefers-color-scheme: light)" srcset="{escape(paths["light"], quote=True)}">\n'
-              f'  <img src="{escape(paths["light"], quote=True)}" alt="{escape(alt, quote=True)}"{width_attr}>\n'
-              f'</picture>')
-    return f'<a href="{escape(link, quote=True)}">\n{result}\n</a>' if link else result
+    # GitHub applies these markers to anchor hrefs using its selected site theme.
+    # An SVG or <picture> media query only knows the browser/OS colour scheme.
+    images = []
+    for theme in ("dark", "light"):
+        target = (link or paths[theme]) + f"#gh-{theme}-mode-only"
+        images.append(f'<a href="{escape(target, quote=True)}">\n'
+                      f'  <img src="{escape(paths[theme], quote=True)}" alt="{escape(alt, quote=True)}"{width_attr}>\n'
+                      '</a>')
+    return "\n".join(images)
 
 
 def pending(title: str, colors: dict, detail="Awaiting the first successful GitHub Actions run.", width=467, height=145) -> str:
@@ -217,12 +220,28 @@ def quote_card(entries: list, today: date, colors: dict) -> str:
     if not entries:
         return pending("No quotes configured", colors, "Add your own quotes to quotes.txt. Nothing is fetched or attributed to you.", width=600)
     quote, author = entries[today.toordinal() % len(entries)]
-    lines = textwrap.wrap(quote, 65, break_long_words=False, break_on_hyphens=False)
-    height = 70 + 23 * len(lines) + (25 if author else 0)
-    body = "".join(text(24, 38 + i * 23, line, colors["title"], 14) for i, line in enumerate(lines))
+    lines = textwrap.wrap(quote, 58, break_long_words=False, break_on_hyphens=False)
+    last_baseline = 42 + 23 * (len(lines) - 1)
+    height = max(96, last_baseline + (52 if author else 26))
+    body = f'<path d="M22 20V{height - 20}" stroke="#{colors["accent"]}" stroke-width="3" stroke-linecap="round"/>'
+    body += text(35, 56, "“", colors["accent"], 42)
+    body += '<g font-style="italic">' + "".join(
+        text(62, 42 + i * 23, line + ("”" if i == len(lines) - 1 else ""), colors["title"], 15)
+        for i, line in enumerate(lines)) + '</g>'
     if author:
-        body += text(576, height - 25, author, colors["text"], 12, anchor="end")
+        body += text(62, last_baseline + 28, "— " + author, colors["text"], 12)
     return svg(600, height, "Quote from quotes.txt", body, colors["background"], quote + (f" — {author}" if author else ""))
+
+
+def typing_card(content: bytes, colors: dict) -> bytes:
+    """Recolour outlined glyphs; never change character steps or line timing."""
+    ET.register_namespace("", SVG_NS[1:-1])
+    root = ET.fromstring(content)
+    lettering = root.find('.//*[@id="typing-text"]')
+    if lettering is None:
+        raise ValueError("Outlined typing SVG is missing its lettering group")
+    lettering.set("fill", "#" + colors["typing"])
+    return ET.tostring(root, encoding="utf-8")
 
 
 def snake_card(content: bytes, colors: dict) -> bytes:
@@ -297,9 +316,12 @@ def render(markdown: str, config: dict, state: dict, assets: Assets, today: date
     user, repo = config["username"], config["repository"]
     sources = state["sources"]
     colors = config["colors"]
+    typing_source = (ROOT / "profile-showcase/static/typing-iosevka.svg").read_bytes()
+    typing_paths = {theme: assets.put(f"typing-iosevka-{theme}", typing_card(typing_source, palette))
+                    for theme, palette in colors.items()}
     replacements = {
         "footer": '![Decorative waving footer](./profile-showcase/static/footer-wave.svg)',
-        "typing": f'![Typing introduction — outlined Iosevka]({assets.put("typing-iosevka", (ROOT / "profile-showcase/static/typing-iosevka.svg").read_bytes())})',
+        "typing": themed_images(typing_paths, "Typing introduction — outlined Iosevka"),
     }
     profile = sources.get("github")
     if profile:
@@ -321,10 +343,10 @@ def render(markdown: str, config: dict, state: dict, assets: Assets, today: date
         ("repository-placeholder", "Repository preview placeholder", lambda c: pending("Repository preview", c, "Placeholder — no featured repository selected.", 400)),
     ]:
         paths = {theme: assets.put(f"{region}-{theme}", factory(palette)) for theme, palette in colors.items()}
-        replacements[region] = picture(paths, title, width=467 if region == "stats" else 400 if region == "repository-placeholder" else None)
+        replacements[region] = themed_images(paths, title, width=467 if region == "stats" else 400 if region == "repository-placeholder" else None)
     entries = quote_entries(inside(assets.root, config["quotes"]).read_text())
     paths = {theme: assets.put(f"quote-{theme}", quote_card(entries, today, palette)) for theme, palette in colors.items()}
-    replacements["quote"] = picture(paths, "Quote card from quotes.txt", link="./quotes.txt")
+    replacements["quote"] = themed_images(paths, "Quote card from quotes.txt", link="./quotes.txt")
     snake_paths = state.get("snake", {})
     for theme in colors:
         candidate = snake_dir / f"snake-{theme}.svg" if snake_dir else None
@@ -338,7 +360,7 @@ def render(markdown: str, config: dict, state: dict, assets: Assets, today: date
             continue
         snake_paths[theme] = assets.put(f"snake-{theme}", snake_card(content, colors[theme]))
     state["snake"] = snake_paths
-    replacements["snake"] = picture(snake_paths, f"{user}'s contribution snake", width=1000)
+    replacements["snake"] = themed_images(snake_paths, f"{user}'s contribution snake", width=1000)
     if "activity" in sources:
         replacements["activity"] = activity_table(sources["activity"], assets)
     else:

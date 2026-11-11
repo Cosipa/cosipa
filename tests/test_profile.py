@@ -1,5 +1,6 @@
 from datetime import UTC, date, datetime, timedelta
 import hashlib
+from html.parser import HTMLParser
 import json
 from pathlib import Path
 import re
@@ -156,6 +157,43 @@ class RenderTests(unittest.TestCase):
         self.assertIn("No quotes configured", empty)
         self.assertNotIn("Your chosen author", empty)
 
+    def test_quote_has_restrained_quotation_and_attribution_styling(self):
+        document = profile.quote_card([("An exact sample quote.", "Sample attribution")], NOW.date(), self.palette)
+        root = ET.fromstring(document)
+        ns = {"s": "http://www.w3.org/2000/svg"}
+        self.assertIn("“", document)
+        self.assertIn("An exact sample quote.”", document)
+        self.assertIn("— Sample attribution", document)
+        self.assertIsNotNone(root.find('.//s:g[@font-style="italic"]', ns))
+        self.assertEqual(len(root.findall(".//s:path", ns)), 1)  # Just a simple left rule.
+        self.assertEqual(root.findall(".//s:linearGradient", ns), [])
+
+    def test_theme_selection_uses_github_anchor_markers_not_os_media(self):
+        class Images(HTMLParser):
+            def __init__(self):
+                super().__init__()
+                self.anchors, self.images = [], []
+
+            def handle_starttag(self, tag, attrs):
+                if tag == "a":
+                    self.anchors.append(dict(attrs))
+                elif tag == "img":
+                    self.images.append(dict(attrs))
+
+        paths = {"dark": "./dark.svg", "light": "./light.svg"}
+        alt = 'A "quote" & <card>'
+        for link in (None, "./quotes.txt"):
+            markup = profile.themed_images(paths, alt, width=467, link=link)
+            parsed = Images()
+            parsed.feed(markup)
+            self.assertEqual(len(parsed.anchors), 2)
+            self.assertEqual(len(parsed.images), 2)
+            self.assertNotIn("prefers-color-scheme", markup)
+            self.assertNotIn("<picture", markup)
+            for i, theme in enumerate(("dark", "light")):
+                self.assertEqual(parsed.anchors[i]["href"], (link or paths[theme]) + f"#gh-{theme}-mode-only")
+                self.assertEqual(parsed.images[i], {"src": paths[theme], "alt": alt, "width": "467"})
+
     def test_svg_and_markdown_text_are_escaped(self):
         document = profile.quote_card([('<script>&"', '<author>')], NOW.date(), self.palette)
         ET.fromstring(document)
@@ -244,6 +282,9 @@ class RenderTests(unittest.TestCase):
         self.assertEqual(len(root.findall(".//s:path", ns)), 3)
         self.assertEqual(len(root.findall(".//s:animate", ns)), 4)
         self.assertIn("IosevkaTerm Nerd Font", "".join(root.itertext()))
+        for path in root.findall(".//s:path", ns):
+            self.assertNotIn("opacity:0", path.attrib.get("style", ""))
+            self.assertNotEqual(path.attrib.get("opacity"), "0")
         reveal = root.find('.//s:animate[@attributeName="width"]', ns)
         self.assertEqual(reveal.attrib["calcMode"], "discrete")
         widths = [float(v) for v in reveal.attrib["values"].split(";")]
@@ -254,6 +295,26 @@ class RenderTests(unittest.TestCase):
             times = [float(t) for t in node.attrib["keyTimes"].split(";")]
             self.assertEqual(len(times), len(node.attrib["values"].split(";")))
             self.assertTrue(all(a < b for a, b in zip(times, times[1:])))
+
+    def test_typing_variants_change_only_colour_and_have_readable_contrast(self):
+        source = (ROOT / "profile-showcase/static/typing-iosevka.svg").read_bytes()
+        ns = {"s": "http://www.w3.org/2000/svg"}
+        original = ET.fromstring(source)
+
+        def luminance(hex_color):
+            channels = [int(hex_color[i:i + 2], 16) / 255 for i in (0, 2, 4)]
+            channels = [v / 12.92 if v <= .04045 else ((v + .055) / 1.055) ** 2.4 for v in channels]
+            return sum(v * w for v, w in zip(channels, (.2126, .7152, .0722)))
+
+        for colors in self.config["colors"].values():
+            result = ET.fromstring(profile.typing_card(source, colors))
+            self.assertEqual(result.find('.//*[@id="typing-text"]').attrib["fill"], "#" + colors["typing"])
+            self.assertEqual([p.attrib["d"] for p in original.findall(".//s:path", ns)],
+                             [p.attrib["d"] for p in result.findall(".//s:path", ns)])
+            self.assertEqual([a.attrib for a in original.findall(".//s:animate", ns)],
+                             [a.attrib for a in result.findall(".//s:animate", ns)])
+            a, b = sorted([luminance(colors["typing"]), luminance(colors["background"])])
+            self.assertGreaterEqual((b + .05) / (a + .05), 4.5)
 
     def test_snake_themes_cached_or_fresh_animation_without_changing_data(self):
         content = (b'<svg xmlns="http://www.w3.org/2000/svg" viewBox="-16 -32 880 192">'
@@ -411,6 +472,11 @@ class WorkflowAndCacheTests(unittest.TestCase):
         self.assertIn("profile:quote:start", mockups)
         self.assertIn("### 48A · Ordinary blockquotes", working)
         self.assertIn("### 48B · Unframed excerpts", working)
+        for name in ("typing", "stats", "timeline", "snake", "quote", "repository-placeholder"):
+            body = profile.region_pattern(name).search(markdown)[2]
+            self.assertEqual(body.count("#gh-dark-mode-only"), 1)
+            self.assertEqual(body.count("#gh-light-mode-only"), 1)
+            self.assertNotIn("<picture", body)
         for removed in ["posts42", "posts48c", "48C", "## 42", "profile:header:", "header-wave.svg", "[!TIP]"]:
             self.assertNotIn(removed, markdown)
         self.assertNotIn("<details", markdown)

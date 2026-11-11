@@ -47,6 +47,26 @@ Font** glyphs. Merely specifying a font family does not make that font available
 inside a GitHub image. Outlining prevents fallback without adding a font/tool
 installation to Actions. Its animation advances and erases in discrete 11.5px
 character cells, with pauses, rather than sliding a clipping edge through glyphs.
+Separate light/dark variants recolour the same outlined paths; `typing` in each
+palette controls the text colour. Keep source groups visible when outlining:
+SMIL handles visibility at runtime, otherwise Inkscape can bake `opacity:0` into
+individual glyph paths and hide entire lines permanently.
+
+### GitHub theme selection
+
+Typing, stats, timeline, snake, quotes, and the repository placeholder each use
+separate light/dark SVGs. Their wrapping links end in `#gh-dark-mode-only` or
+`#gh-light-mode-only`, which GitHub hides according to its **selected site theme**,
+including automatic mode. The marker belongs on the anchor's `href`, not just
+an image URL. Linked quotes still open `quotes.txt`.
+
+The previous `<picture>` media queries followed the browser/OS colour scheme;
+that can disagree with GitHub's manually selected theme. Media queries inside an
+SVG have the same limitation. These markers are GitHub-specific: a generic
+Markdown preview without GitHub's stylesheet may display both variants.
+
+Quote cards use a simple left rule, quotation marks, italic text, and an em-dash
+attribution. No changes to the quote wording or attribution are made.
 
 Generated SVG filenames include their content hash. Updating data changes the
 image URL to avoid displaying an older image through GitHub's cache. The

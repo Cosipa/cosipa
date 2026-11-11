@@ -14,10 +14,15 @@ These components already render or refresh successfully. GitHub Actions updates 
 
 ## 01 · Animated typing introduction
 
-**Outlined Iosevka · sample copy.** Whole characters appear one at a time, pause, then erase one at a time. The glyphs are paths, so GitHub cannot substitute another font. Editable source: [`typing-iosevka.source.svg`](./profile-showcase/typing-iosevka.source.svg).
+**Outlined Iosevka · sample copy.** Whole characters appear one at a time, pause, then erase one at a time. Separate light/dark lettering follows GitHub's selected theme. The glyphs are paths, so GitHub cannot substitute another font. Editable source: [`typing-iosevka.source.svg`](./profile-showcase/typing-iosevka.source.svg).
 
 <!-- profile:typing:start -->
-![Typing introduction — outlined Iosevka](./profile-showcase/generated/typing-iosevka.cf82e163cfdd.svg)
+<a href="./profile-showcase/generated/typing-iosevka-dark.f9e360945313.svg#gh-dark-mode-only">
+  <img src="./profile-showcase/generated/typing-iosevka-dark.f9e360945313.svg" alt="Typing introduction — outlined Iosevka">
+</a>
+<a href="./profile-showcase/generated/typing-iosevka-light.f7fdbaaf1430.svg#gh-light-mode-only">
+  <img src="./profile-showcase/generated/typing-iosevka-light.f7fdbaaf1430.svg" alt="Typing introduction — outlined Iosevka">
+</a>
 <!-- profile:typing:end -->
 
 ## 03 · Your terminal styling
@@ -53,11 +58,12 @@ Rosé Pine Moon, your two-line Fish/Starship prompt and branch symbol, no title 
 **Your public contribution data, with explicit calendar-year dates.** Commit contributions are GitHub-eligible public commits, not every Git commit on every branch. Any published private total is labeled contributions, never commits.
 
 <!-- profile:stats:start -->
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./profile-showcase/generated/stats-dark.7ea1df49c453.svg">
-  <source media="(prefers-color-scheme: light)" srcset="./profile-showcase/generated/stats-light.48200e10da2b.svg">
+<a href="./profile-showcase/generated/stats-dark.7ea1df49c453.svg#gh-dark-mode-only">
+  <img src="./profile-showcase/generated/stats-dark.7ea1df49c453.svg" alt="Cosipa&#x27;s public GitHub contribution statistics" width="467">
+</a>
+<a href="./profile-showcase/generated/stats-light.48200e10da2b.svg#gh-light-mode-only">
   <img src="./profile-showcase/generated/stats-light.48200e10da2b.svg" alt="Cosipa&#x27;s public GitHub contribution statistics" width="467">
-</picture>
+</a>
 <!-- profile:stats:end -->
 
 <sub>Original simple layout, GitHub-native light/dark backgrounds, and blue accents. Missing data is not presented as zero.</sub>
@@ -69,14 +75,15 @@ Rosé Pine Moon, your two-line Fish/Starship prompt and branch symbol, no title 
 **Your publicly visible contributions over an explicit 365-day window.** The headline is checked against the sum of the daily counts. A blue/green line and shaded area show weekly totals; the green dot marks the busiest week.
 
 <!-- profile:timeline:start -->
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./profile-showcase/generated/timeline-dark.f3416f11eecf.svg">
-  <source media="(prefers-color-scheme: light)" srcset="./profile-showcase/generated/timeline-light.313d2852c7f3.svg">
+<a href="./profile-showcase/generated/timeline-dark.f3416f11eecf.svg#gh-dark-mode-only">
+  <img src="./profile-showcase/generated/timeline-dark.f3416f11eecf.svg" alt="Cosipa&#x27;s 365-day contribution timeline">
+</a>
+<a href="./profile-showcase/generated/timeline-light.313d2852c7f3.svg#gh-light-mode-only">
   <img src="./profile-showcase/generated/timeline-light.313d2852c7f3.svg" alt="Cosipa&#x27;s 365-day contribution timeline">
-</picture>
+</a>
 <!-- profile:timeline:end -->
 
-<sub>Publicly published private activity may be included in the graph. Light/dark colours are selected by the color-scheme media query.</sub>
+<sub>Publicly published private activity may be included in the graph. Light/dark variants follow GitHub's selected theme, even when it differs from your browser/OS preference.</sub>
 
 [GitHub's own contribution calendar](https://github.com/users/Cosipa/contributions)
 
@@ -85,11 +92,12 @@ Rosé Pine Moon, your two-line Fish/Starship prompt and branch symbol, no title 
 **Your contribution grid.** A pink snake over the normal GitHub green contribution cells, with GitHub-native light/dark backgrounds. The pinned Action generates the animation; the local renderer applies the palette from `profile.toml`.
 
 <!-- profile:snake:start -->
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./profile-showcase/generated/snake-dark.a206315f4fc5.svg">
-  <source media="(prefers-color-scheme: light)" srcset="./profile-showcase/generated/snake-light.59a1d16f1a34.svg">
+<a href="./profile-showcase/generated/snake-dark.a206315f4fc5.svg#gh-dark-mode-only">
+  <img src="./profile-showcase/generated/snake-dark.a206315f4fc5.svg" alt="Cosipa&#x27;s contribution snake" width="1000">
+</a>
+<a href="./profile-showcase/generated/snake-light.59a1d16f1a34.svg#gh-light-mode-only">
   <img src="./profile-showcase/generated/snake-light.59a1d16f1a34.svg" alt="Cosipa&#x27;s contribution snake" width="1000">
-</picture>
+</a>
 <!-- profile:snake:end -->
 
 [Generator](https://github.com/Platane/snk)
@@ -252,11 +260,12 @@ These are **not finished personal content**. Some are visual mockups; others hav
 **Placeholder.** No featured repository is selected yet.
 
 <!-- profile:repository-placeholder:start -->
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./profile-showcase/generated/repository-placeholder-dark.a543fce88cf0.svg">
-  <source media="(prefers-color-scheme: light)" srcset="./profile-showcase/generated/repository-placeholder-light.35e31349540e.svg">
+<a href="./profile-showcase/generated/repository-placeholder-dark.a543fce88cf0.svg#gh-dark-mode-only">
+  <img src="./profile-showcase/generated/repository-placeholder-dark.a543fce88cf0.svg" alt="Repository preview placeholder" width="400">
+</a>
+<a href="./profile-showcase/generated/repository-placeholder-light.35e31349540e.svg#gh-light-mode-only">
   <img src="./profile-showcase/generated/repository-placeholder-light.35e31349540e.svg" alt="Repository preview placeholder" width="400">
-</picture>
+</a>
 <!-- profile:repository-placeholder:end -->
 
 ## 21 · Two-column project gallery
@@ -307,12 +316,11 @@ The one that exists because you wanted to understand how something works.
 **Working renderer · temporary demo quotes.** The entries in [`quotes.txt`](./quotes.txt) are explicitly labelled placeholders, not real quotations or your words. Replace them with your own content; the workflow selects one each UTC day and renders both themes. An empty file shows an explicit setup notice.
 
 <!-- profile:quote:start -->
-<a href="./quotes.txt">
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./profile-showcase/generated/quote-dark.9aa9c8f77651.svg">
-  <source media="(prefers-color-scheme: light)" srcset="./profile-showcase/generated/quote-light.7219e201637a.svg">
-  <img src="./profile-showcase/generated/quote-light.7219e201637a.svg" alt="Quote card from quotes.txt">
-</picture>
+<a href="./quotes.txt#gh-dark-mode-only">
+  <img src="./profile-showcase/generated/quote-dark.7d44fde44d16.svg" alt="Quote card from quotes.txt">
+</a>
+<a href="./quotes.txt#gh-light-mode-only">
+  <img src="./profile-showcase/generated/quote-light.26f3343b7b77.svg" alt="Quote card from quotes.txt">
 </a>
 <!-- profile:quote:end -->
 
