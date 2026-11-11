@@ -1,15 +1,15 @@
-from datetime import UTC, date, datetime, timedelta
 import hashlib
-from html.parser import HTMLParser
 import json
-from pathlib import Path
 import re
 import sys
 import tempfile
 import tomllib
 import unittest
-from unittest.mock import patch
 import xml.etree.ElementTree as ET
+from datetime import UTC, date, datetime, timedelta
+from html.parser import HTMLParser
+from pathlib import Path
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / "src/scripts"))
@@ -18,6 +18,30 @@ import profile_data as data
 import update_profile as profile
 
 NOW = datetime(2026, 11, 12, 15, 30, tzinfo=UTC)
+
+
+class Images(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.anchors, self.images = [], []
+
+    def handle_starttag(self, tag, attrs):
+        if tag == "a":
+            self.anchors.append(dict(attrs))
+        elif tag == "img":
+            self.images.append(dict(attrs))
+
+
+def luminance(hex_color):
+    channels = [int(hex_color[i:i + 2], 16) / 255 for i in (0, 2, 4)]
+    channels = [v / 12.92 if v <= .04045 else ((v + .055) / 1.055) ** 2.4 for v in channels]
+    return sum(v * w for v, w in zip(channels, (.2126, .7152, .0722)))
+
+
+def outside_regions(markdown):
+    for name in profile.REGIONS:
+        markdown = profile.replace_region(markdown, name, "UNCHANGED REGION")
+    return markdown
 
 
 def contribution_document():
@@ -150,14 +174,12 @@ class MergedActivityTests(unittest.TestCase):
                 "updated_at": "2026-11-12T00:00:00Z", "pull_request": {"merged_at": merged_at}, **extra}
 
     def test_merged_list_uses_merge_time_and_excludes_unmerged_or_open_prs(self):
-        calls = []
         items = [self.item(1, "2026-11-01T12:00:00Z"), self.item(2, "2026-11-11T12:00:00Z"),
                  self.item(3, None), self.item(4, "2026-11-12T00:00:00Z", state="open")]
-        def api(path, token):
-            calls.append(path)
-            return {"incomplete_results": False, "total_count": 4, "items": items}
-        with patch.object(data, "api", side_effect=api):
+        page = {"incomplete_results": False, "total_count": 4, "items": items}
+        with patch.object(data, "api", return_value=page) as api:
             result = data.recently_merged("Cosipa", NOW.date(), "token")
+        calls = [call.args[0] for call in api.call_args_list]
         self.assertEqual([i["number"] for i in result["items"]], [2, 1])
         self.assertIn("is%3Amerged", calls[0])
         self.assertIn("is%3Apublic", calls[0])
@@ -212,17 +234,6 @@ class RenderTests(unittest.TestCase):
         self.assertIn("No quotes configured", empty)
 
     def test_theme_selection_uses_github_anchor_markers_not_os_media(self):
-        class Images(HTMLParser):
-            def __init__(self):
-                super().__init__()
-                self.anchors, self.images = [], []
-
-            def handle_starttag(self, tag, attrs):
-                if tag == "a":
-                    self.anchors.append(dict(attrs))
-                elif tag == "img":
-                    self.images.append(dict(attrs))
-
         paths = {"dark": "./dark.svg", "light": "./light.svg"}
         alt = 'A "quote" & <card>'
         for link in (None, "./quotes.txt"):
@@ -264,20 +275,16 @@ class RenderTests(unittest.TestCase):
         self.assertIn("a%29b%28%7Cc/", link)
         self.assertEqual(link.count(")"), 1)
 
-    def test_posts_keep_the_selected_layouts(self):
+    def test_posts_keep_the_readme_layout(self):
         posts = data.parse_posts(rss(), "https://cosipa.dev/rss")
         rows = profile.post_rows(posts)
         self.assertIn('width="20%" valign="top">October 18, 2026', rows)
         self.assertIn("> Exact first sentence.", rows)
         self.assertNotIn("<img", rows)
-        self.assertNotIn("[!", profile.post_excerpts(posts, "quote"))
-        self.assertIn("Exact first sentence.", profile.post_excerpts(posts, "plain"))
-        with self.assertRaises(ValueError):
-            profile.post_excerpts(posts, "tip")
 
     def test_badges_have_consistent_six_pixel_segment_padding(self):
         ns = {"s": "http://www.w3.org/2000/svg"}
-        for label, value in [("followers", "5"), ("stars", "12"), ("updated", "2026-11-11"), ("pgp", "0xA8523AE122FE6E85")]:
+        for label, value in [("pgp", "0xA8523AE122FE6E85"), ("pgp", "0x1234")]:
             with self.subTest(label=label):
                 root = ET.fromstring(cards.badge(label, value))
                 segments = root.findall('.//s:g[@clip-path="url(#badge)"]/s:rect', ns)[:2]
@@ -370,11 +377,6 @@ class RenderTests(unittest.TestCase):
         ns = {"s": "http://www.w3.org/2000/svg"}
         original = ET.fromstring(source)
 
-        def luminance(hex_color):
-            channels = [int(hex_color[i:i + 2], 16) / 255 for i in (0, 2, 4)]
-            channels = [v / 12.92 if v <= .04045 else ((v + .055) / 1.055) ** 2.4 for v in channels]
-            return sum(v * w for v, w in zip(channels, (.2126, .7152, .0722)))
-
         for colors in self.config["colors"].values():
             result = ET.fromstring(cards.typing_card(source, colors))
             self.assertEqual(result.find('.//*[@id="typing-text"]').attrib["fill"], "#" + colors["typing"])
@@ -463,7 +465,7 @@ class RenderTests(unittest.TestCase):
                         'Prose: "./not-a-link" and href="./not-an-attribute"\n'
                         r'Escaped: \[not a link\](./not-a-link)')
             expected = {root / "src/assets/static/card.svg", root / "src/data/quotes.txt"}
-            for name in ("README.md", "src/showcase.md", "src/nested/showcase.md"):
+            for name in ("README.md", "src/example.md", "src/nested/example.md"):
                 document = root / name
                 with self.subTest(document=name):
                     converted = profile.document_links(original, root, document)
@@ -473,10 +475,25 @@ class RenderTests(unittest.TestCase):
                     self.assertIn('Prose: "./not-a-link" and href="./not-an-attribute"', converted)
                     self.assertIn(r'\[not a link\](./not-a-link)', converted)
 
+    def test_local_link_spans_preserve_fragments_and_html_attributes(self):
+        markdown = (
+            '[Quotes](./src/data/quotes.txt#favorite)\n'
+            '<A HREF = "./README.md#top"><IMG SRC=\'./src/assets/static/card.svg\'></A>\n'
+            'Prose: href="./not-a-link"\n'
+            r'Escaped: \[not a link\](./not-a-link)'
+        )
+        links = list(profile.local_links(markdown))
+        self.assertEqual(
+            [path for _, _, path in links],
+            ["./src/data/quotes.txt", "./README.md", "./src/assets/static/card.svg"],
+        )
+        for start, end, path in links:
+            self.assertEqual(markdown[start:end], path)
+
     def test_nested_document_validation_rejects_missing_or_escaping_svgs(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            document = root / "src/showcase.md"
+            document = root / "src/example.md"
             for target in ("./assets/missing.svg", "../../outside.svg", "../.git/config.svg"):
                 markdown = f'<!-- profile:stats:start -->\n![Card]({target})\n<!-- profile:stats:end -->'
                 with self.subTest(target=target), self.assertRaises(ValueError):
@@ -506,7 +523,7 @@ class RenderTests(unittest.TestCase):
             second = assets.put("badge", cards.badge("PR", "closed"))
             unrelated = assets.directory / "handmade.svg"
             unrelated.write_text("do not delete")
-            assets.prune([(root / "README.md", f"![Badge]({first})")])
+            assets.prune(f"![Badge]({first})", root / "README.md")
             self.assertTrue((root / first).exists())
             self.assertFalse((root / second).exists())
             self.assertTrue(unrelated.exists())
@@ -564,52 +581,41 @@ class RenderTests(unittest.TestCase):
                 for name in profile.REGIONS) + "\nfooter prose\n"
             state = {"schema": 1, "sources": {"posts": {"items": data.parse_posts(rss(), "https://cosipa.dev/rss")}}}
             rendered = profile.render(original, self.config, state, assets, NOW.date(), None)
-            def outside(markdown):
-                for name in profile.REGIONS:
-                    markdown = profile.replace_region(markdown, name, "UNCHANGED REGION")
-                return markdown
-            self.assertEqual(outside(original), outside(rendered))
+            self.assertEqual(outside_regions(original), outside_regions(rendered))
             self.assertNotIn("Platane/snk/output", rendered)
-            self.assertIn("Repository preview placeholder", rendered)
+            self.assertNotIn("Repository preview placeholder", rendered)
 
 
 class WorkflowAndCacheTests(unittest.TestCase):
     def copy_profile_inputs(self, root):
-        paths = ["src/data/profile.toml", "README.md", "src/showcase.md", "src/data/quotes.txt", "src/data/public.json"]
+        paths = ["src/data/profile.toml", "README.md", "src/data/quotes.txt", "src/data/public.json"]
         paths += [str(path.relative_to(ROOT)) for path in (ROOT / "src/assets/static").glob("*.svg")]
         for relative in paths:
             destination = root / relative
             destination.parent.mkdir(parents=True, exist_ok=True)
             destination.write_bytes((ROOT / relative).read_bytes())
 
-    def test_offline_refresh_updates_both_documents_and_retains_their_assets(self):
+    def test_offline_refresh_updates_readme_and_retains_its_assets(self):
         config = tomllib.loads((ROOT / "src/data/profile.toml").read_text())
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             self.copy_profile_inputs(root)
-            before = {name: (root / name).read_text() for name in (config["markdown"], config["showcase_markdown"])}
+            readme_path = root / config["markdown"]
+            before = readme_path.read_text()
             with patch.object(profile, "ROOT", root), patch.object(sys, "argv", ["update_profile.py", "--offline"]), \
                  patch.object(profile, "refresh", side_effect=AssertionError("offline must not fetch")):
                 profile.main()
-                for name, regions in [(config["markdown"], config["regions"]), (config["showcase_markdown"], config["showcase_regions"])]:
-                    updated = (root / name).read_text()
-                    profile.validate(root, config, updated, regions=regions, document=root / name)
-                    original = before[name]
-                    for region in regions:
-                        original = profile.replace_region(original, region, "REGION")
-                        updated = profile.replace_region(updated, region, "REGION")
-                    self.assertEqual(updated, original)
-                catalogue_path = root / config["showcase_markdown"]
-                catalogue = catalogue_path.read_text()
-                readme_path = root / config["markdown"]
                 readme = readme_path.read_text()
-                catalogue_only = profile.region_pattern("repository-placeholder").search(catalogue)[2]
-                catalogue_assets = profile.linked_files(root, catalogue_only, catalogue_path)
-                self.assertTrue(catalogue_assets)
-                for path in catalogue_assets:
-                    self.assertNotIn(path, profile.linked_files(root, readme, readme_path))
+                profile.validate(root, config, readme, regions=config["regions"], document=readme_path)
+                self.assertEqual(outside_regions(readme), outside_regions(before))
+                for path in profile.linked_files(root, readme, readme_path):
                     self.assertTrue(path.is_file())
+                names = [path.name for path in (root / config["generated_dir"]).glob("*.svg")]
+                for prefix in ("followers.", "stars.", "updated.", "repos.", "repository-placeholder-"):
+                    self.assertFalse(any(name.startswith(prefix) for name in names))
+                self.assertFalse((root / "src/showcase.md").exists())
                 cache = json.loads((root / config["cache"]).read_text())
+                self.assertNotIn("github", cache["sources"])
                 for path in cache["snake"].values():
                     self.assertTrue(path.startswith("./src/assets/generated/"))
                     self.assertTrue((root / path).is_file())
@@ -619,65 +625,50 @@ class WorkflowAndCacheTests(unittest.TestCase):
             with patch.object(profile, "ROOT", root), patch.object(sys, "argv", ["update_profile.py", "--check"]):
                 profile.main()
 
-    def test_broken_catalogue_aborts_before_fetching_or_writing_readme(self):
+    def test_broken_readme_aborts_before_fetching_or_writing_assets(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             self.copy_profile_inputs(root)
-            before = (root / "README.md").read_bytes()
-            catalogue = root / "src/showcase.md"
-            catalogue.write_text(catalogue.read_text().replace("<!-- profile:footer:end -->", ""))
+            readme = root / "README.md"
+            readme.write_text(readme.read_text().replace("<!-- profile:typing:end -->", ""))
+            before = readme.read_bytes()
             with patch.object(profile, "ROOT", root), patch.object(sys, "argv", ["update_profile.py"]), \
                  patch.object(profile, "refresh") as refresh, self.assertRaises(ValueError):
                 profile.main()
             refresh.assert_not_called()
-            self.assertEqual((root / "README.md").read_bytes(), before)
+            self.assertEqual(readme.read_bytes(), before)
             self.assertFalse((root / "src/assets/generated").exists())
 
-    def test_configured_documents_partition_the_known_regions(self):
+    def test_configured_readme_uses_all_known_regions(self):
         config = tomllib.loads((ROOT / "src/data/profile.toml").read_text())
-        primary = set(config["regions"])
-        showcase = set(config["showcase_regions"])
-        self.assertTrue(primary.isdisjoint(showcase))
-        self.assertEqual(primary | showcase, set(profile.REGIONS))
-        for path, regions in [(config["markdown"], config["regions"]),
-                              (config["showcase_markdown"], config["showcase_regions"])]:
-            with self.subTest(document=path):
-                profile.validate(ROOT, config, (ROOT / path).read_text(), regions=regions, document=ROOT / path)
+        self.assertEqual(set(config["regions"]), set(profile.REGIONS))
+        self.assertNotIn("showcase_markdown", config)
+        path = ROOT / config["markdown"]
+        profile.validate(ROOT, config, path.read_text(), regions=config["regions"], document=path)
 
     def test_source_failure_keeps_last_good_data(self):
         config = tomllib.loads((ROOT / "src/data/profile.toml").read_text())
         state = {"schema": 1, "sources": {"posts": {"as_of": "2026-10-18", "items": [{"title": "Existing post"}]}}}
         original = json.loads(json.dumps(state))
-        with patch.object(data, "public_profile", side_effect=ValueError("offline")), \
-             patch.object(data, "contributions", side_effect=ValueError("offline")), \
+        with patch.object(data, "contributions", side_effect=ValueError("offline")), \
              patch.object(data, "public_calendar", side_effect=ValueError("offline")), \
              patch.object(data, "activity", side_effect=ValueError("offline")), \
              patch.object(data, "recently_merged", side_effect=ValueError("offline")), \
              patch.object(data, "posts", side_effect=ValueError("offline")):
             warnings = profile.refresh(config, state, NOW)
-        self.assertEqual(len(warnings), 6)
+        self.assertEqual(len(warnings), 5)
         self.assertEqual(state, original)
 
     def test_closed_and_private_activity_is_not_published(self):
-        calls = []
-        def api(path, token):
-            calls.append(path)
-            return {"incomplete_results": False, "items": [
-                {"state": "open", "html_url": "https://github.com/owner/repo/pull/1", "title": "Actual title", "number": 1, "updated_at": "2026-11-12T00:00:00Z"},
-                {"state": "closed", "html_url": "https://github.com/owner/repo/pull/2", "title": "Closed", "number": 2, "updated_at": "2026-11-12T00:00:00Z"}]}
-        with patch.object(data, "api", side_effect=api):
+        page = {"incomplete_results": False, "items": [
+            {"state": "open", "html_url": "https://github.com/owner/repo/pull/1", "title": "Actual title", "number": 1, "updated_at": "2026-11-12T00:00:00Z"},
+            {"state": "closed", "html_url": "https://github.com/owner/repo/pull/2", "title": "Closed", "number": 2, "updated_at": "2026-11-12T00:00:00Z"},
+        ]}
+        with patch.object(data, "api", return_value=page) as api:
             activity = data.activity("Cosipa", NOW.date(), "token")
+        calls = [call.args[0] for call in api.call_args_list]
         self.assertTrue(all("is%3Aopen" in c and "is%3Apublic" in c for c in calls))
         self.assertTrue(all(item["number"] == 1 for item in activity["items"]))
-
-    def test_private_preview_metadata_is_not_published(self):
-        user = {"login": "Cosipa", "created_at": "2025-01-01T00:00:00Z", "followers": 2, "public_repos": 4}
-        private = {"private": True, "stargazers_count": 99, "pushed_at": "2026-11-12T00:00:00Z"}
-        with patch.object(data, "api", side_effect=[user, private]):
-            result = data.public_profile("Cosipa", "Cosipa/cosipa", NOW.date(), "token")
-        self.assertIsNone(result["repository_stars"])
-        self.assertIsNone(result["repository_updated"])
-        self.assertEqual(result["followers"], 2)
 
     def test_action_refs_and_python_are_pinned(self):
         for path in (ROOT / ".github/workflows").glob("*.yml"):

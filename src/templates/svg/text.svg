@@ -1,0 +1,1 @@
+<text x="$x" y="$y" fill="#$color" font-size="$size" text-anchor="$anchor" font-weight="$weight">$value</text>

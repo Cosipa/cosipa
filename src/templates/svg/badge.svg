@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="$width" height="20" role="img">
+  <title>$title</title>
+  <g font-family="Verdana,Geneva,DejaVu Sans,sans-serif">
+    <defs>
+      <linearGradient id="shade" x2="0" y2="100%">
+        <stop offset="0" stop-color="#bbb" stop-opacity=".1"/>
+        <stop offset="1" stop-opacity=".1"/>
+      </linearGradient>
+      <clipPath id="badge"><rect width="$width" height="20" rx="3"/></clipPath>
+    </defs>
+    <g clip-path="url(#badge)">
+      <rect width="$left" height="20" fill="#$label_color"/>
+      <rect x="$left" width="$right" height="20" fill="#$color"/>
+      <rect width="$width" height="20" fill="url(#shade)"/>
+    </g>
+$labels
+  </g>
+</svg>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="$width" height="$height" viewBox="0 0 $width $height" role="img" aria-labelledby="title desc">
+  <title id="title">$title</title>
+  <desc id="desc">$description</desc>
+  <rect width="$width" height="$height" rx="5" fill="#$background"/>
+  <g font-family="Verdana,DejaVu Sans,sans-serif">
+$body
+  </g>
+</svg>

@@ -64,41 +64,6 @@
     "sha256": "f5094bc5f8d6016ef25bc8527cb082356890e69a8b9d9fb08a41734669055272",
     "note": "One-time SVG snapshot; never requested by the scheduled workflow or profile visitors."
   },
-  "badge-cli.svg": {
-    "source": "https://img.shields.io/badge/CLI-7aa2f7?style=flat",
-    "sha256": "c5b56143edb9007dd2d766193e2d841aa227407a6c787eee99594a54249bc8de",
-    "note": "One-time SVG snapshot; never requested by the scheduled workflow or profile visitors."
-  },
-  "badge-local-first.svg": {
-    "source": "https://img.shields.io/badge/local_first-9ece6a?style=flat",
-    "sha256": "473a4266fca62f42c4019ba7a696f12107569efb35a09639ca134ba693f18311",
-    "note": "One-time SVG snapshot; never requested by the scheduled workflow or profile visitors."
-  },
-  "badge-experiment.svg": {
-    "source": "https://img.shields.io/badge/experiment-bb9af7?style=flat",
-    "sha256": "95ecb32fcc6f784ceddaa594e3c5d7df4147b9fb037019dd711948c735068706",
-    "note": "One-time SVG snapshot; never requested by the scheduled workflow or profile visitors."
-  },
-  "badge-work-in-progress.svg": {
-    "source": "https://img.shields.io/badge/work_in_progress-e0af68?style=flat",
-    "sha256": "db4e47e46da95ddb4b952748e4260e99557c7e2d96809d12ae92ac62002643c6",
-    "note": "One-time SVG snapshot; never requested by the scheduled workflow or profile visitors."
-  },
-  "badge-demo-version-1-4-0.svg": {
-    "source": "https://img.shields.io/badge/demo-v1.4.0-7aa2f7?style=flat",
-    "sha256": "d60e4892e6dfb30bc74a7080578188bc7675abba86ed9715d175db225cccf6e8",
-    "note": "One-time SVG snapshot; never requested by the scheduled workflow or profile visitors."
-  },
-  "badge-demo-version-0-8-2.svg": {
-    "source": "https://img.shields.io/badge/demo-v0.8.2-bb9af7?style=flat",
-    "sha256": "93b414efda29221f83059057d2620b4410f39f92179831fe080e7c25843342ca",
-    "note": "One-time SVG snapshot; never requested by the scheduled workflow or profile visitors."
-  },
-  "badge-demo-rolling-release.svg": {
-    "source": "https://img.shields.io/badge/demo-rolling-9ece6a?style=flat",
-    "sha256": "b8a1ffe30744832853f3abf029014689c6dcbec546637d9c5a9c4177fe1dc3c3",
-    "note": "One-time SVG snapshot; never requested by the scheduled workflow or profile visitors."
-  },
   "badge-pr-open.svg": {
     "source": "https://img.shields.io/badge/PR-open-313131?style=flat&labelColor=3e8fb0",
     "sha256": "5c52fddaf9e428e8fa41ae1932cb2a8b5cdd3b728b07d329a242ac5400921cf6",
@@ -128,11 +93,5 @@
     "source": "../source/typing-iosevka.svg",
     "sha256": "828b3ebabca75d55a62827e7ac2512c113cd2fb412b9ea12379cf4266a92c109",
     "note": "Local source exported with Inkscape text-to-path using IosevkaTerm Nerd Font; animation preserved, no runtime font dependency."
-  },
-  "footer-wave.svg": {
-    "source": "https://capsule-render.vercel.app/api?type=waving&height=110&section=footer&color=gradient",
-    "sha256": "0ac9466f6bfe859191eafc6c5f702d18f6b3db8244c36f56187a02ddcc7f97d1",
-    "note": "One-time SVG snapshot, trailing whitespace normalized; never requested by the workflow or profile visitors.",
-    "source_sha256": "dfff9cf976d72ed89d26f1c6f4519c1d65bbc15202cfe77adce9d3b1ef113cde"
   }
 }
