@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="290" viewBox="0 0 1000 290" role="img" aria-labelledby="title desc">
-  <title id="title">Personal telemetry dashboard mockup</title><desc id="desc">Illustrative values only: twelve books, three projects, forty-two home-lab days, and seven side quests.</desc>
-  <rect width="1000" height="290" rx="14" fill="#1a1b26"/>
-  <g font-family="monospace"><text x="30" y="38" fill="#c0caf5" font-size="18">LIFE / SYSTEM STATUS</text><text x="30" y="63" fill="#e0af68" font-size="12">ILLUSTRATIVE VALUES — NOT COSIPA'S ACTUAL DATA</text></g>
-  <g fill="#24283b" stroke="#414868"><rect x="25" y="85" width="225" height="150" rx="10"/><rect x="267" y="85" width="225" height="150" rx="10"/><rect x="509" y="85" width="225" height="150" rx="10"/><rect x="751" y="85" width="224" height="150" rx="10"/></g>
-  <g font-family="monospace" text-anchor="middle"><g fill="#7aa2f7" font-size="48"><text x="137" y="155">12</text><text x="379" y="155">03</text><text x="621" y="155">42</text><text x="863" y="155">07</text></g><g fill="#c0caf5" font-size="14"><text x="137" y="193">BOOKS READ</text><text x="379" y="193">ACTIVE PROJECTS</text><text x="621" y="193">HOMELAB DAYS</text><text x="863" y="193">SIDE QUESTS</text></g></g>
-  <text x="30" y="267" fill="#9ece6a" font-family="monospace" font-size="12">● generated from your own data / no third-party widget required</text>
-</svg>

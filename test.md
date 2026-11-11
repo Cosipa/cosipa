@@ -81,7 +81,13 @@ Rosé Pine Moon, your two-line Fish/Starship prompt and branch symbol, no title 
 
 **Live / Cosipa.** Public data via a community service; its grade is not an objective developer rating.
 
-![Cosipa's public GitHub statistics](https://github-readme-stats-fast.vercel.app/api?username=Cosipa&show_icons=true&theme=tokyonight&hide_border=true)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-stats-fast.vercel.app/api?username=Cosipa&amp;show_icons=true&amp;hide_border=true&amp;bg_color=0d1117&amp;title_color=c9d1d9&amp;text_color=8b949e&amp;icon_color=8b949e&amp;ring_color=8b949e">
+  <source media="(prefers-color-scheme: light)" srcset="https://github-readme-stats-fast.vercel.app/api?username=Cosipa&amp;show_icons=true&amp;hide_border=true&amp;bg_color=ffffff&amp;title_color=24292f&amp;text_color=57606a&amp;icon_color=57606a&amp;ring_color=57606a">
+  <img src="https://github-readme-stats-fast.vercel.app/api?username=Cosipa&amp;show_icons=true&amp;hide_border=true&amp;bg_color=ffffff&amp;title_color=24292f&amp;text_color=57606a&amp;icon_color=57606a&amp;ring_color=57606a" alt="Cosipa's public GitHub statistics" width="467">
+</picture>
+
+<sub>Neutral gray palette. Separate light/dark images selected by the color-scheme media query.</sub>
 
 [Service source](https://github.com/pranesh-2005/github-readme-stats-fast) · [Original project](https://github.com/anuraghazra/github-readme-stats)
 
@@ -89,7 +95,15 @@ Rosé Pine Moon, your two-line Fish/Starship prompt and branch symbol, no title 
 
 **Live / Cosipa.** This service's headline count previously differed from GitHub's own calendar; don't read it as a verified annual total.
 
-[![Cosipa's contribution timeline and public profile summary](https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=Cosipa&theme=tokyonight)](https://github.com/vn7n24fzkq/github-profile-summary-cards)
+<a href="https://github.com/vn7n24fzkq/github-profile-summary-cards">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=Cosipa&amp;theme=github_dark">
+    <source media="(prefers-color-scheme: light)" srcset="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=Cosipa&amp;theme=github">
+    <img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=Cosipa&amp;theme=github" alt="Cosipa's contribution timeline and public profile summary">
+  </picture>
+</a>
+
+<sub>GitHub-native light/dark palettes rather than Tokyo Night; selected by the color-scheme media query.</sub>
 
 [GitHub's own contribution calendar](https://github.com/users/Cosipa/contributions)
 
@@ -110,21 +124,9 @@ Rosé Pine Moon, your two-line Fish/Starship prompt and branch symbol, no title 
 
 [![Metrics example: classic profile dashboard](https://raw.githubusercontent.com/lowlighter/metrics/examples/metrics.classic.svg)](https://github.com/lowlighter/metrics)
 
-### Language analysis
-
-![Metrics example: language analysis](https://raw.githubusercontent.com/lowlighter/metrics/examples/metrics.plugin.languages.svg)
-
-### Coding habits
-
-![Metrics example: coding habits](https://raw.githubusercontent.com/lowlighter/metrics/examples/metrics.plugin.habits.charts.svg)
-
 ### Achievement wall
 
 ![Metrics example: achievements](https://raw.githubusercontent.com/lowlighter/metrics/examples/metrics.plugin.achievements.compact.svg)
-
-### Star history
-
-![Metrics example: star history](https://raw.githubusercontent.com/lowlighter/metrics/examples/metrics.plugin.stargazers.svg)
 
 <a id="projects"></a>
 
@@ -134,7 +136,15 @@ Rosé Pine Moon, your two-line Fish/Starship prompt and branch symbol, no title 
 
 **Live / Cosipa.** Using the profile repository until you choose projects to feature.
 
-[![Cosipa profile repository card](https://github-readme-stats-fast.vercel.app/api/pin/?username=Cosipa&repo=cosipa&theme=tokyonight&hide_border=true)](https://github.com/Cosipa/cosipa)
+<a href="https://github.com/Cosipa/cosipa">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-stats-fast.vercel.app/api/pin/?username=Cosipa&amp;repo=cosipa&amp;hide_border=true&amp;bg_color=0d1117&amp;title_color=c9d1d9&amp;text_color=8b949e&amp;icon_color=8b949e">
+    <source media="(prefers-color-scheme: light)" srcset="https://github-readme-stats-fast.vercel.app/api/pin/?username=Cosipa&amp;repo=cosipa&amp;hide_border=true&amp;bg_color=ffffff&amp;title_color=24292f&amp;text_color=57606a&amp;icon_color=57606a">
+    <img src="https://github-readme-stats-fast.vercel.app/api/pin/?username=Cosipa&amp;repo=cosipa&amp;hide_border=true&amp;bg_color=ffffff&amp;title_color=24292f&amp;text_color=57606a&amp;icon_color=57606a" alt="Cosipa profile repository card" width="400">
+  </picture>
+</a>
+
+<sub>Same neutral light/dark palette as #09.</sub>
 
 ## 21 · Two-column project gallery
 
@@ -194,49 +204,17 @@ The one that exists because you wanted to understand how something works.
 
 # Other experiments
 
-## 29 · Personal telemetry
+## 37 · Your own quote card
 
-**Mockup · invented numbers, not your personal data.**
+**Customizable.** The service accepts `quote`, `author`, and custom colors. This preview uses the literal placeholders “Your chosen quote” and “Your chosen author”—not your writing or an attribution to you. No random quotes.
 
-![Personal telemetry mockup with illustrative books, projects, home-lab days, and side quests](./profile-showcase/dashboard.svg)
-
-Example source data, now visible inline:
-
-```yaml
-books_read: 12
-active_projects: 3
-homelab_days: 42
-side_quests: 7
-```
-
-## 31 · Native GitHub formatting
-
-> [!NOTE]
-> GitHub renders these callouts natively. They can highlight project status or contribution instructions.
-
-<!-- -->
-
-> [!TIP]
-> A few carefully chosen links often beat ten dashboards.
-
-<!-- -->
-
-> [!WARNING]
-> External widgets can break or return cached data.
-
-**Keyboard styling:** <kbd>Ctrl</kbd> + <kbd>K</kbd>, then <kbd>Enter</kbd>.
-
-**Math rendering:** $\text{side projects}_{n+1} = \text{side projects}_n + 1$
-
-**Footnote:** Extra context without interrupting the page.[^footnote-demo]
-
-[^footnote-demo]: A native GitHub Markdown footnote, useful for explaining a metric or its source.
-
-## 37 · Rotating quote card
-
-**Live service · not a personal endorsement of the generated quote.** Subject to image caching.
-
-[![Quote generated by the GitHub README quotes service](https://quotes-github-readme.vercel.app/api?type=horizontal&theme=tokyonight)](https://github.com/PiyushSuthar/github-readme-quotes)
+<a href="https://github.com/PiyushSuthar/github-readme-quotes#custom">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://quotes-github-readme.vercel.app/api?type=horizontal&amp;quote=Your%20chosen%20quote&amp;author=Your%20chosen%20author&amp;backgroundColor=0d1117&amp;quoteColor=c9d1d9&amp;authorColor=8b949e&amp;symbolColor=8b949e">
+    <source media="(prefers-color-scheme: light)" srcset="https://quotes-github-readme.vercel.app/api?type=horizontal&amp;quote=Your%20chosen%20quote&amp;author=Your%20chosen%20author&amp;backgroundColor=ffffff&amp;quoteColor=24292f&amp;authorColor=57606a&amp;symbolColor=57606a">
+    <img src="https://quotes-github-readme.vercel.app/api?type=horizontal&amp;quote=Your%20chosen%20quote&amp;author=Your%20chosen%20author&amp;backgroundColor=ffffff&amp;quoteColor=24292f&amp;authorColor=57606a&amp;symbolColor=57606a" alt="Placeholder custom quote card: Your chosen quote — Your chosen author">
+  </picture>
+</a>
 
 <a id="real-posts"></a>
 
@@ -244,7 +222,7 @@ side_quests: 7
 
 Only **42**, **47**, and **48** remain. Titles, dates, and quoted excerpts are from [your RSS feed](https://cosipa.dev/rss). No rewritten headlines or generated article images. These are snapshots, not automatic feed readers yet.
 
-[42 · Cards](#42--two-column-text-cards) · [47 · Rows](#47--compact-magazine-rows) · [48 · Callouts with excerpts](#48--three-callouts-with-excerpts)
+[42 · Cards](#42--two-column-text-cards) · [47 · Rows](#47--compact-magazine-rows) · [48 · Quieter excerpt layouts](#48--quieter-excerpt-layouts)
 
 ## 42 · Two-column text cards
 
@@ -252,19 +230,17 @@ Only **42**, **47**, and **48** remain. Titles, dates, and quoted excerpts are f
 <tr>
 <td width="50%" valign="top">
 
-### A user in the Docker group can become root
+### [A user in the Docker group can become root](https://cosipa.dev/posts/docker-group-security-risk/)
 
 <sub>October 18, 2026</sub>
 
 > This is a well-known (very old) Docker security risk, that everybody knows
 > exists, yet sometimes we underestimate the impact of it.
 
-**[A user in the Docker group can become root](https://cosipa.dev/posts/docker-group-security-risk/)**
-
 </td>
 <td width="50%" valign="top">
 
-### How to setup a pull-through Docker registry
+### [How to setup a pull-through Docker registry](https://cosipa.dev/posts/docker-registry-cache-setup/)
 
 <sub>August 5, 2026</sub>
 
@@ -272,32 +248,26 @@ Only **42**, **47**, and **48** remain. Titles, dates, and quoted excerpts are f
 > instead of having your servers pulling images from DockerHub directly, they
 > could pull them from your own registry.
 
-**[How to setup a pull-through Docker registry](https://cosipa.dev/posts/docker-registry-cache-setup/)**
-
 </td>
 </tr>
 <tr>
 <td width="50%" valign="top">
 
-### How to speed up Linux disk encryption
+### [How to speed up Linux disk encryption](https://cosipa.dev/posts/full-disk-encryption-tweaks/)
 
 <sub>July 25, 2026</sub>
 
 > What is dm-crypt: Device-Mapper’s crypt provides transparent encryption of
 > block devices using the kernel crypto API.
 
-**[How to speed up Linux disk encryption](https://cosipa.dev/posts/full-disk-encryption-tweaks/)**
-
 </td>
 <td width="50%" valign="top">
 
-### First post ever
+### [First post ever](https://cosipa.dev/posts/first-post-ever/)
 
 <sub>October 2, 2025</sub>
 
 > Welcome to my tech blog, this post just serves as a placeholder until I write a full post.
-
-**[First post ever](https://cosipa.dev/posts/first-post-ever/)**
 
 </td>
 </tr>
@@ -342,9 +312,12 @@ Only **42**, **47**, and **48** remain. Titles, dates, and quoted excerpts are f
 </tr>
 </table>
 
-## 48 · Three callouts with excerpts
+## 48 · Quieter excerpt layouts
 
-> [!NOTE]
+The same three latest posts, with identical RSS titles and excerpts. No NOTE alerts.
+
+### 48A · Ordinary blockquotes
+
 > **[A user in the Docker group can become root](https://cosipa.dev/posts/docker-group-security-risk/)** · <sub>Oct 18, 2026</sub>
 >
 > This is a well-known (very old) Docker security risk, that everybody knows
@@ -352,7 +325,6 @@ Only **42**, **47**, and **48** remain. Titles, dates, and quoted excerpts are f
 
 <!-- -->
 
-> [!NOTE]
 > **[How to setup a pull-through Docker registry](https://cosipa.dev/posts/docker-registry-cache-setup/)** · <sub>Aug 05, 2026</sub>
 >
 > A pull-through Docker registry is basically just a cached proxy to DockerHub,
@@ -361,7 +333,55 @@ Only **42**, **47**, and **48** remain. Titles, dates, and quoted excerpts are f
 
 <!-- -->
 
-> [!NOTE]
+> **[How to speed up Linux disk encryption](https://cosipa.dev/posts/full-disk-encryption-tweaks/)** · <sub>Jul 25, 2026</sub>
+>
+> What is dm-crypt: Device-Mapper’s crypt provides transparent encryption of
+> block devices using the kernel crypto API.
+
+### 48B · Unframed excerpts
+
+**[A user in the Docker group can become root](https://cosipa.dev/posts/docker-group-security-risk/)** · <sub>Oct 18, 2026</sub>
+
+This is a well-known (very old) Docker security risk, that everybody knows
+exists, yet sometimes we underestimate the impact of it.
+
+---
+
+**[How to setup a pull-through Docker registry](https://cosipa.dev/posts/docker-registry-cache-setup/)** · <sub>Aug 05, 2026</sub>
+
+A pull-through Docker registry is basically just a cached proxy to DockerHub,
+instead of having your servers pulling images from DockerHub directly, they
+could pull them from your own registry.
+
+---
+
+**[How to speed up Linux disk encryption](https://cosipa.dev/posts/full-disk-encryption-tweaks/)** · <sub>Jul 25, 2026</sub>
+
+What is dm-crypt: Device-Mapper’s crypt provides transparent encryption of
+block devices using the kernel crypto API.
+
+### 48C · Green TIP callouts, for comparison
+
+These still introduce a colored label. Compare with the quieter versions above.
+
+> [!TIP]
+> **[A user in the Docker group can become root](https://cosipa.dev/posts/docker-group-security-risk/)** · <sub>Oct 18, 2026</sub>
+>
+> This is a well-known (very old) Docker security risk, that everybody knows
+> exists, yet sometimes we underestimate the impact of it.
+
+<!-- -->
+
+> [!TIP]
+> **[How to setup a pull-through Docker registry](https://cosipa.dev/posts/docker-registry-cache-setup/)** · <sub>Aug 05, 2026</sub>
+>
+> A pull-through Docker registry is basically just a cached proxy to DockerHub,
+> instead of having your servers pulling images from DockerHub directly, they
+> could pull them from your own registry.
+
+<!-- -->
+
+> [!TIP]
 > **[How to speed up Linux disk encryption](https://cosipa.dev/posts/full-disk-encryption-tweaks/)** · <sub>Jul 25, 2026</sub>
 >
 > What is dm-crypt: Device-Mapper’s crypt provides transparent encryption of
