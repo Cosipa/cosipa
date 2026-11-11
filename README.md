@@ -11,11 +11,11 @@
 <div align="center">
 
 <!-- profile:typing:start -->
-<a href="./profile-showcase/generated/typing-iosevka-dark.825615e7d14d.svg#gh-dark-mode-only">
-  <img src="./profile-showcase/generated/typing-iosevka-dark.825615e7d14d.svg" alt="Typing introduction — outlined Iosevka">
+<a href="./profile-showcase/generated/typing-iosevka-dark.ed8d1167eb0a.svg#gh-dark-mode-only">
+  <img src="./profile-showcase/generated/typing-iosevka-dark.ed8d1167eb0a.svg" alt="Typing introduction — outlined Iosevka">
 </a>
-<a href="./profile-showcase/generated/typing-iosevka-light.393fd6b2bf22.svg#gh-light-mode-only">
-  <img src="./profile-showcase/generated/typing-iosevka-light.393fd6b2bf22.svg" alt="Typing introduction — outlined Iosevka">
+<a href="./profile-showcase/generated/typing-iosevka-light.abb87d0f9458.svg#gh-light-mode-only">
+  <img src="./profile-showcase/generated/typing-iosevka-light.abb87d0f9458.svg" alt="Typing introduction — outlined Iosevka">
 </a>
 <!-- profile:typing:end -->
 
@@ -42,14 +42,14 @@
 ![Linux](./profile-showcase/static/badge-linux.svg)
 ![NixOS](./profile-showcase/static/badge-nixos.svg)
 ![Neovim](./profile-showcase/static/badge-neovim.svg)
-![Rust](./profile-showcase/static/badge-rust.svg)
-![Python](./profile-showcase/static/badge-python.svg)
-![Go](./profile-showcase/static/badge-go.svg)
-![Java](./profile-showcase/static/badge-java.svg)
 ![C](./profile-showcase/static/badge-c.svg)
 ![C++](./profile-showcase/static/badge-cpp.svg)
+![Rust](./profile-showcase/static/badge-rust.svg)
+![Go](./profile-showcase/static/badge-go.svg)
+![Python](./profile-showcase/static/badge-python.svg)
+![Java](./profile-showcase/static/badge-java.svg)
 
-## Self-hosting
+## Infrastructure as Code
 
 ![Docker](./profile-showcase/static/badge-docker.svg)
 ![Kubernetes](./profile-showcase/static/badge-kubernetes.svg)

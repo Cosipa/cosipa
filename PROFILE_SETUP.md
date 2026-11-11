@@ -60,6 +60,8 @@ Font** glyphs. Merely specifying a font family does not make that font available
 inside a GitHub image. Outlining prevents fallback without adding a font/tool
 installation to Actions. Its animation advances and erases in discrete 11.5px
 character cells, with pauses, rather than sliding a clipping edge through glyphs.
+Nine custom taglines rotate in the source order, with a five-second typing cycle
+per line and a 45-second full loop.
 The renderer centers the currently visible characters at every typing/erasing
 step by translating each line with its clipping region. Glyph paths and the
 original character/line timings are unchanged.

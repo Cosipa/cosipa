@@ -17,6 +17,17 @@ import profile_data as data
 import update_profile as profile
 
 NOW = datetime(2026, 11, 12, 15, 30, tzinfo=UTC)
+TYPING_LINES = [
+    "Declarative > Imperative",
+    "My fridge is not connected to the internet",
+    "Checking out some cool projects",
+    "Updating packages...",
+    "Intentionally procrastinating...",
+    "Keeping busy with whatever",
+    "Reading a book, or a README, who knows",
+    "Receiving prometheus alerts",
+    "Fluxcd reconciling my cluster as we speak",
+]
 
 
 def contribution_document():
@@ -325,12 +336,36 @@ class RenderTests(unittest.TestCase):
         self.assertIn("Placeholder, not a real quotation", document)
         self.assertNotIn("No quotes configured", document)
 
+    def test_typing_source_and_export_keep_all_requested_taglines_and_rotate(self):
+        ns = {"s": "http://www.w3.org/2000/svg"}
+        source = ET.parse(ROOT / "profile-showcase/typing-iosevka.source.svg").getroot()
+        self.assertEqual([node.text for node in source.findall(".//s:text", ns)], TYPING_LINES)
+        exported = ET.parse(ROOT / "profile-showcase/static/typing-iosevka.svg").getroot()
+        groups = exported.find('.//*[@id="typing-text"]').findall("s:g", ns)
+        self.assertEqual([group.find('.//*[@aria-label]').attrib["aria-label"] for group in groups], TYPING_LINES)
+        animations = [group.find('s:animate[@attributeName="opacity"]', ns) for group in groups]
+        for animation in animations:
+            self.assertEqual(animation.attrib["dur"], "45s")
+            self.assertEqual(animation.attrib["repeatCount"], "indefinite")
+        # Every five-second slot shows exactly its own line, not overlapping text.
+        for slot in range(len(TYPING_LINES)):
+            for fraction in (.01, .5, .99):
+                phase = (slot + fraction) / len(TYPING_LINES)
+                active = []
+                for i, animation in enumerate(animations):
+                    times = [float(t) for t in animation.attrib["keyTimes"].split(";")]
+                    values = animation.attrib["values"].split(";")
+                    step = max(j for j, time in enumerate(times) if time <= phase)
+                    if values[step] == "1":
+                        active.append(i)
+                self.assertEqual(active, [slot])
+
     def test_typing_has_outlined_iosevka_and_preserved_animation(self):
         root = ET.parse(ROOT / "profile-showcase/static/typing-iosevka.svg").getroot()
         ns = {"s": "http://www.w3.org/2000/svg"}
         self.assertEqual(root.findall(".//s:text", ns), [])
-        self.assertEqual(len(root.findall(".//s:path", ns)), 3)
-        self.assertEqual(len(root.findall(".//s:animate", ns)), 4)
+        self.assertEqual(len(root.findall(".//s:path", ns)), len(TYPING_LINES))
+        self.assertEqual(len(root.findall(".//s:animate", ns)), len(TYPING_LINES) + 1)
         self.assertIn("IosevkaTerm Nerd Font", "".join(root.itertext()))
         for path in root.findall(".//s:path", ns):
             self.assertNotIn("opacity:0", path.attrib.get("style", ""))
@@ -339,6 +374,8 @@ class RenderTests(unittest.TestCase):
         self.assertEqual(reveal.attrib["calcMode"], "discrete")
         widths = [float(v) for v in reveal.attrib["values"].split(";")]
         self.assertEqual(max(widths), 44 * 11.5)
+        self.assertGreaterEqual(max(widths), max(map(len, TYPING_LINES)) * 11.5)
+        self.assertLessEqual(max(widths), float(root.attrib["width"]))
         self.assertTrue(all(abs(b - a) in (0, 11.5) for a, b in zip(widths, widths[1:])))
         self.assertTrue(any(b < a for a, b in zip(widths, widths[1:])))
         for node in root.findall(".//s:animate", ns):
@@ -356,7 +393,8 @@ class RenderTests(unittest.TestCase):
             reveal = root.find('.//s:animate[@attributeName="width"]', ns)
             widths = [float(value) for value in reveal.attrib["values"].split(";")]
             lines = lettering.findall("s:g", ns)
-            self.assertEqual(len(lines), 3)
+            self.assertEqual(len(lines), len(TYPING_LINES))
+            self.assertEqual([line.find('.//*[@aria-label]').attrib["aria-label"] for line in lines], TYPING_LINES)
             for line in lines:
                 self.assertEqual(line.attrib["clip-path"], "url(#typing-line)")
                 self.assertEqual(line.attrib["transform"], "translate(325 0)")
@@ -628,12 +666,12 @@ class WorkflowAndCacheTests(unittest.TestCase):
         self.assertEqual(re.findall(r"profile:([\w-]+):start", markdown), expected)
         self.assertLess(markdown.index("github.com/Cosipa.png"), markdown.index('<h3 align="center">Cosipa'))
         self.assertLess(markdown.index("Welcome, hope you find what you are looking for."), markdown.index("profile:typing:start"))
-        self.assertLess(markdown.index("## Toolbox"), markdown.index("## Self-hosting"))
-        self.assertLess(markdown.index("## Self-hosting"), markdown.index("## Latest posts"))
-        toolbox = markdown.split("## Toolbox\n", 1)[1].split("\n## Self-hosting", 1)[0]
-        hosting = markdown.split("## Self-hosting\n", 1)[1].split("\n## Latest posts", 1)[0]
+        self.assertLess(markdown.index("## Toolbox"), markdown.index("## Infrastructure as Code"))
+        self.assertLess(markdown.index("## Infrastructure as Code"), markdown.index("## Latest posts"))
+        toolbox = markdown.split("## Toolbox\n", 1)[1].split("\n## Infrastructure as Code", 1)[0]
+        hosting = markdown.split("## Infrastructure as Code\n", 1)[1].split("\n## Latest posts", 1)[0]
         self.assertEqual(re.findall(r"badge-([\w-]+)\.svg", toolbox),
-                         ["linux", "nixos", "neovim", "rust", "python", "go", "java", "c", "cpp"])
+                         ["linux", "nixos", "neovim", "c", "cpp", "rust", "go", "python", "java"])
         self.assertEqual(re.findall(r"badge-([\w-]+)\.svg", hosting),
                          ["docker", "kubernetes", "terraform", "ansible"])
         self.assertIn("komarev.com/ghpvc/", markdown)

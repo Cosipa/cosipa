@@ -126,7 +126,7 @@
   },
   "typing-iosevka.svg": {
     "source": "../typing-iosevka.source.svg",
-    "sha256": "6352ef71fa811f7849a80c3a4e4ff5707a486da1526d496057e99962fc9b3e7e",
+    "sha256": "828b3ebabca75d55a62827e7ac2512c113cd2fb412b9ea12379cf4266a92c109",
     "note": "Local source exported with Inkscape text-to-path using IosevkaTerm Nerd Font; animation preserved, no runtime font dependency."
   },
   "footer-wave.svg": {

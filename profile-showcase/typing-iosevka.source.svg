@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="650" height="70" viewBox="0 0 650 70" role="img" aria-labelledby="title desc">
   <title id="title">Typing introduction</title>
-  <desc id="desc">Hello, I'm Cosipa. Building, breaking, and figuring things out. Probably starting another side project. IosevkaTerm Nerd Font, outlined for consistent rendering on GitHub.</desc>
+  <desc id="desc">Nine rotating taglines in IosevkaTerm Nerd Font, outlined for consistent rendering on GitHub.</desc>
   <!-- Edit this source, then export text as paths. GitHub image rendering cannot load custom fonts. -->
   <defs>
     <clipPath id="typing-line">
@@ -11,18 +11,43 @@
     </clipPath>
   </defs>
   <g id="typing-text" clip-path="url(#typing-line)" font-family="IosevkaTerm Nerd Font" font-size="23" fill="#c4a7e7">
-    <g opacity="1">
-      <animate attributeName="opacity" values="1;0;0" keyTimes="0;0.333333;1" calcMode="discrete" dur="15s" repeatCount="indefinite"/>
-      <text x="0" y="41">Hello, I'm Cosipa.</text>
-    </g>
     <!-- Keep source groups visible for outlining; SMIL controls their visibility at runtime. -->
+    <!-- Each line has a five-second typing cycle; all nine repeat every 45 seconds. -->
     <g opacity="1">
-      <animate attributeName="opacity" values="0;1;0;0" keyTimes="0;0.333333;0.666667;1" calcMode="discrete" dur="15s" repeatCount="indefinite"/>
-      <text x="0" y="41">Building, breaking, and figuring things out.</text>
+      <animate attributeName="opacity" values="1;0;0" keyTimes="0;0.111111;1" calcMode="discrete" dur="45s" repeatCount="indefinite"/>
+      <text x="0" y="41">Declarative &gt; Imperative</text>
     </g>
     <g opacity="1">
-      <animate attributeName="opacity" values="0;1;0" keyTimes="0;0.666667;1" calcMode="discrete" dur="15s" repeatCount="indefinite"/>
-      <text x="0" y="41">Probably starting another side project.</text>
+      <animate attributeName="opacity" values="0;1;0;0" keyTimes="0;0.111111;0.222222;1" calcMode="discrete" dur="45s" repeatCount="indefinite"/>
+      <text x="0" y="41">My fridge is not connected to the internet</text>
+    </g>
+    <g opacity="1">
+      <animate attributeName="opacity" values="0;1;0;0" keyTimes="0;0.222222;0.333333;1" calcMode="discrete" dur="45s" repeatCount="indefinite"/>
+      <text x="0" y="41">Checking out some cool projects</text>
+    </g>
+    <g opacity="1">
+      <animate attributeName="opacity" values="0;1;0;0" keyTimes="0;0.333333;0.444444;1" calcMode="discrete" dur="45s" repeatCount="indefinite"/>
+      <text x="0" y="41">Updating packages...</text>
+    </g>
+    <g opacity="1">
+      <animate attributeName="opacity" values="0;1;0;0" keyTimes="0;0.444444;0.555556;1" calcMode="discrete" dur="45s" repeatCount="indefinite"/>
+      <text x="0" y="41">Intentionally procrastinating...</text>
+    </g>
+    <g opacity="1">
+      <animate attributeName="opacity" values="0;1;0;0" keyTimes="0;0.555556;0.666667;1" calcMode="discrete" dur="45s" repeatCount="indefinite"/>
+      <text x="0" y="41">Keeping busy with whatever</text>
+    </g>
+    <g opacity="1">
+      <animate attributeName="opacity" values="0;1;0;0" keyTimes="0;0.666667;0.777778;1" calcMode="discrete" dur="45s" repeatCount="indefinite"/>
+      <text x="0" y="41">Reading a book, or a README, who knows</text>
+    </g>
+    <g opacity="1">
+      <animate attributeName="opacity" values="0;1;0;0" keyTimes="0;0.777778;0.888889;1" calcMode="discrete" dur="45s" repeatCount="indefinite"/>
+      <text x="0" y="41">Receiving prometheus alerts</text>
+    </g>
+    <g opacity="1">
+      <animate attributeName="opacity" values="0;1;0" keyTimes="0;0.888889;1" calcMode="discrete" dur="45s" repeatCount="indefinite"/>
+      <text x="0" y="41">Fluxcd reconciling my cluster as we speak</text>
     </g>
   </g>
 </svg>
