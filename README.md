@@ -24,7 +24,7 @@
 <p align="center">
   <a href="https://github.com/Cosipa?tab=repositories">Projects</a> ·
   <a href="https://github.com/Cosipa?tab=stars">Things I find interesting</a> ·
-  <a href="https://cosipa.dev/">Writing</a>
+  <a href="https://cosipa.dev/">Blog</a>
 </p>
 
 <div align="center">
