@@ -250,6 +250,45 @@ def activity(username: str, today: date, token: str = "") -> dict:
     return {"as_of": today.isoformat(), "items": result[:12]}
 
 
+def recently_merged(username: str, today: date, token: str = "") -> dict:
+    # Search cannot sort by merge time. Read every result (up to GitHub's 1,000
+    # result limit), then sort actual merged_at timestamps, not update/close dates.
+    items = []
+    for page_number in range(1, 11):
+        query = urlencode({"q": f"author:{username} is:pr is:merged is:public",
+                           "sort": "updated", "order": "desc", "per_page": 100, "page": page_number})
+        page = api("/search/issues?" + query, token)
+        total = nonnegative(page["total_count"])
+        if page.get("incomplete_results") or total > 1000:
+            raise ValueError("GitHub truncated merged PR search; refusing an incomplete list")
+        batch = page["items"]
+        items.extend(batch)
+        if len(items) >= total:
+            break
+        if not batch:
+            raise ValueError("GitHub returned an incomplete merged PR search page")
+    else:
+        raise ValueError("GitHub truncated merged PR search pagination")
+    merged = {}
+    for item in items:
+        timestamp = (item.get("pull_request") or {}).get("merged_at")
+        if item["state"] != "closed" or not timestamp:
+            continue  # Never equate closed with merged.
+        url = urlsplit(item["html_url"])
+        parts = url.path.strip("/").split("/")
+        if (url.scheme != "https" or url.netloc != "github.com" or len(parts) != 4
+                or parts[2] != "pull" or not parts[3].isdigit()):
+            raise ValueError("Unexpected merged pull request URL")
+        when = datetime.fromisoformat(timestamp)
+        if when.tzinfo is None:
+            raise ValueError("Merged pull request timestamp is missing its timezone")
+        merged[item["html_url"]] = {"kind": "pr", "title": item["title"], "url": item["html_url"],
+                                    "repository": "/".join(parts[:2]), "number": item["number"],
+                                    "merged_at": when.astimezone(UTC).isoformat()}
+    result = sorted(merged.values(), key=lambda item: item["merged_at"], reverse=True)
+    return {"as_of": today.isoformat(), "items": result[:6]}
+
+
 class FeedText(HTMLParser):
     def __init__(self):
         super().__init__(convert_charrefs=True)

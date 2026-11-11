@@ -116,8 +116,18 @@ schedules in inactive public repositories; manual runs still work.
   headline can include a few extra days. Missing days are never zero-filled.
   Private activity is included only when GitHub publishes it. A GitHub markup
   change fails safely, retaining the last successful graph.
-- **Activity table:** the 12 most recently updated open public PRs/issues found
-  through explicit `is:public is:open` searches. Closed items are excluded.
+- **Open activity (24):** the 12 most recently updated open public PRs/issues
+  found through explicit `is:public is:open` searches. Closed items are excluded.
+  Compact 72×24px green pills use GitHub's PR/issue Octicons, without a dropdown.
+- **Recently merged PRs (25):** up to six public PRs, sorted by actual `merged_at`
+  timestamps, with UTC merge dates and compact 86×24px purple merge pills.
+  Closed-but-unmerged PRs are never counted as merged. GitHub search cannot order
+  by merge time, so the fetcher paginates all results before selecting the latest
+  six; incomplete responses or more than GitHub's 1,000-result search limit fail
+  safely and retain the last cached list. An empty list includes a clearly labelled
+  status-style preview, not fabricated activity. Both tables refresh via Actions.
+  The local pill artwork uses MIT-licensed Octicons; attribution/license is in
+  `profile-showcase/status-icons.LICENSE`. No icon service is contacted at runtime.
 - **Views:** Komarev's approximate image requests, not unique visitors. An Actions
   workflow cannot independently count visits to your GitHub profile.
 

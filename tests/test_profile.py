@@ -142,6 +142,56 @@ class FeedTests(unittest.TestCase):
         self.assertEqual(posts[0]["title"], "Exact title & spelling")
 
 
+class MergedActivityTests(unittest.TestCase):
+    def item(self, number, merged_at, **extra):
+        return {"state": "closed", "title": f"Actual PR {number}", "number": number,
+                "html_url": f"https://github.com/owner/repo/pull/{number}",
+                "updated_at": "2026-11-12T00:00:00Z", "pull_request": {"merged_at": merged_at}, **extra}
+
+    def test_merged_list_uses_merge_time_and_excludes_unmerged_or_open_prs(self):
+        calls = []
+        items = [self.item(1, "2026-11-01T12:00:00Z"), self.item(2, "2026-11-11T12:00:00Z"),
+                 self.item(3, None), self.item(4, "2026-11-12T00:00:00Z", state="open")]
+        def api(path, token):
+            calls.append(path)
+            return {"incomplete_results": False, "total_count": 4, "items": items}
+        with patch.object(data, "api", side_effect=api):
+            result = data.recently_merged("Cosipa", NOW.date(), "token")
+        self.assertEqual([i["number"] for i in result["items"]], [2, 1])
+        self.assertIn("is%3Amerged", calls[0])
+        self.assertIn("is%3Apublic", calls[0])
+        self.assertEqual(result["items"][0]["merged_at"], "2026-11-11T12:00:00+00:00")
+
+    def test_merge_search_paginates_before_selecting_six_latest(self):
+        old = [self.item(i, f"2026-11-{i:02}T00:00:00Z") for i in range(1, 7)]
+        pages = [{"incomplete_results": False, "total_count": 7, "items": old},
+                 {"incomplete_results": False, "total_count": 7,
+                  "items": [self.item(7, "2026-11-07T00:00:00Z")]}]
+        with patch.object(data, "api", side_effect=pages) as api:
+            result = data.recently_merged("Cosipa", NOW.date())
+        self.assertEqual([i["number"] for i in result["items"]], [7, 6, 5, 4, 3, 2])
+        self.assertIn("page=2", api.call_args_list[1].args[0])
+
+    def test_truncated_merge_search_fails_instead_of_publishing_partial_data(self):
+        for page in [{"incomplete_results": True, "total_count": 0, "items": []},
+                     {"incomplete_results": False, "total_count": 1001, "items": []},
+                     {"incomplete_results": False, "total_count": 1, "items": []}]:
+            with self.subTest(page=page), patch.object(data, "api", return_value=page), self.assertRaises(ValueError):
+                data.recently_merged("Cosipa", NOW.date())
+
+    def test_merged_urls_and_timestamps_are_validated(self):
+        for item in [self.item(1, "2026-11-11T00:00:00Z", html_url="https://example.com/a/b/pull/1"),
+                     self.item(1, "2026-11-11T00:00:00Z", html_url="https://github.com/a/b/issues/1"),
+                     self.item(1, "2026-11-11T00:00:00")]:
+            page = {"incomplete_results": False, "total_count": 1, "items": [item]}
+            with self.subTest(item=item), patch.object(data, "api", return_value=page), self.assertRaises(ValueError):
+                data.recently_merged("Cosipa", NOW.date())
+
+    def test_no_merged_prs_produces_an_honest_empty_list(self):
+        with patch.object(data, "api", return_value={"total_count": 0, "incomplete_results": False, "items": []}):
+            self.assertEqual(data.recently_merged("Cosipa", NOW.date())["items"], [])
+
+
 class RenderTests(unittest.TestCase):
     def setUp(self):
         self.config = tomllib.loads((ROOT / "profile.toml").read_text())
@@ -355,6 +405,41 @@ class RenderTests(unittest.TestCase):
             self.assertIn("105 contributions", document)
             self.assertIn("#" + colors["secondary"], document)
 
+    def test_activity_tables_use_compact_github_style_pills(self):
+        with tempfile.TemporaryDirectory() as directory:
+            assets = profile.Assets(Path(directory), "generated")
+            item = {"kind": "pr", "title": "Actual | title", "repository": "owner/repo", "number": 1,
+                    "url": "https://github.com/owner/repo/pull/1", "merged_at": "2026-11-11T12:00:00+00:00"}
+            opened = profile.activity_table({"items": [item, {**item, "kind": "issue"}]}, assets)
+            merged = profile.activity_table({"items": [item]}, assets, merged=True)
+            self.assertIn("status-pr-open.", opened)
+            self.assertIn("status-issue-open.", opened)
+            self.assertIn("status-pr-merged.", merged)
+            self.assertIn("Merged (UTC)", merged)
+            self.assertIn("2026-11-11", merged)
+            self.assertIn(r"Actual \| title", merged)
+            self.assertNotIn("Status style preview", merged)
+            self.assertNotIn("static/badge-", opened)
+            for path in assets.directory.glob("status-*.svg"):
+                root = ET.parse(path).getroot()
+                self.assertLessEqual(int(root.attrib["width"]), 86)
+                self.assertEqual(root.attrib["height"], "24")
+                rect = root.find("{http://www.w3.org/2000/svg}rect")
+                self.assertEqual(rect.attrib["rx"], "12")
+                self.assertEqual(rect.attrib["fill"], "#8250df" if "merged" in path.name else "#1f883d")
+            self.assertTrue((ROOT / "profile-showcase/status-icons.LICENSE").is_file())
+
+    def test_empty_merged_table_previews_style_without_fake_prs(self):
+        with tempfile.TemporaryDirectory() as directory:
+            assets = profile.Assets(Path(directory), "generated")
+            rendered = profile.activity_table({"items": []}, assets, merged=True)
+            self.assertIn("Status style preview", rendered)
+            self.assertIn("No merged public pull requests found.", rendered)
+            self.assertNotIn("https://github.com/", rendered)
+            pending = profile.activity_table({"items": [], "pending": True}, assets, merged=True)
+            self.assertIn("Awaiting a successful", pending)
+            self.assertNotIn("No merged public", pending)
+
     def test_only_marked_content_is_changed(self):
         original = "before\n<!-- profile:stats:start -->\nold\n<!-- profile:stats:end -->\nafter\n"
         changed = profile.replace_region(original, "stats", "new\\not a regex replacement")
@@ -416,9 +501,10 @@ class WorkflowAndCacheTests(unittest.TestCase):
              patch.object(data, "contributions", side_effect=ValueError("offline")), \
              patch.object(data, "public_calendar", side_effect=ValueError("offline")), \
              patch.object(data, "activity", side_effect=ValueError("offline")), \
+             patch.object(data, "recently_merged", side_effect=ValueError("offline")), \
              patch.object(data, "posts", side_effect=ValueError("offline")):
             warnings = profile.refresh(config, state, NOW)
-        self.assertEqual(len(warnings), 5)
+        self.assertEqual(len(warnings), 6)
         self.assertEqual(state, original)
 
     def test_closed_and_private_activity_is_not_published(self):
@@ -462,11 +548,16 @@ class WorkflowAndCacheTests(unittest.TestCase):
     def test_working_components_are_separate_from_mockups(self):
         markdown = (ROOT / "test.md").read_text()
         self.assertEqual([int(n) for n in re.findall(r"^## (\d+) ·", markdown, re.M)],
-                         [1, 3, 7, 18, 9, 12, 14, 24, 47, 48, 4, 5, 17, 19, 21, 22, 37])
+                         [1, 3, 7, 18, 9, 12, 14, 24, 25, 47, 48, 4, 5, 17, 19, 21, 22, 37])
         working, mockups = markdown.split("# Mockups & setup pending", 1)
         self.assertIn("# Working components", working)
         self.assertIn("profile:stats:start", working)
         self.assertIn("profile:posts47:start", working)
+        self.assertIn("profile:merged:start", working)
+        self.assertLess(working.index("## 24 ·"), working.index("## 25 ·"))
+        self.assertLess(working.index("## 25 ·"), working.index("## 47 ·"))
+        self.assertIn('<a id="top"></a>', markdown)
+        self.assertIn("[↑ Go back to the top](#top)", markdown)
         self.assertNotIn("raw.githubusercontent.com/lowlighter/metrics", working)
         self.assertIn("Achievement wall · not configured", mockups)
         self.assertIn("profile:quote:start", mockups)

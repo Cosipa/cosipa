@@ -1,5 +1,7 @@
 <!-- Profile shortlist. Layout stays hand-edited; marked regions are refreshed by GitHub Actions. -->
 
+<a id="top"></a>
+
 # Profile shortlist
 
 [Working components](#working) · [Mockups & setup pending](#mockups) · [Blog layouts](#real-posts)
@@ -104,16 +106,28 @@ Rosé Pine Moon, your two-line Fish/Starship prompt and branch symbol, no title 
 
 ## 24 · Open pull requests and issues
 
-**Actual public activity, refreshed by Actions.** Up to 12 open items only, using locally stored status badges. Not an instant status check.
+**Actual public activity, refreshed by Actions.** Up to 12 open items only. Compact GitHub-style green status pills use the proper PR or issue icon; they are display-only, not dropdowns.
 
 <!-- profile:activity:start -->
 | Status | Repository | Title |
 | :-- | :-- | :-- |
-| ![PR open](./profile-showcase/static/badge-pr-open.svg) | `NixOS/nixpkgs` | [zap: install desktop icons](https://github.com/NixOS/nixpkgs/pull/585770) · #585770 |
-| ![PR open](./profile-showcase/static/badge-pr-open.svg) | `NixOS/nixpkgs` | [fido2-manage: update to 0.2.2](https://github.com/NixOS/nixpkgs/pull/585745) · #585745 |
-| ![PR open](./profile-showcase/static/badge-pr-open.svg) | `NixOS/nixpkgs` | [iproute2: 7.2.0 \-&gt; 7.3.0](https://github.com/NixOS/nixpkgs/pull/585573) · #585573 |
-| ![issue open](./profile-showcase/static/badge-issue-open.svg) | `maxdorninger/MediaManager` | [\[BUG\] Prowlarr magnet redirect is discarded before Transmission grab](https://github.com/maxdorninger/MediaManager/issues/574) · #574 |
+| ![PR open](./profile-showcase/generated/status-pr-open.05cacbdfd7d3.svg) | `NixOS/nixpkgs` | [zap: install desktop icons](https://github.com/NixOS/nixpkgs/pull/585770) · #585770 |
+| ![PR open](./profile-showcase/generated/status-pr-open.05cacbdfd7d3.svg) | `NixOS/nixpkgs` | [fido2-manage: update to 0.2.2](https://github.com/NixOS/nixpkgs/pull/585745) · #585745 |
+| ![PR open](./profile-showcase/generated/status-pr-open.05cacbdfd7d3.svg) | `NixOS/nixpkgs` | [iproute2: 7.2.0 \-&gt; 7.3.0](https://github.com/NixOS/nixpkgs/pull/585573) · #585573 |
+| ![Issue open](./profile-showcase/generated/status-issue-open.de17ea530027.svg) | `maxdorninger/MediaManager` | [\[BUG\] Prowlarr magnet redirect is discarded before Transmission grab](https://github.com/maxdorninger/MediaManager/issues/574) · #574 |
 <!-- profile:activity:end -->
+
+## 25 · Recently merged pull requests
+
+**Actual public merged PRs, refreshed by Actions.** Up to six, ordered by their merge timestamp—not when they were last updated or closed. Closed-but-unmerged PRs are excluded. The compact purple pill uses GitHub's merge icon.
+
+<!-- profile:merged:start -->
+<sub>Status style preview:</sub> ![Merged](./profile-showcase/generated/status-pr-merged.adbe82d6dab5.svg)
+
+| Status | Repository | Title | Merged (UTC) |
+| :-- | :-- | :-- | :-- |
+| — | — | No merged public pull requests found. | — |
+<!-- profile:merged:end -->
 
 <a id="real-posts"></a>
 
@@ -323,6 +337,8 @@ The one that exists because you wanted to understand how something works.
   <img src="./profile-showcase/generated/quote-light.26f3343b7b77.svg" alt="Quote card from quotes.txt">
 </a>
 <!-- profile:quote:end -->
+
+[↑ Go back to the top](#top)
 
 <!-- profile:footer:start -->
 ![Decorative waving footer](./profile-showcase/static/footer-wave.svg)

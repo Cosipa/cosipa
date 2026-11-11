@@ -22,7 +22,7 @@ import profile_data as data
 
 ROOT = Path(__file__).resolve().parent.parent
 REGIONS = ("typing", "github-badges", "pgp", "stats", "timeline", "snake",
-           "repository-placeholder", "activity", "quote", "posts47",
+           "repository-placeholder", "activity", "merged", "quote", "posts47",
            "posts48a", "posts48b", "footer")
 SVG_NS = "{http://www.w3.org/2000/svg}"
 
@@ -301,15 +301,33 @@ def post_excerpts(posts: list[dict], kind: str) -> str:
     return ("\n\n---\n\n" if kind == "plain" else "\n\n<!-- -->\n\n").join(parts)
 
 
-def activity_table(facts: dict, assets: Assets) -> str:
-    parts = ["| Status | Repository | Title |", "| :-- | :-- | :-- |"]
+def activity_table(facts: dict, assets: Assets, *, merged=False) -> str:
+    status = "merged" if merged else "open"
+
+    def status_image(kind):
+        name = f"status-{kind}-{status}"
+        return assets.put(name, (ROOT / f"profile-showcase/static/{name}.svg").read_bytes())
+
+    headers = ["Status", "Repository", "Title"] + (["Merged (UTC)"] if merged else [])
+    parts = ["| " + " | ".join(headers) + " |", "| " + " | ".join([":--"] * len(headers)) + " |"]
     for item in facts["items"]:
-        kind = "PR" if item["kind"] == "pr" else "issue"
-        image = f'./profile-showcase/static/badge-{item["kind"]}-open.svg'
-        parts.append(f'| ![{kind} open]({image}) | `{item["repository"]}` | {post_link({"title": item["title"], "url": item["url"]})} · #{item["number"]} |')
+        kind = "pr" if merged or item["kind"] == "pr" else "issue"
+        label = "PR" if kind == "pr" else "Issue"
+        cells = [f'![{label} {status}]({status_image(kind)})', f'`{item["repository"]}`',
+                 f'{post_link({"title": item["title"], "url": item["url"]})} · #{item["number"]}']
+        if merged:
+            cells.append(datetime.fromisoformat(item["merged_at"]).date().isoformat())
+        parts.append("| " + " | ".join(cells) + " |")
     if not facts["items"]:
-        parts.append("| — | — | No open public pull requests or issues. |")
-    return "\n".join(parts)
+        message = ("Awaiting a successful public GitHub API fetch." if facts.get("pending") else
+                   "No merged public pull requests found." if merged else "No open public pull requests or issues.")
+        cells = ["—", "—", message] + (["—"] if merged else [])
+        parts.append("| " + " | ".join(cells) + " |")
+    table = "\n".join(parts)
+    if merged and not facts["items"]:
+        # Preview the requested style without fabricating a merged PR row.
+        table = f'<sub>Status style preview:</sub> ![Merged]({status_image("pr")})\n\n' + table
+    return table
 
 
 def render(markdown: str, config: dict, state: dict, assets: Assets, today: date, snake_dir: Path | None) -> str:
@@ -365,6 +383,7 @@ def render(markdown: str, config: dict, state: dict, assets: Assets, today: date
         replacements["activity"] = activity_table(sources["activity"], assets)
     else:
         replacements["activity"] = "| Status | Repository | Title |\n| :-- | :-- | :-- |\n| — | — | Awaiting a successful public GitHub API fetch. |"
+    replacements["merged"] = activity_table(sources.get("merged", {"items": [], "pending": True}), assets, merged=True)
     if "posts" in sources:
         posts = sources["posts"]["items"]
         replacements["posts47"] = post_rows(posts[:config["blog"]["rows"]])
@@ -398,6 +417,7 @@ def refresh(config: dict, state: dict, now: datetime) -> list[str]:
         "contributions": lambda: data.contributions(config["username"], now, token),
         "calendar": lambda: data.public_calendar(config["username"], now.date()),
         "activity": lambda: data.activity(config["username"], now.date(), token),
+        "merged": lambda: data.recently_merged(config["username"], now.date(), token),
         "posts": lambda: data.posts(config["blog"]["feed"], now.date()),
     }
     warnings = []
