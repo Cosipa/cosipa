@@ -1,6 +1,9 @@
 username = "Cosipa"
 repository = "Cosipa/cosipa"
-markdown = "test.md"
+markdown = "README.md"
+regions = ["typing", "pgp", "posts47", "activity", "merged", "stats", "timeline", "snake", "quote"]
+# Keep the component catalogue refreshed without adding its extra widgets to the README.
+showcase_markdown = "test.md"
 generated_dir = "profile-showcase/generated"
 cache = ".profile-data/public.json"
 quotes = "quotes.txt"

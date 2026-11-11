@@ -1,8 +1,17 @@
 # Profile automation
 
-The existing `test.md` layout is hand-maintained. Only content between
+`README.md` is the profile; `test.md` remains the component catalogue. Both
+layouts are hand-maintained. Only content between
 `<!-- profile:NAME:start -->` / `<!-- profile:NAME:end -->` markers is generated.
-The terminal image is unchanged. `README.md` is not an output.
+`profile.toml` selects the README's regions; the catalogue keeps the full set.
+Both documents refresh from the same public-data fetch, and asset cleanup keeps
+SVGs referenced by either document. The terminal image is unchanged.
+
+The README leads with the avatar, subtitle, typing introduction, links and PGP/views.
+The provisional toolbox and magazine-style blog rows come next, followed by open
+and merged activity, contribution stats/timeline/snake, a quote and a back-to-top
+link. Catalogue-only badges, mockups, alternative blog layouts and the decorative
+footer are not included in the README.
 
 `test.md` separates **Working components** from **Mockups & setup pending**.
 The latter includes Metrics/achievements (not configured), project placeholders,
@@ -136,8 +145,9 @@ A truncated API response is treated as a failure rather than an incomplete total
 
 ## Edit your content
 
-- `profile.toml`: username, light/dark palettes, feed URL, displayed post counts,
-  and public PGP fingerprint. Each palette includes five snake contribution
+- `profile.toml`: primary `markdown` path and its required `regions`, optional
+  `showcase_markdown` path (all regions), username, light/dark palettes, feed URL,
+  displayed post counts, and public PGP fingerprint. Each palette includes five snake contribution
   levels in `dots`; `snake` colours the snake itself. The tool-badge stack is still demo copy.
 - `profile-showcase/typing-iosevka.source.svg`: editable typing-introduction copy.
   After changing it, export with the exact **IosevkaTerm Nerd Font** installed:
@@ -159,8 +169,10 @@ A truncated API response is treated as a failure rather than an incomplete total
   the first paragraph, with HTML converted to text and whitespace normalized.
   There are no rewritten titles, generated summaries, or article images.
 - Project cards/gallery/release rows remain explicitly labeled placeholders.
-- Edit prose and layout outside the generated markers normally. Do not remove or
-  duplicate markers. The generator fails instead of guessing where to write.
+- Edit prose and layout outside the generated markers normally. To add or remove
+  a README widget, update both its marker pair and `regions` in `profile.toml`.
+  Do not duplicate markers. The generator validates both documents before fetching
+  data and fails instead of guessing where to write.
 
 ## Local checks
 

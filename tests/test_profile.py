@@ -480,6 +480,41 @@ class RenderTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 assets.put("../escape", profile.badge("PR", "open"))
 
+    def test_selected_regions_render_without_unselected_widgets(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "quotes.txt").write_text("")
+            assets = profile.Assets(root, "generated")
+            regions = self.config["regions"]
+            original = "# Keep this intro\n" + "\n".join(
+                f'<!-- profile:{name}:start -->\nold {name}\n<!-- profile:{name}:end -->'
+                for name in regions) + "\nKeep this ending.\n"
+            state = {"schema": 1, "sources": {"posts": {"items": data.parse_posts(rss(), "https://cosipa.dev/rss")}}}
+            rendered = profile.render(original, self.config, state, assets, NOW.date(), None, regions=regions)
+            profile.validate(root, self.config, rendered, regions=regions)
+            self.assertEqual(set(re.findall(r"profile:([\w-]+):start", rendered)), set(regions))
+            for name in regions:
+                self.assertNotIn(f"old {name}", rendered)
+            self.assertTrue(rendered.startswith("# Keep this intro\n"))
+            self.assertTrue(rendered.endswith("\nKeep this ending.\n"))
+            self.assertNotIn("footer-wave", rendered)
+            self.assertNotIn("Repository preview placeholder", rendered)
+
+    def test_region_validation_rejects_missing_duplicate_and_unexpected_markers(self):
+        valid = "<!-- profile:typing:start -->\nbody\n<!-- profile:typing:end -->"
+        profile.validate_regions(valid, ["typing"])
+        for markdown, regions in [
+            (valid, ["typing", "pgp"]),
+            (valid + "\n" + valid, ["typing"]),
+            (valid + "\n<!-- profile:typing:end -->", ["typing"]),
+            (valid + "\n<!-- profile:footer:start -->", ["typing"]),
+            (valid, ["typing", "typing"]),
+            (valid, ["unknown"]),
+            (valid, []),
+        ]:
+            with self.subTest(markdown=markdown, regions=regions), self.assertRaises(ValueError):
+                profile.validate_regions(markdown, regions)
+
     def test_render_preserves_everything_outside_markers(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -500,6 +535,81 @@ class RenderTests(unittest.TestCase):
 
 
 class WorkflowAndCacheTests(unittest.TestCase):
+    def copy_profile_inputs(self, root):
+        paths = ["profile.toml", "README.md", "test.md", "quotes.txt", ".profile-data/public.json"]
+        paths += [str(path.relative_to(ROOT)) for folder in ("profile-showcase", "profile-showcase/static")
+                  for path in (ROOT / folder).glob("*.svg")]
+        for relative in paths:
+            destination = root / relative
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            destination.write_bytes((ROOT / relative).read_bytes())
+
+    def test_offline_refresh_updates_both_documents_and_retains_their_assets(self):
+        config = tomllib.loads((ROOT / "profile.toml").read_text())
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.copy_profile_inputs(root)
+            before = {name: (root / name).read_text() for name in ("README.md", "test.md")}
+            with patch.object(profile, "ROOT", root), patch.object(sys, "argv", ["update_profile.py", "--offline"]), \
+                 patch.object(profile, "refresh", side_effect=AssertionError("offline must not fetch")):
+                profile.main()
+                for name, regions in [("README.md", config["regions"]), ("test.md", profile.REGIONS)]:
+                    updated = (root / name).read_text()
+                    profile.validate(root, config, updated, regions=regions)
+                    original = before[name]
+                    for region in regions:
+                        original = profile.replace_region(original, region, "REGION")
+                        updated = profile.replace_region(updated, region, "REGION")
+                    self.assertEqual(updated, original)
+                catalogue = (root / "test.md").read_text()
+                readme = (root / "README.md").read_text()
+                catalogue_only = profile.region_pattern("repository-placeholder").search(catalogue)[2]
+                for relative in re.findall(r"\./profile-showcase/[\w./-]+\.svg", catalogue_only):
+                    self.assertNotIn(relative, readme)
+                    self.assertTrue((root / relative).is_file())
+                snapshot = {str(path.relative_to(root)): path.read_bytes() for path in root.rglob("*") if path.is_file()}
+                profile.main()
+                self.assertEqual(snapshot, {str(path.relative_to(root)): path.read_bytes() for path in root.rglob("*") if path.is_file()})
+            with patch.object(profile, "ROOT", root), patch.object(sys, "argv", ["update_profile.py", "--check"]):
+                profile.main()
+
+    def test_broken_catalogue_aborts_before_fetching_or_writing_readme(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.copy_profile_inputs(root)
+            before = (root / "README.md").read_bytes()
+            catalogue = root / "test.md"
+            catalogue.write_text(catalogue.read_text().replace("<!-- profile:footer:end -->", ""))
+            with patch.object(profile, "ROOT", root), patch.object(sys, "argv", ["update_profile.py"]), \
+                 patch.object(profile, "refresh") as refresh, self.assertRaises(ValueError):
+                profile.main()
+            refresh.assert_not_called()
+            self.assertEqual((root / "README.md").read_bytes(), before)
+            self.assertFalse((root / "profile-showcase/generated").exists())
+
+    def test_readme_layout_and_workflow_include_only_selected_widgets(self):
+        config = tomllib.loads((ROOT / "profile.toml").read_text())
+        self.assertEqual(config["markdown"], "README.md")
+        self.assertEqual(config["showcase_markdown"], "test.md")
+        markdown = (ROOT / config["markdown"]).read_text()
+        profile.validate(ROOT, config, markdown, regions=config["regions"])
+        expected = ["typing", "pgp", "posts47", "activity", "merged", "stats", "timeline", "snake", "quote"]
+        self.assertEqual(re.findall(r"profile:([\w-]+):start", markdown), expected)
+        self.assertLess(markdown.index("github.com/Cosipa.png"), markdown.index('<h3 align="center">Cosipa'))
+        self.assertLess(markdown.index("Code, experiments"), markdown.index("profile:typing:start"))
+        self.assertLess(markdown.index("## Toolbox"), markdown.index("## Latest writing"))
+        for tool in ("linux", "nixos", "neovim", "rust", "python"):
+            self.assertIn(f"badge-{tool}.svg", markdown)
+        self.assertIn("komarev.com/ghpvc/", markdown)
+        self.assertIn('<a id="top"></a>', markdown)
+        self.assertIn("[↑ Go back to the top](#top)", markdown)
+        for omitted in ("footer-wave", "terminal-rose-pine", "profile:github-badges:", "profile:posts48", "profile:repository-placeholder:"):
+            self.assertNotIn(omitted, markdown)
+        workflow = (ROOT / ".github/workflows/profile.yml").read_text()
+        self.assertIn("      - 'README.md'", workflow)
+        self.assertIn("git add -- README.md test.md profile-showcase/generated .profile-data/public.json", workflow)
+        self.assertIn("      - 'README.md'", (ROOT / ".github/workflows/check.yml").read_text())
+
     def test_source_failure_keeps_last_good_data(self):
         config = tomllib.loads((ROOT / "profile.toml").read_text())
         state = {"schema": 1, "sources": {"posts": {"as_of": "2026-10-18", "items": [{"title": "Existing post"}]}}}
@@ -578,7 +688,7 @@ class WorkflowAndCacheTests(unittest.TestCase):
         for removed in ["posts42", "posts48c", "48C", "## 42", "profile:header:", "header-wave.svg", "[!TIP]"]:
             self.assertNotIn(removed, markdown)
         self.assertNotIn("<details", markdown)
-        self.assertEqual(tomllib.loads((ROOT / "profile.toml").read_text())["markdown"], "test.md")
+        self.assertEqual(tomllib.loads((ROOT / "profile.toml").read_text())["showcase_markdown"], "test.md")
         self.assertTrue((ROOT / "profile-showcase/terminal-rose-pine.svg").is_file())
 
 

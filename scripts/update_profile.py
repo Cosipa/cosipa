@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Refresh marked sections of test.md; never rewrite its layout or README.md."""
+"""Refresh configured regions in the profile README and component showcase."""
 
 from __future__ import annotations
 
@@ -333,7 +333,7 @@ def activity_table(facts: dict, assets: Assets, *, merged=False) -> str:
     return table
 
 
-def render(markdown: str, config: dict, state: dict, assets: Assets, today: date, snake_dir: Path | None) -> str:
+def render(markdown: str, config: dict, state: dict, assets: Assets, today: date, snake_dir: Path | None, *, regions=REGIONS) -> str:
     user, repo = config["username"], config["repository"]
     sources = state["sources"]
     colors = config["colors"]
@@ -393,14 +393,25 @@ def render(markdown: str, config: dict, state: dict, assets: Assets, today: date
         for region, kind in [("posts48a", "quote"), ("posts48b", "plain")]:
             replacements[region] = post_excerpts(posts[:config["blog"]["excerpts"]], kind)
     for name, value in replacements.items():
-        markdown = replace_region(markdown, name, value)
+        if name in regions:
+            markdown = replace_region(markdown, name, value)
     return markdown
 
 
-def validate(root: Path, config: dict, markdown: str):
-    for name in REGIONS:
-        if len(list(region_pattern(name).finditer(markdown))) != 1:
+def validate_regions(markdown: str, regions=REGIONS):
+    if not regions or len(set(regions)) != len(regions) or set(regions) - set(REGIONS):
+        raise ValueError("Configured regions must be unique, known region names")
+    markers = re.findall(r"<!-- profile:([\w-]+):(start|end) -->", markdown)
+    if {name for name, _ in markers} - set(regions):
+        raise ValueError("Unexpected generated region for this document")
+    for name in regions:
+        if (len(list(region_pattern(name).finditer(markdown))) != 1
+                or markers.count((name, "start")) != 1 or markers.count((name, "end")) != 1):
             raise ValueError(f"Missing or duplicate generated region: {name}")
+
+
+def validate(root: Path, config: dict, markdown: str, *, regions=REGIONS):
+    validate_regions(markdown, regions)
     for relative in re.findall(r"\./profile-showcase/[\w./-]+\.svg", markdown):
         path = inside(root, relative)
         if not path.is_file():
@@ -441,16 +452,21 @@ def main():
     parser.add_argument("--snake-dir", type=Path)
     args = parser.parse_args()
     config = tomllib.loads((ROOT / "profile.toml").read_text())
-    markdown_path = inside(ROOT, config["markdown"])
-    original = markdown_path.read_text()
+    targets = [(config["markdown"], config.get("regions", REGIONS))]
+    if config.get("showcase_markdown"):
+        targets.append((config["showcase_markdown"], REGIONS))
+    documents = [(inside(ROOT, path), regions, inside(ROOT, path).read_text())
+                 for path, regions in targets]
+    if len({path for path, _, _ in documents}) != len(documents):
+        raise ValueError("Markdown output paths must be distinct")
+    # Check every document before network requests or any output changes.
+    for _, regions, original in documents:
+        validate_regions(original, regions)
+        if args.check:
+            validate(ROOT, config, original, regions=regions)
     if args.check:
-        validate(ROOT, config, original)
         print("Profile regions and local assets are valid.")
         return
-    # Check all markers before network requests or any output changes.
-    for name in REGIONS:
-        if len(list(region_pattern(name).finditer(original))) != 1:
-            raise ValueError(f"Missing or duplicate generated region: {name}")
     cache_path = inside(ROOT, config["cache"])
     state = json.loads(cache_path.read_text()) if cache_path.exists() else {"schema": 1, "sources": {}}
     if state.get("schema") != 1 or not isinstance(state.get("sources"), dict):
@@ -458,16 +474,22 @@ def main():
     now = datetime.now(UTC)
     warnings = [] if args.offline else refresh(config, state, now)
     assets = Assets(ROOT, config["generated_dir"])
-    updated = render(original, config, state, assets, now.date(), args.snake_dir)
-    validate(ROOT, config, updated)
-    if updated != original:
-        markdown_path.write_text(updated)
+    rendered = [(path, regions, original,
+                 render(original, config, state, assets, now.date(), args.snake_dir, regions=regions))
+                for path, regions, original in documents]
+    for _, regions, _, updated in rendered:
+        validate(ROOT, config, updated, regions=regions)
+    for path, _, original, updated in rendered:
+        if updated != original:
+            path.write_text(updated)
     cache_path.parent.mkdir(parents=True, exist_ok=True)
     cache = json.dumps(state, indent=2, sort_keys=True, ensure_ascii=False) + "\n"
     if not cache_path.exists() or cache_path.read_text() != cache:
         cache_path.write_text(cache)
-    assets.prune(updated)
-    print(f"Profile {'updated' if updated != original else 'unchanged'}; {len(warnings)} data-source warning(s).")
+    # Catalogue-only assets must survive pruning even when absent from the README.
+    assets.prune("\n".join(updated for _, _, _, updated in rendered))
+    changed = any(updated != original for _, _, original, updated in rendered)
+    print(f"Profile {'updated' if changed else 'unchanged'}; {len(warnings)} data-source warning(s).")
     summary = os.environ.get("GITHUB_STEP_SUMMARY")
     if summary:
         with open(summary, "a") as out:
