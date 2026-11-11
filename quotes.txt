@@ -1,0 +1,4 @@
+# Your quotes only. No random quotes are fetched.
+# One quote per line. Optional attribution follows a literal TAB character.
+# Lines beginning with # and blank lines are ignored.
+# With no entries, the card explicitly says no quotes are configured.

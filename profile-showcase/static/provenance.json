@@ -1,0 +1,84 @@
+{
+  "badge-linux.svg": {
+    "source": "https://img.shields.io/badge/Linux-FCC624?style=flat&logo=linux&logoColor=black",
+    "sha256": "66b0c8e0c9f91dea6f6bb6dba4800d8de22b817daf9a3e0a4675aba000f0e387",
+    "note": "One-time SVG snapshot; never requested by the scheduled workflow or profile visitors."
+  },
+  "badge-nixos.svg": {
+    "source": "https://img.shields.io/badge/NixOS-5277C3?style=flat&logo=nixos&logoColor=white",
+    "sha256": "faec6ee0b161c82f4223017e1af6ceee2124eaddc7a7afc00cb5b98f63e46601",
+    "note": "One-time SVG snapshot; never requested by the scheduled workflow or profile visitors."
+  },
+  "badge-neovim.svg": {
+    "source": "https://img.shields.io/badge/Neovim-57A143?style=flat&logo=neovim&logoColor=white",
+    "sha256": "2989c1cea66a4f772103bb34ac19b3db084b7cfc3a6ff569711b37ff3efc42bb",
+    "note": "One-time SVG snapshot; never requested by the scheduled workflow or profile visitors."
+  },
+  "badge-rust.svg": {
+    "source": "https://img.shields.io/badge/Rust-000000?style=flat&logo=rust&logoColor=white",
+    "sha256": "7a8d039d1d2e2371308637d80098f5715100798de867433f8e461389edcd8852",
+    "note": "One-time SVG snapshot; never requested by the scheduled workflow or profile visitors."
+  },
+  "badge-python.svg": {
+    "source": "https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white",
+    "sha256": "f5094bc5f8d6016ef25bc8527cb082356890e69a8b9d9fb08a41734669055272",
+    "note": "One-time SVG snapshot; never requested by the scheduled workflow or profile visitors."
+  },
+  "badge-cli.svg": {
+    "source": "https://img.shields.io/badge/CLI-7aa2f7?style=flat",
+    "sha256": "c5b56143edb9007dd2d766193e2d841aa227407a6c787eee99594a54249bc8de",
+    "note": "One-time SVG snapshot; never requested by the scheduled workflow or profile visitors."
+  },
+  "badge-local-first.svg": {
+    "source": "https://img.shields.io/badge/local_first-9ece6a?style=flat",
+    "sha256": "473a4266fca62f42c4019ba7a696f12107569efb35a09639ca134ba693f18311",
+    "note": "One-time SVG snapshot; never requested by the scheduled workflow or profile visitors."
+  },
+  "badge-experiment.svg": {
+    "source": "https://img.shields.io/badge/experiment-bb9af7?style=flat",
+    "sha256": "95ecb32fcc6f784ceddaa594e3c5d7df4147b9fb037019dd711948c735068706",
+    "note": "One-time SVG snapshot; never requested by the scheduled workflow or profile visitors."
+  },
+  "badge-work-in-progress.svg": {
+    "source": "https://img.shields.io/badge/work_in_progress-e0af68?style=flat",
+    "sha256": "db4e47e46da95ddb4b952748e4260e99557c7e2d96809d12ae92ac62002643c6",
+    "note": "One-time SVG snapshot; never requested by the scheduled workflow or profile visitors."
+  },
+  "badge-demo-version-1-4-0.svg": {
+    "source": "https://img.shields.io/badge/demo-v1.4.0-7aa2f7?style=flat",
+    "sha256": "d60e4892e6dfb30bc74a7080578188bc7675abba86ed9715d175db225cccf6e8",
+    "note": "One-time SVG snapshot; never requested by the scheduled workflow or profile visitors."
+  },
+  "badge-demo-version-0-8-2.svg": {
+    "source": "https://img.shields.io/badge/demo-v0.8.2-bb9af7?style=flat",
+    "sha256": "93b414efda29221f83059057d2620b4410f39f92179831fe080e7c25843342ca",
+    "note": "One-time SVG snapshot; never requested by the scheduled workflow or profile visitors."
+  },
+  "badge-demo-rolling-release.svg": {
+    "source": "https://img.shields.io/badge/demo-rolling-9ece6a?style=flat",
+    "sha256": "b8a1ffe30744832853f3abf029014689c6dcbec546637d9c5a9c4177fe1dc3c3",
+    "note": "One-time SVG snapshot; never requested by the scheduled workflow or profile visitors."
+  },
+  "badge-pr-open.svg": {
+    "source": "https://img.shields.io/badge/PR-open-313131?style=flat&labelColor=3e8fb0",
+    "sha256": "5c52fddaf9e428e8fa41ae1932cb2a8b5cdd3b728b07d329a242ac5400921cf6",
+    "note": "One-time SVG snapshot; never requested by the scheduled workflow or profile visitors."
+  },
+  "badge-issue-open.svg": {
+    "source": "https://img.shields.io/badge/issue-open-313131?style=flat&labelColor=3e8fb0",
+    "sha256": "3ec04aa1244e0edbac9b2c819efb6a70e90c1a260cb08711b1e3fe1ae99bef80",
+    "note": "One-time SVG snapshot; never requested by the scheduled workflow or profile visitors."
+  },
+  "header-wave.svg": {
+    "source": "https://capsule-render.vercel.app/api?type=waving&height=160&text=COSIPA&fontSize=52&fontAlignY=38&color=232136&fontColor=e0def4",
+    "sha256": "5798b651245d8ad67a9755272f249c70ebe7200a14573831176e4884c03c5896",
+    "note": "One-time SVG snapshot, trailing whitespace normalized; never requested by the workflow or profile visitors.",
+    "source_sha256": "3c0b2562f1954bec0f4661da4940ad9961cb0a9a185ee6cab354a9da03b7c46b"
+  },
+  "footer-wave.svg": {
+    "source": "https://capsule-render.vercel.app/api?type=waving&height=110&section=footer&color=gradient",
+    "sha256": "0ac9466f6bfe859191eafc6c5f702d18f6b3db8244c36f56187a02ddcc7f97d1",
+    "note": "One-time SVG snapshot, trailing whitespace normalized; never requested by the workflow or profile visitors.",
+    "source_sha256": "dfff9cf976d72ed89d26f1c6f4519c1d65bbc15202cfe77adce9d3b1ef113cde"
+  }
+}

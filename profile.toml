@@ -1,0 +1,32 @@
+username = "Cosipa"
+repository = "Cosipa/cosipa"
+markdown = "test.md"
+generated_dir = "profile-showcase/generated"
+cache = ".profile-data/public.json"
+quotes = "quotes.txt"
+
+[blog]
+feed = "https://cosipa.dev/rss"
+cards = 4
+rows = 3
+excerpts = 3
+
+[colors.dark]
+background = "0d1117"
+title = "c9d1d9"
+text = "8b949e"
+accent = "8b949e"
+
+[colors.light]
+background = "ffffff"
+title = "24292f"
+text = "57606a"
+accent = "57606a"
+
+[pgp]
+# Verified against https://github.com/Cosipa.gpg. Update after rotating your key.
+fingerprint = "2C92F4C9475DE7B8A84380E9A8523AE122FE6E85"
+
+[typing]
+# Existing demo copy; edit these yourself when choosing your introduction.
+lines = ["Hello, I'm Cosipa.", "Building, breaking, and figuring things out.", "Probably starting another side project."]

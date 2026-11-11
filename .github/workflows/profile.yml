@@ -1,0 +1,82 @@
+name: Refresh profile
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 */6 * * *'
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/**'
+      - 'tests/**'
+      - 'profile.toml'
+      - 'quotes.txt'
+      - '.python-version'
+      - '.github/workflows/profile.yml'
+      - 'test.md'
+      - 'profile-showcase/static/**'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: refresh-profile
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version-file: .python-version
+      - name: Test generators without network access
+        run: python -m unittest discover -s tests -v
+      - name: Generate contribution snake from this account
+        id: snake
+        # In a private preview repo its token can see non-public contribution data.
+        # Run this generator only once the profile repo is public.
+        if: github.event.repository.private == false
+        continue-on-error: true
+        uses: Platane/snk/svg-only@d8f6715049803e982ee5ff501b6b9b7d5deeb09b # v3.5.0
+        with:
+          github_user_name: Cosipa
+          github_token: ${{ github.token }}
+          outputs: |
+            .profile-build/snake-light.svg?palette=github-light&color_snake=%2357606a
+            .profile-build/snake-dark.svg?palette=github-dark&color_snake=%238b949e
+      - name: Fetch public data and render existing profile sections
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          SNAKE_OUTCOME: ${{ steps.snake.outcome }}
+          PROFILE_REPOSITORY_PRIVATE: ${{ github.event.repository.private }}
+        run: |
+          if [ "$PROFILE_REPOSITORY_PRIVATE" = true ]; then
+            echo '::notice::Public-only snake generation is deferred until this profile repository is public.'
+          elif [ "$SNAKE_OUTCOME" != success ]; then
+            echo '::warning::Snake generation failed; retaining the last successful animation.'
+          fi
+          python scripts/update_profile.py --snake-dir .profile-build
+          python scripts/update_profile.py --check
+      - name: Commit changed generated output only
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          git add -- test.md profile-showcase/generated .profile-data/public.json
+          if git diff --cached --quiet; then
+            echo 'No profile data changed.'
+            exit 0
+          fi
+          git -c user.name='github-actions[bot]' \
+              -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
+              commit -m 'chore: refresh profile data'
+          auth="$(printf 'x-access-token:%s' "$GITHUB_TOKEN" | base64 -w0)"
+          echo "::add-mask::$auth"
+          git -c "http.https://github.com/.extraheader=AUTHORIZATION: basic $auth" push origin HEAD:main
