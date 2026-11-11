@@ -584,7 +584,7 @@ class WorkflowAndCacheTests(unittest.TestCase):
             with patch.object(profile, "ROOT", root), patch.object(sys, "argv", ["update_profile.py", "--offline"]), \
                  patch.object(profile, "refresh", side_effect=AssertionError("offline must not fetch")):
                 profile.main()
-                for name, regions in [("README.md", config["regions"]), ("test.md", profile.REGIONS)]:
+                for name, regions in [("README.md", config["regions"]), ("test.md", config["showcase_regions"])]:
                     updated = (root / name).read_text()
                     profile.validate(root, config, updated, regions=regions)
                     original = before[name]
@@ -693,33 +693,37 @@ class WorkflowAndCacheTests(unittest.TestCase):
             self.assertEqual(hashlib.sha256((directory / name).read_bytes()).hexdigest(), metadata["sha256"])
             ET.parse(directory / name)
 
-    def test_working_components_are_separate_from_mockups(self):
+    def test_catalogue_contains_only_unused_components_and_separates_mockups(self):
+        config = tomllib.loads((ROOT / "profile.toml").read_text())
         markdown = (ROOT / "test.md").read_text()
+        profile.validate(ROOT, config, markdown, regions=config["showcase_regions"])
         self.assertEqual([int(n) for n in re.findall(r"^## (\d+) ·", markdown, re.M)],
-                         [1, 3, 7, 18, 9, 12, 14, 24, 25, 47, 48, 4, 5, 17, 19, 21, 22, 37])
+                         [3, 7, 48, 17, 19, 21, 22])
+        self.assertEqual(set(re.findall(r"profile:([\w-]+):start", markdown)), set(config["showcase_regions"]))
+        self.assertTrue(set(config["regions"]).isdisjoint(config["showcase_regions"]))
+        self.assertEqual(set(config["regions"]) | set(config["showcase_regions"]), set(profile.REGIONS))
+        for name in config["regions"]:
+            self.assertNotIn(f"profile:{name}:", markdown)
+        for shared in ["badge-linux.svg", "badge-nixos.svg", "badge-neovim.svg", "badge-rust.svg",
+                       "badge-python.svg", "komarev.com", "github.com/Cosipa.png", "quotes.txt",
+                       "[↑ Go back to the top](#top)"]:
+            self.assertNotIn(shared, markdown)
         working, mockups = markdown.split("# Mockups & setup pending", 1)
         self.assertIn("# Working components", working)
-        self.assertIn("profile:stats:start", working)
-        self.assertIn("profile:posts47:start", working)
-        self.assertIn("profile:merged:start", working)
-        self.assertLess(working.index("## 24 ·"), working.index("## 25 ·"))
-        self.assertLess(working.index("## 25 ·"), working.index("## 47 ·"))
-        self.assertIn('<a id="top"></a>', markdown)
-        self.assertIn("[↑ Go back to the top](#top)", markdown)
+        self.assertIn("profile:github-badges:start", working)
         self.assertNotIn("raw.githubusercontent.com/lowlighter/metrics", working)
         self.assertIn("Achievement wall · not configured", mockups)
-        self.assertIn("profile:quote:start", mockups)
+        self.assertIn("profile:footer:start", mockups)
         self.assertIn("### 48A · Ordinary blockquotes", working)
         self.assertIn("### 48B · Unframed excerpts", working)
-        for name in ("typing", "stats", "timeline", "snake", "quote", "repository-placeholder"):
-            body = profile.region_pattern(name).search(markdown)[2]
-            self.assertEqual(body.count("#gh-dark-mode-only"), 1)
-            self.assertEqual(body.count("#gh-light-mode-only"), 1)
-            self.assertNotIn("<picture", body)
+        body = profile.region_pattern("repository-placeholder").search(markdown)[2]
+        self.assertEqual(body.count("#gh-dark-mode-only"), 1)
+        self.assertEqual(body.count("#gh-light-mode-only"), 1)
+        self.assertNotIn("<picture", body)
         for removed in ["posts42", "posts48c", "48C", "## 42", "profile:header:", "header-wave.svg", "[!TIP]"]:
             self.assertNotIn(removed, markdown)
         self.assertNotIn("<details", markdown)
-        self.assertEqual(tomllib.loads((ROOT / "profile.toml").read_text())["showcase_markdown"], "test.md")
+        self.assertEqual(config["showcase_markdown"], "test.md")
         self.assertTrue((ROOT / "profile-showcase/terminal-rose-pine.svg").is_file())
 
 

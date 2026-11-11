@@ -1,9 +1,10 @@
 # Profile automation
 
-`README.md` is the profile; `test.md` remains the component catalogue. Both
+`README.md` is the profile; `test.md` contains only unused component options. Both
 layouts are hand-maintained. Only content between
 `<!-- profile:NAME:start -->` / `<!-- profile:NAME:end -->` markers is generated.
-`profile.toml` selects the README's regions; the catalogue keeps the full set.
+`profile.toml` selects each document's required blocks using `regions` and
+`showcase_regions`; adopted README widgets are not duplicated in the catalogue.
 Both documents refresh from the same public-data fetch, and asset cleanup keeps
 SVGs referenced by either document. The terminal image is unchanged.
 
@@ -14,9 +15,11 @@ link. Catalogue-only badges, mockups, alternative blog layouts and the decorativ
 footer are not included in the README.
 
 `test.md` separates **Working components** from **Mockups & setup pending**.
-The latter includes Metrics/achievements (not configured), project placeholders,
-sample intro/tool copy, and quotes awaiting your content. Blog alternatives 47,
-48A, and 48B are automated; the old cards and TIP-callout alternatives are removed.
+It retains terminal styling (03), live badges (07), blog alternatives (48A/48B),
+Metrics/achievements (17, not configured), repository/project/release placeholders
+(19/21/22), and the unused decorative footer. The intro, toolbox, PGP/views,
+contribution cards, open/merged activity, blog rows (47), quote and back-to-top link
+live only in the README. Both blog alternatives remain automated.
 
 ## What runs
 
@@ -149,7 +152,7 @@ A truncated API response is treated as a failure rather than an incomplete total
 ## Edit your content
 
 - `profile.toml`: primary `markdown` path and its required `regions`, optional
-  `showcase_markdown` path (all regions), username, light/dark palettes, feed URL,
+  `showcase_markdown` path with its `showcase_regions`, username, light/dark palettes, feed URL,
   displayed post counts, and public PGP fingerprint. Each palette includes five snake contribution
   levels in `dots`; `snake` colours the snake itself. The tool-badge stack is still demo copy.
 - `profile-showcase/typing-iosevka.source.svg`: editable typing-introduction copy.
@@ -173,7 +176,8 @@ A truncated API response is treated as a failure rather than an incomplete total
   There are no rewritten titles, generated summaries, or article images.
 - Project cards/gallery/release rows remain explicitly labeled placeholders.
 - Edit prose and layout outside the generated markers normally. To add or remove
-  a README widget, update both its marker pair and `regions` in `profile.toml`.
+  a widget, update both its marker pair and the corresponding `regions` or
+  `showcase_regions` in `profile.toml`. Move adopted options out of `test.md`.
   Do not duplicate markers. The generator validates both documents before fetching
   data and fails instead of guessing where to write.
 

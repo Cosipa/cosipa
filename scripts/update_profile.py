@@ -472,7 +472,7 @@ def main():
     config = tomllib.loads((ROOT / "profile.toml").read_text())
     targets = [(config["markdown"], config.get("regions", REGIONS))]
     if config.get("showcase_markdown"):
-        targets.append((config["showcase_markdown"], REGIONS))
+        targets.append((config["showcase_markdown"], config.get("showcase_regions", REGIONS)))
     documents = [(inside(ROOT, path), regions, inside(ROOT, path).read_text())
                  for path, regions in targets]
     if len({path for path, _, _ in documents}) != len(documents):

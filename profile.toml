@@ -2,8 +2,9 @@ username = "Cosipa"
 repository = "Cosipa/cosipa"
 markdown = "README.md"
 regions = ["typing", "pgp", "posts47", "activity", "merged", "stats", "timeline", "snake", "quote"]
-# Keep the component catalogue refreshed without adding its extra widgets to the README.
+# Refresh only the unused options left in the component catalogue.
 showcase_markdown = "test.md"
+showcase_regions = ["github-badges", "posts48a", "posts48b", "repository-placeholder", "footer"]
 generated_dir = "profile-showcase/generated"
 cache = ".profile-data/public.json"
 quotes = "quotes.txt"
