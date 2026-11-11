@@ -20,27 +20,13 @@ Original numbers are kept so we can keep referring to them. Everything is visibl
 
 [![Typing introduction: Hello, I'm Cosipa; building, breaking, and figuring things out; probably starting another side project](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=23&duration=3000&pause=1100&color=C4A7E7&width=950&height=70&lines=Hello%2C+I%27m+Cosipa.;Building%2C+breaking%2C+and+figuring+things+out.;Probably+starting+another+side+project.)](https://readme-typing-svg.demolab.com/)
 
-## 02 · Type-only header
-
-No generated banner artwork, gradients, orbit graphics, or invented tagline. Just type and real links.
-
-<h1>Cosipa</h1>
-<p>
-  <a href="https://cosipa.dev/">cosipa.dev</a> /
-  <a href="https://github.com/Cosipa?tab=repositories">repositories</a> /
-  <a href="https://cosipa.dev/rss">rss</a> /
-  <a href="https://github.com/Cosipa.gpg">pgp</a>
-</p>
-
----
-
 ## 03 · Your terminal styling
 
-Rosé Pine Moon, a two-line Fish/Starship prompt, no title bar or window controls, and a steady beam cursor. Based on your Ghostty, Kitty, Fish, and Starship configurations in `~/NixOS`.
+Rosé Pine Moon, your two-line Fish/Starship prompt and branch symbol, no title bar or window buttons, and a steady beam cursor.
 
-![Terminal styling recreation using Cosipa's Rosé Pine Moon palette and two-line Starship prompt](./profile-showcase/terminal.svg)
+![Undecorated Rosé Pine Moon terminal with Cosipa's two-line Starship prompt](./profile-showcase/terminal-rose-pine.svg)
 
-<sub>A styling recreation with demonstration commands, not a screenshot. Uses ZedMono NF / IosevkaTerm NFP when available, with a monospace fallback.</sub>
+<sub>Styling recreation, not a screenshot. Uses the installed IosevkaTerm Nerd Font from your Kitty/Foot setup. Glyphs are rendered as paths so font fallback cannot change the image. New asset URL to avoid reusing the old cached illustration.</sub>
 
 ## 04 · Native avatar + a centered intro
 
@@ -193,33 +179,16 @@ The one that exists because you wanted to understand how something works.
 | `tiny-parser` | ![Demo version 0.8.2](https://img.shields.io/badge/demo-v0.8.2-bb9af7?style=flat) | Error messages now attempt to help. |
 | `homelab-notes` | ![Demo rolling release](https://img.shields.io/badge/demo-rolling-9ece6a?style=flat) | Another diagram of the same server. |
 
-## 24 · Activity with status badges and callouts
+## 24 · Open pull requests and issues
 
-**Actual public PRs/issues · snapshot.** States were checked through GitHub's API; these badges are presentation labels, not live status checks. No invented events.
+**Actual public activity · snapshot.** Open items only. Status badges are presentation labels, not live checks.
 
-> [!NOTE]
-> ![PR open](https://img.shields.io/badge/PR-open-313131?style=flat&labelColor=3e8fb0)
-> **[zap: install desktop icons](https://github.com/NixOS/nixpkgs/pull/585770)** · `NixOS/nixpkgs #585770`
->
-> ![PR open](https://img.shields.io/badge/PR-open-313131?style=flat&labelColor=3e8fb0)
-> **[fido2-manage: update to 0.2.2](https://github.com/NixOS/nixpkgs/pull/585745)** · `NixOS/nixpkgs #585745`
->
-> ![PR open](https://img.shields.io/badge/PR-open-313131?style=flat&labelColor=3e8fb0)
-> **[iproute2: 7.2.0 -> 7.3.0](https://github.com/NixOS/nixpkgs/pull/585573)** · `NixOS/nixpkgs #585573`
-
-<!-- -->
-
-> [!NOTE]
-> ![PR closed](https://img.shields.io/badge/PR-closed-313131?style=flat&labelColor=eb6f92)
-> **[Update install-with-flux.md (https://charts.longhorn.io url deprecated)](https://github.com/longhorn/website/pull/1150)** · `longhorn/website #1150`
->
-> <sub>Closed without merging · July 6, 2025.</sub>
-
-<!-- -->
-
-> [!NOTE]
-> ![Issue open](https://img.shields.io/badge/issue-open-313131?style=flat&labelColor=3e8fb0)
-> **[\[BUG\] Prowlarr magnet redirect is discarded before Transmission grab](https://github.com/maxdorninger/MediaManager/issues/574)** · `maxdorninger/MediaManager #574`
+| Status | Repository | Title |
+| :-- | :-- | :-- |
+| ![PR open](https://img.shields.io/badge/PR-open-313131?style=flat&labelColor=3e8fb0) | `NixOS/nixpkgs` | [zap: install desktop icons](https://github.com/NixOS/nixpkgs/pull/585770) · #585770 |
+| ![PR open](https://img.shields.io/badge/PR-open-313131?style=flat&labelColor=3e8fb0) | `NixOS/nixpkgs` | [fido2-manage: update to 0.2.2](https://github.com/NixOS/nixpkgs/pull/585745) · #585745 |
+| ![PR open](https://img.shields.io/badge/PR-open-313131?style=flat&labelColor=3e8fb0) | `NixOS/nixpkgs` | [iproute2: 7.2.0 -> 7.3.0](https://github.com/NixOS/nixpkgs/pull/585573) · #585573 |
+| ![Issue open](https://img.shields.io/badge/issue-open-313131?style=flat&labelColor=3e8fb0) | `maxdorninger/MediaManager` | [\[BUG\] Prowlarr magnet redirect is discarded before Transmission grab](https://github.com/maxdorninger/MediaManager/issues/574) · #574 |
 
 <a id="other"></a>
 
@@ -275,7 +244,7 @@ side_quests: 7
 
 Only **42**, **47**, and **48** remain. Titles, dates, and quoted excerpts are from [your RSS feed](https://cosipa.dev/rss). No rewritten headlines or generated article images. These are snapshots, not automatic feed readers yet.
 
-[42 · Cards](#42--two-column-text-cards) · [47 · Rows](#47--compact-magazine-rows) · [48 · Compact callouts](#48--three-compact-callouts)
+[42 · Cards](#42--two-column-text-cards) · [47 · Rows](#47--compact-magazine-rows) · [48 · Callouts with excerpts](#48--three-callouts-with-excerpts)
 
 ## 42 · Two-column text cards
 
@@ -373,20 +342,30 @@ Only **42**, **47**, and **48** remain. Titles, dates, and quoted excerpts are f
 </tr>
 </table>
 
-## 48 · Three compact callouts
+## 48 · Three callouts with excerpts
 
 > [!NOTE]
 > **[A user in the Docker group can become root](https://cosipa.dev/posts/docker-group-security-risk/)** · <sub>Oct 18, 2026</sub>
+>
+> This is a well-known (very old) Docker security risk, that everybody knows
+> exists, yet sometimes we underestimate the impact of it.
 
 <!-- -->
 
 > [!NOTE]
 > **[How to setup a pull-through Docker registry](https://cosipa.dev/posts/docker-registry-cache-setup/)** · <sub>Aug 05, 2026</sub>
+>
+> A pull-through Docker registry is basically just a cached proxy to DockerHub,
+> instead of having your servers pulling images from DockerHub directly, they
+> could pull them from your own registry.
 
 <!-- -->
 
 > [!NOTE]
 > **[How to speed up Linux disk encryption](https://cosipa.dev/posts/full-disk-encryption-tweaks/)** · <sub>Jul 25, 2026</sub>
+>
+> What is dm-crypt: Device-Mapper’s crypt provides transparent encryption of
+> block devices using the kernel crypto API.
 
 [cosipa.dev](https://cosipa.dev/) · [RSS](https://cosipa.dev/rss) · [↑ Back to top](#profile-shortlist)
 
