@@ -22,8 +22,9 @@ sample intro/tool copy, and quotes awaiting your content. Blog alternatives 47,
 4. Fetch public GitHub API data, the unauthenticated public contribution calendar,
    and `https://cosipa.dev/rss` using Python's standard library.
 5. Generate local SVGs and refresh only the marked Markdown blocks. Apply the
-   Rosé Pine Moon / Dawn palettes from `profile.toml` to stats, timeline, and snake.
-   Snake backgrounds and contrasting rose heads are themed locally, including
+   GitHub-native light/dark backgrounds and blue/green accents from `profile.toml`.
+   Snake cells keep GitHub's normal green levels; only the snake itself is pink.
+   Snake backgrounds and colours are applied locally, including
    cached animations when the Action cannot produce a fresh one.
 6. Commit changed generated files using GitHub's built-in `GITHUB_TOKEN`.
 
@@ -37,12 +38,15 @@ Static tool badges and the footer wave are vendored SVG snapshots; source URLs
 and SHA-256 checksums are in `profile-showcase/static/provenance.json`. Those hosts
 are not queried by the workflow or by visitors. Locally generated badges use the
 same rounded clipping, subtle gradient, and text-shadow treatment as Shields flat.
+Proportional glyph metrics and explicit SVG text lengths keep each badge segment's
+horizontal padding at six pixels, rather than estimating width by character count.
 The decorative header wave is removed.
 
 The typing introduction is a local SVG exported with **outlined IosevkaTerm Nerd
 Font** glyphs. Merely specifying a font family does not make that font available
 inside a GitHub image. Outlining prevents fallback without adding a font/tool
-installation to Actions. Its animation is preserved.
+installation to Actions. Its animation advances and erases in discrete 11.5px
+character cells, with pauses, rather than sliding a clipping edge through glyphs.
 
 Generated SVG filenames include their content hash. Updating data changes the
 image URL to avoid displaying an older image through GitHub's cache. The
@@ -104,7 +108,7 @@ A truncated API response is treated as a failure rather than an incomplete total
 
 - `profile.toml`: username, light/dark palettes, feed URL, displayed post counts,
   and public PGP fingerprint. Each palette includes five snake contribution
-  levels in `dots`; `rose` colours its head. The tool-badge stack is still demo copy.
+  levels in `dots`; `snake` colours the snake itself. The tool-badge stack is still demo copy.
 - `profile-showcase/typing-iosevka.source.svg`: editable typing-introduction copy.
   After changing it, export with the exact **IosevkaTerm Nerd Font** installed:
   ```sh
@@ -117,7 +121,9 @@ A truncated API response is treated as a failure rather than an incomplete total
   dependency. Ensure the exported SVG retains animation and has no `<text>` nodes.
 - `quotes.txt`: one quote per line; optional attribution after a literal **TAB**.
   Blank lines and lines starting with `#` are ignored. Selection is deterministic
-  for a UTC day. There are no supplied/random quotes or invented attributions.
+  for a UTC day. The current entries are explicitly labelled demo placeholders,
+  supplied only to preview the card; replace them before publishing your final
+  README. No quotations or real-world attributions are invented.
   An empty file shows an explicit configuration notice.
 - Blog titles and dates come from RSS. Excerpts are contiguous first sentences of
   the first paragraph, with HTML converted to text and whitespace normalized.

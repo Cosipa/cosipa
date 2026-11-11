@@ -174,6 +174,12 @@ class RenderTests(unittest.TestCase):
         self.assertIn("Published restricted contributions", document)
         self.assertNotIn("Private commits", document)
         self.assertIn("2026 YTD", document)
+        root = ET.fromstring(document)
+        ns = {"s": "http://www.w3.org/2000/svg"}
+        self.assertEqual(root.attrib["height"], "229")
+        self.assertEqual(len(root.findall(".//s:rect", ns)), 1)  # Background only, no row pills.
+        self.assertEqual(root.findall(".//s:circle", ns), [])
+        self.assertIn(f'fill="#{self.palette["accent"]}"', document)
         stale = profile.stats_card("Cosipa", facts, date(2027, 1, 1), self.palette)
         self.assertIn("await", stale)
         self.assertNotIn("2026 YTD", stale)
@@ -206,6 +212,31 @@ class RenderTests(unittest.TestCase):
         self.assertIn('clip-path="url(#badge)"', document)
         self.assertIn('opacity=".3"', document)
 
+    def test_badges_have_consistent_six_pixel_segment_padding(self):
+        ns = {"s": "http://www.w3.org/2000/svg"}
+        for label, value in [("followers", "5"), ("stars", "12"), ("updated", "2026-11-11"), ("pgp", "0xA8523AE122FE6E85")]:
+            with self.subTest(label=label):
+                root = ET.fromstring(profile.badge(label, value))
+                segments = root.findall('.//s:g[@clip-path="url(#badge)"]/s:rect', ns)[:2]
+                foreground = root.findall(".//s:text", ns)[1::2]
+                for segment, node in zip(segments, foreground):
+                    padding = (float(segment.attrib["width"]) - float(node.attrib["textLength"])) / 2
+                    self.assertGreaterEqual(padding, 6)
+                    self.assertLess(padding, 6.5)
+                    self.assertEqual(node.attrib["lengthAdjust"], "spacingAndGlyphs")
+        self.assertLess(profile.badge_text_width("iiii"), profile.badge_text_width("WWWW"))
+        self.assertEqual(len(profile.BADGE_ADVANCES), 95)
+
+    def test_demo_quotes_are_explicitly_labelled_placeholders(self):
+        entries = profile.quote_entries((ROOT / "quotes.txt").read_text())
+        self.assertTrue(entries)
+        for quote, author in entries:
+            self.assertIn("demo quote", quote.lower())
+            self.assertEqual(author, "Placeholder, not a real quotation")
+        document = profile.quote_card(entries, NOW.date(), self.palette)
+        self.assertIn("Placeholder, not a real quotation", document)
+        self.assertNotIn("No quotes configured", document)
+
     def test_typing_has_outlined_iosevka_and_preserved_animation(self):
         root = ET.parse(ROOT / "profile-showcase/static/typing-iosevka.svg").getroot()
         ns = {"s": "http://www.w3.org/2000/svg"}
@@ -213,6 +244,12 @@ class RenderTests(unittest.TestCase):
         self.assertEqual(len(root.findall(".//s:path", ns)), 3)
         self.assertEqual(len(root.findall(".//s:animate", ns)), 4)
         self.assertIn("IosevkaTerm Nerd Font", "".join(root.itertext()))
+        reveal = root.find('.//s:animate[@attributeName="width"]', ns)
+        self.assertEqual(reveal.attrib["calcMode"], "discrete")
+        widths = [float(v) for v in reveal.attrib["values"].split(";")]
+        self.assertEqual(max(widths), 44 * 11.5)
+        self.assertTrue(all(abs(b - a) in (0, 11.5) for a, b in zip(widths, widths[1:])))
+        self.assertTrue(any(b < a for a, b in zip(widths, widths[1:])))
         for node in root.findall(".//s:animate", ns):
             times = [float(t) for t in node.attrib["keyTimes"].split(";")]
             self.assertEqual(len(times), len(node.attrib["values"].split(";")))
@@ -231,11 +268,19 @@ class RenderTests(unittest.TestCase):
                 background = root[0]
                 self.assertEqual(background.attrib["fill"], "#" + colors["background"])
                 self.assertEqual(background.attrib["x"], "-16")
-                self.assertIn(("--cs:#" + colors["rose"]).encode(), result)
+                self.assertIn(("--cs:#" + colors["snake"]).encode(), result)
                 self.assertIn(("--c4:#" + colors["dots"][4]).encode(), result)
                 self.assertIn(b"@keyframes travel{100%{transform:translate(10px,0)}}", result)
                 self.assertEqual(len(root.findall('.//*[@id="snake-background"]')), 1)
                 self.assertEqual(root[-1].attrib["class"], "snake")
+
+    def test_palettes_match_github_backgrounds_and_contribution_greens(self):
+        self.assertEqual(self.config["colors"]["dark"]["background"], "0d1117")
+        self.assertEqual(self.config["colors"]["light"]["background"], "ffffff")
+        self.assertEqual(self.config["colors"]["dark"]["dots"],
+                         ["161b22", "01311f", "034525", "0f6d31", "00c647"])
+        self.assertEqual(self.config["colors"]["light"]["dots"],
+                         ["ebedf0", "9be9a8", "40c463", "30a14e", "216e39"])
 
     def test_timeline_has_coloured_area_and_real_peak(self):
         facts = {"days": {f"2026-01-{i:02}": i for i in range(1, 15)},

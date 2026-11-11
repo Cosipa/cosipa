@@ -1,4 +1,8 @@
-# Your quotes only. No random quotes are fetched.
+# Temporary demo text to preview the card; these are NOT real quotations.
+# Replace these entries with your own quotes. No random quotes are fetched.
 # One quote per line. Optional attribution follows a literal TAB character.
 # Lines beginning with # and blank lines are ignored.
-# With no entries, the card explicitly says no quotes are configured.
+# Removing all entries produces an explicit no-quotes-configured notice.
+
+Demo quote — replace this with something you actually want to keep.	Placeholder, not a real quotation
+Another demo quote, just to preview line wrapping and the attribution layout.	Placeholder, not a real quotation

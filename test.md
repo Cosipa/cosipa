@@ -14,10 +14,10 @@ These components already render or refresh successfully. GitHub Actions updates 
 
 ## 01 · Animated typing introduction
 
-**Outlined Iosevka · sample copy.** The glyphs are paths, not a font-family suggestion, so GitHub cannot substitute another font. Editable source: [`typing-iosevka.source.svg`](./profile-showcase/typing-iosevka.source.svg).
+**Outlined Iosevka · sample copy.** Whole characters appear one at a time, pause, then erase one at a time. The glyphs are paths, so GitHub cannot substitute another font. Editable source: [`typing-iosevka.source.svg`](./profile-showcase/typing-iosevka.source.svg).
 
 <!-- profile:typing:start -->
-![Typing introduction — outlined Iosevka](./profile-showcase/generated/typing-iosevka.de12f0647ce2.svg)
+![Typing introduction — outlined Iosevka](./profile-showcase/generated/typing-iosevka.cf82e163cfdd.svg)
 <!-- profile:typing:end -->
 
 ## 03 · Your terminal styling
@@ -33,16 +33,16 @@ Rosé Pine Moon, your two-line Fish/Starship prompt and branch symbol, no title 
 **Public GitHub data, rendered locally.** Rounded ends, subtle shading, and text shadows matching the other flat badges.
 
 <!-- profile:github-badges:start -->
-[![followers](./profile-showcase/generated/followers.a87d08cffa2a.svg)](https://github.com/Cosipa?tab=followers)
-[![stars](./profile-showcase/generated/stars.f9acc8113ad5.svg)](https://github.com/Cosipa/cosipa/stargazers)
-[![updated](./profile-showcase/generated/updated.95461ae2d9db.svg)](https://github.com/Cosipa/cosipa/commits)
-[![repos](./profile-showcase/generated/repos.a442213d917b.svg)](https://github.com/Cosipa?tab=repositories)
+[![followers](./profile-showcase/generated/followers.5af084097a3f.svg)](https://github.com/Cosipa?tab=followers)
+[![stars](./profile-showcase/generated/stars.e7f81e54e52f.svg)](https://github.com/Cosipa/cosipa/stargazers)
+[![updated](./profile-showcase/generated/updated.f79310bf7dc9.svg)](https://github.com/Cosipa/cosipa/commits)
+[![repos](./profile-showcase/generated/repos.d5972ff650f6.svg)](https://github.com/Cosipa?tab=repositories)
 <!-- profile:github-badges:end -->
 
 ## 18 · PGP + profile views
 
 <!-- profile:pgp:start -->
-[![PGP key](./profile-showcase/generated/pgp.b2241cd047a4.svg)](https://github.com/Cosipa.gpg)
+[![PGP key](./profile-showcase/generated/pgp.d5297abf483e.svg)](https://github.com/Cosipa.gpg)
 <!-- profile:pgp:end -->
 [![Profile views](https://komarev.com/ghpvc/?username=Cosipa&style=flat&color=313131&label=views)](https://github.com/Cosipa)
 
@@ -54,25 +54,25 @@ Rosé Pine Moon, your two-line Fish/Starship prompt and branch symbol, no title 
 
 <!-- profile:stats:start -->
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./profile-showcase/generated/stats-dark.f6ae2065e796.svg">
-  <source media="(prefers-color-scheme: light)" srcset="./profile-showcase/generated/stats-light.1b7768143c69.svg">
-  <img src="./profile-showcase/generated/stats-light.1b7768143c69.svg" alt="Cosipa&#x27;s public GitHub contribution statistics" width="467">
+  <source media="(prefers-color-scheme: dark)" srcset="./profile-showcase/generated/stats-dark.35d4996266b5.svg">
+  <source media="(prefers-color-scheme: light)" srcset="./profile-showcase/generated/stats-light.05c8f1fedb33.svg">
+  <img src="./profile-showcase/generated/stats-light.05c8f1fedb33.svg" alt="Cosipa&#x27;s public GitHub contribution statistics" width="467">
 </picture>
 <!-- profile:stats:end -->
 
-<sub>Rosé Pine Moon / Dawn palettes, with separate light/dark images. Missing data is not presented as zero.</sub>
+<sub>Original simple layout, GitHub-native light/dark backgrounds, and blue accents. Missing data is not presented as zero.</sub>
 
 [Local generator](./scripts/update_profile.py) · [Counting definitions](./PROFILE_SETUP.md#counting-definitions)
 
 ## 12 · Contribution timeline
 
-**Your publicly visible contributions over an explicit 365-day window.** The headline is checked against the sum of the daily counts. A violet-to-teal line and shaded area show weekly totals; the rose dot marks the busiest week.
+**Your publicly visible contributions over an explicit 365-day window.** The headline is checked against the sum of the daily counts. A blue/green line and shaded area show weekly totals; the green dot marks the busiest week.
 
 <!-- profile:timeline:start -->
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./profile-showcase/generated/timeline-dark.10c948690040.svg">
-  <source media="(prefers-color-scheme: light)" srcset="./profile-showcase/generated/timeline-light.603ccb5c38b0.svg">
-  <img src="./profile-showcase/generated/timeline-light.603ccb5c38b0.svg" alt="Cosipa&#x27;s 365-day contribution timeline">
+  <source media="(prefers-color-scheme: dark)" srcset="./profile-showcase/generated/timeline-dark.555872969c9e.svg">
+  <source media="(prefers-color-scheme: light)" srcset="./profile-showcase/generated/timeline-light.9a673524c10c.svg">
+  <img src="./profile-showcase/generated/timeline-light.9a673524c10c.svg" alt="Cosipa&#x27;s 365-day contribution timeline">
 </picture>
 <!-- profile:timeline:end -->
 
@@ -82,13 +82,13 @@ Rosé Pine Moon, your two-line Fish/Starship prompt and branch symbol, no title 
 
 ## 14 · Contribution snake
 
-**Your contribution grid.** A rose-coloured snake over violet/teal contribution cells, with an explicit background for each theme. The pinned Action generates the animation; the local renderer applies the palette from `profile.toml`.
+**Your contribution grid.** A pink snake over the normal GitHub green contribution cells, with GitHub-native light/dark backgrounds. The pinned Action generates the animation; the local renderer applies the palette from `profile.toml`.
 
 <!-- profile:snake:start -->
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./profile-showcase/generated/snake-dark.4aa832f16bc6.svg">
-  <source media="(prefers-color-scheme: light)" srcset="./profile-showcase/generated/snake-light.56d69acd8dd0.svg">
-  <img src="./profile-showcase/generated/snake-light.56d69acd8dd0.svg" alt="Cosipa&#x27;s contribution snake" width="1000">
+  <source media="(prefers-color-scheme: dark)" srcset="./profile-showcase/generated/snake-dark.e34f81bef834.svg">
+  <source media="(prefers-color-scheme: light)" srcset="./profile-showcase/generated/snake-light.2f4616b438c1.svg">
+  <img src="./profile-showcase/generated/snake-light.2f4616b438c1.svg" alt="Cosipa&#x27;s contribution snake" width="1000">
 </picture>
 <!-- profile:snake:end -->
 
@@ -253,9 +253,9 @@ These are **not finished personal content**. Some are visual mockups; others hav
 
 <!-- profile:repository-placeholder:start -->
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./profile-showcase/generated/repository-placeholder-dark.63491c529c60.svg">
-  <source media="(prefers-color-scheme: light)" srcset="./profile-showcase/generated/repository-placeholder-light.f71a307711a6.svg">
-  <img src="./profile-showcase/generated/repository-placeholder-light.f71a307711a6.svg" alt="Repository preview placeholder" width="400">
+  <source media="(prefers-color-scheme: dark)" srcset="./profile-showcase/generated/repository-placeholder-dark.a543fce88cf0.svg">
+  <source media="(prefers-color-scheme: light)" srcset="./profile-showcase/generated/repository-placeholder-light.35e31349540e.svg">
+  <img src="./profile-showcase/generated/repository-placeholder-light.35e31349540e.svg" alt="Repository preview placeholder" width="400">
 </picture>
 <!-- profile:repository-placeholder:end -->
 
@@ -304,14 +304,14 @@ The one that exists because you wanted to understand how something works.
 
 ## 37 · Your own quote card
 
-**Renderer works · your quotes are not configured.** Edit [`quotes.txt`](./quotes.txt); the workflow selects one deterministically each UTC day and renders both themes. An empty file shows an explicit setup notice, not a fabricated quote.
+**Working renderer · temporary demo quotes.** The entries in [`quotes.txt`](./quotes.txt) are explicitly labelled placeholders, not real quotations or your words. Replace them with your own content; the workflow selects one each UTC day and renders both themes. An empty file shows an explicit setup notice.
 
 <!-- profile:quote:start -->
 <a href="./quotes.txt">
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./profile-showcase/generated/quote-dark.f206b2e7c327.svg">
-  <source media="(prefers-color-scheme: light)" srcset="./profile-showcase/generated/quote-light.0b0b62bf9b5d.svg">
-  <img src="./profile-showcase/generated/quote-light.0b0b62bf9b5d.svg" alt="Quote card from quotes.txt">
+  <source media="(prefers-color-scheme: dark)" srcset="./profile-showcase/generated/quote-dark.9aa9c8f77651.svg">
+  <source media="(prefers-color-scheme: light)" srcset="./profile-showcase/generated/quote-light.7219e201637a.svg">
+  <img src="./profile-showcase/generated/quote-light.7219e201637a.svg" alt="Quote card from quotes.txt">
 </picture>
 </a>
 <!-- profile:quote:end -->

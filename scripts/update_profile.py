@@ -8,6 +8,7 @@ from datetime import UTC, date, datetime
 import hashlib
 from html import escape
 import json
+import math
 import os
 from pathlib import Path
 import re
@@ -52,8 +53,9 @@ def md(text: str) -> str:
     return re.sub(r"(?<!\S)(\d+)\.(?=\s|$)", r"\1\\.", value)
 
 
-def text(x, y, value, color, size=13, *, anchor="start", weight="normal"):
-    return f'<text x="{x}" y="{y}" fill="#{color}" font-size="{size}" text-anchor="{anchor}" font-weight="{weight}">{escape(str(value))}</text>'
+def text(x, y, value, color, size=13, *, anchor="start", weight="normal", length=None):
+    sizing = f' textLength="{length}" lengthAdjust="spacingAndGlyphs"' if length else ""
+    return f'<text x="{x}" y="{y}" fill="#{color}" font-size="{size}" text-anchor="{anchor}" font-weight="{weight}"{sizing}>{escape(str(value))}</text>'
 
 
 def svg(width: int, height: int, title: str, body: str, background: str, description: str = "") -> str:
@@ -65,9 +67,25 @@ def svg(width: int, height: int, title: str, body: str, background: str, descrip
     return document
 
 
+# DejaVu Sans 2.37 advances at 11px, ASCII 32–126. Fixed authoring-time metrics
+# avoid a font dependency in Actions; SVG textLength also prevents viewer drift.
+BADGE_ADVANCES = (
+    3.5, 4.41, 5.06, 9.22, 7, 10.45, 8.58, 3.02, 4.29, 4.29, 5.5, 9.22, 3.5, 3.97, 3.5, 3.71,
+    7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 3.71, 3.71, 9.22, 9.22, 9.22, 5.84,
+    11, 7.52, 7.55, 7.68, 8.47, 6.95, 6.33, 8.52, 8.27, 3.24, 3.24, 7.21, 6.13, 9.49, 8.23, 8.66,
+    6.63, 8.66, 7.64, 6.98, 6.72, 8.05, 7.52, 10.88, 7.54, 6.72, 7.54, 4.29, 3.71, 4.29, 9.22, 5.5,
+    5.5, 6.74, 6.98, 6.05, 6.98, 6.77, 3.87, 6.98, 6.97, 3.06, 3.06, 6.37, 3.06, 10.72, 6.97, 6.73,
+    6.98, 6.98, 4.52, 5.73, 4.31, 6.97, 6.51, 9, 6.51, 6.51, 5.77, 7, 3.71, 7, 9.22,
+)
+
+
+def badge_text_width(value: str) -> float:
+    return round(sum(BADGE_ADVANCES[ord(c) - 32] if 32 <= ord(c) <= 126 else 7 for c in value), 2)
+
+
 def badge(label: str, value: str, label_color="555555", color="313131") -> str:
-    left = max(28, len(label) * 7 + 12)
-    right = max(24, len(value) * 7 + 12)
+    left = math.ceil(badge_text_width(label)) + 12
+    right = math.ceil(badge_text_width(value)) + 12
     width = left + right
     # Match Shields' flat style: both ends clipped, subtle bevel, text shadow.
     body = (f'<defs><linearGradient id="shade" x2="0" y2="100%">'
@@ -78,8 +96,9 @@ def badge(label: str, value: str, label_color="555555", color="313131") -> str:
             f'<rect x="{left}" width="{right}" height="20" fill="#{color}"/>'
             f'<rect width="{width}" height="20" fill="url(#shade)"/></g>')
     for x, content in [(left / 2, label), (left + right / 2, value)]:
-        body += '<g opacity=".3">' + text(x, 15, content, "010101", 11, anchor="middle") + '</g>'
-        body += text(x, 14, content, "ffffff", 11, anchor="middle")
+        length = badge_text_width(content)
+        body += '<g opacity=".3">' + text(x, 15, content, "010101", 11, anchor="middle", length=length) + '</g>'
+        body += text(x, 14, content, "ffffff", 11, anchor="middle", length=length)
     return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="20" role="img">'
             f'<title>{escape(label + ": " + value)}</title>'
             f'<g font-family="Verdana,Geneva,DejaVu Sans,sans-serif">{body}</g></svg>\n')
@@ -145,19 +164,13 @@ def stats_card(username: str, facts: dict | None, today: date, colors: dict) -> 
             ("Public issues opened", f'{facts["public_issues"]:,}'),
             ("Public PR reviews", f'{facts["public_reviews"]:,}'),
             ("Published restricted contributions", f"{private:,}" if private is not None else "Not published / none")]
-    body = (f'<rect x=".5" y=".5" width="466" height="250" rx="5" fill="none" stroke="#{colors["border"]}"/>'
-            f'<path d="M20 23V49" stroke="#{colors["accent"]}" stroke-width="4" stroke-linecap="round"/>')
-    body += text(33, 32, f"{username}'s GitHub stats", colors["title"], 18, weight="bold")
-    body += text(33, 52, f'{facts["year"]} YTD through {facts["as_of"]} (UTC)', colors["text"], 11)
-    accents = [colors["accent"], colors["secondary"], colors["rose"], colors["secondary"], colors["accent"]]
-    for i, ((label, count), accent) in enumerate(zip(rows, accents)):
-        y = 84 + i * 29
-        body += f'<rect x="16" y="{y - 17}" width="435" height="26" rx="4" fill="#{colors["surface"]}"/>'
-        body += f'<circle cx="28" cy="{y - 4}" r="3" fill="#{accent}"/>'
-        body += text(40, y, label, colors["text"], 11)
-        body += text(439, y, count, accent, 12, anchor="end", weight="bold")
-    body += text(20, 236, "Restricted private activity: all types, not just commits.", colors["text"], 10)
-    return svg(467, 251, f"{username}'s public contribution stats", body, colors["background"],
+    body = text(20, 30, f"{username}'s GitHub stats", colors["accent"], 18)
+    body += text(20, 52, f'{facts["year"]} YTD through {facts["as_of"]} (UTC)', colors["text"], 11)
+    for i, (label, count) in enumerate(rows):
+        body += text(20, 82 + i * 23, label, colors["text"], 12)
+        body += text(445, 82 + i * 23, count, colors["accent"], 12, anchor="end")
+    body += text(20, 211, "Restricted private activity: all types, not just commits.", colors["text"], 10)
+    return svg(467, 229, f"{username}'s public contribution stats", body, colors["background"],
                "Public commit contributions are eligible commits to public repositories, not every Git commit on every branch. Private counts are only anonymized totals published by GitHub.")
 
 
@@ -184,7 +197,7 @@ def timeline_card(username: str, facts: dict | None, colors: dict) -> str:
     body += f'<polyline points="{points}" fill="none" stroke="url(#line)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>'
     peak = weeks.index(max(weeks))
     x, y = coordinates[peak]
-    body += f'<circle cx="{x:.1f}" cy="{y:.1f}" r="4" fill="#{colors["rose"]}" stroke="#{colors["background"]}" stroke-width="2"><title>Peak week: {max(weeks):,} contributions</title></circle>'
+    body += f'<circle cx="{x:.1f}" cy="{y:.1f}" r="4" fill="#{colors["secondary"]}" stroke="#{colors["background"]}" stroke-width="2"><title>Peak week: {max(weeks):,} contributions</title></circle>'
     body += text(24, 193, "Weekly totals · includes anonymized private activity only when publicly visible", colors["text"], 10)
     return svg(846, 208, f"{username}'s 365-day contribution timeline", body, colors["background"])
 
@@ -219,7 +232,7 @@ def snake_card(content: bytes, colors: dict) -> bytes:
     style = root.find(SVG_NS + "style")
     if style is None or not style.text:
         raise ValueError("Snake SVG is missing its palette")
-    palette = {"cb": colors["border"], "cs": colors["rose"], "ce": colors["dots"][0],
+    palette = {"cb": "1b1f230a", "cs": colors["snake"], "ce": colors["dots"][0],
                **{f"c{i}": color for i, color in enumerate(colors["dots"])}}
     for name, color in palette.items():
         style.text, count = re.subn(r"--" + name + r":[^;}]+", f"--{name}:#{color}", style.text, count=1)
