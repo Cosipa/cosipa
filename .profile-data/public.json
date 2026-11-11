@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "snake": {
-    "dark": "./profile-showcase/generated/snake-dark.e34f81bef834.svg",
-    "light": "./profile-showcase/generated/snake-light.2f4616b438c1.svg"
+    "dark": "./profile-showcase/generated/snake-dark.a206315f4fc5.svg",
+    "light": "./profile-showcase/generated/snake-light.59a1d16f1a34.svg"
   },
   "sources": {
     "activity": {
@@ -46,7 +46,7 @@
       "as_of": "2026-11-11",
       "calendar_end": "2026-11-11",
       "calendar_start": "2025-11-12",
-      "calendar_total": 1091,
+      "calendar_total": 1101,
       "days": {
         "2025-11-12": 30,
         "2025-11-13": 23,
@@ -412,17 +412,17 @@
         "2026-11-08": 3,
         "2026-11-09": 6,
         "2026-11-10": 1,
-        "2026-11-11": 8
+        "2026-11-11": 18
       },
-      "source_calendar_total": 1110
+      "source_calendar_total": 1120
     },
     "contributions": {
       "as_of": "2026-11-11",
-      "public_commits": 64,
+      "public_commits": 66,
       "public_issues": 1,
       "public_prs": 3,
       "public_reviews": 1,
-      "published_private": 834,
+      "published_private": 842,
       "year": 2026
     },
     "github": {

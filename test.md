@@ -54,9 +54,9 @@ Rosé Pine Moon, your two-line Fish/Starship prompt and branch symbol, no title 
 
 <!-- profile:stats:start -->
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./profile-showcase/generated/stats-dark.35d4996266b5.svg">
-  <source media="(prefers-color-scheme: light)" srcset="./profile-showcase/generated/stats-light.05c8f1fedb33.svg">
-  <img src="./profile-showcase/generated/stats-light.05c8f1fedb33.svg" alt="Cosipa&#x27;s public GitHub contribution statistics" width="467">
+  <source media="(prefers-color-scheme: dark)" srcset="./profile-showcase/generated/stats-dark.7ea1df49c453.svg">
+  <source media="(prefers-color-scheme: light)" srcset="./profile-showcase/generated/stats-light.48200e10da2b.svg">
+  <img src="./profile-showcase/generated/stats-light.48200e10da2b.svg" alt="Cosipa&#x27;s public GitHub contribution statistics" width="467">
 </picture>
 <!-- profile:stats:end -->
 
@@ -70,9 +70,9 @@ Rosé Pine Moon, your two-line Fish/Starship prompt and branch symbol, no title 
 
 <!-- profile:timeline:start -->
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./profile-showcase/generated/timeline-dark.555872969c9e.svg">
-  <source media="(prefers-color-scheme: light)" srcset="./profile-showcase/generated/timeline-light.9a673524c10c.svg">
-  <img src="./profile-showcase/generated/timeline-light.9a673524c10c.svg" alt="Cosipa&#x27;s 365-day contribution timeline">
+  <source media="(prefers-color-scheme: dark)" srcset="./profile-showcase/generated/timeline-dark.f3416f11eecf.svg">
+  <source media="(prefers-color-scheme: light)" srcset="./profile-showcase/generated/timeline-light.313d2852c7f3.svg">
+  <img src="./profile-showcase/generated/timeline-light.313d2852c7f3.svg" alt="Cosipa&#x27;s 365-day contribution timeline">
 </picture>
 <!-- profile:timeline:end -->
 
@@ -86,9 +86,9 @@ Rosé Pine Moon, your two-line Fish/Starship prompt and branch symbol, no title 
 
 <!-- profile:snake:start -->
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./profile-showcase/generated/snake-dark.e34f81bef834.svg">
-  <source media="(prefers-color-scheme: light)" srcset="./profile-showcase/generated/snake-light.2f4616b438c1.svg">
-  <img src="./profile-showcase/generated/snake-light.2f4616b438c1.svg" alt="Cosipa&#x27;s contribution snake" width="1000">
+  <source media="(prefers-color-scheme: dark)" srcset="./profile-showcase/generated/snake-dark.a206315f4fc5.svg">
+  <source media="(prefers-color-scheme: light)" srcset="./profile-showcase/generated/snake-light.59a1d16f1a34.svg">
+  <img src="./profile-showcase/generated/snake-light.59a1d16f1a34.svg" alt="Cosipa&#x27;s contribution snake" width="1000">
 </picture>
 <!-- profile:snake:end -->
 
