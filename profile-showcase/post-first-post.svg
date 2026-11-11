@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="360" viewBox="0 0 1000 360" role="img" aria-labelledby="title desc">
-  <title id="title">First post ever</title>
-  <desc id="desc">Cosipa.dev article, October 2, 2025. Custom showcase cover for the blog's introductory placeholder post, with a paper-and-pencil illustration.</desc>
-  <rect width="1000" height="360" rx="18" fill="#f5f0e7"/>
-  <g font-family="monospace"><text x="38" y="48" fill="#746440" font-size="13" letter-spacing="2">COSIPA.DEV / THE BEGINNING</text><text x="38" y="144" fill="#302c26" font-family="sans-serif" font-size="54" font-weight="bold">First post ever</text><text x="38" y="204" fill="#746b5b" font-size="17">A small hello before the technical rabbit holes.</text><text x="38" y="306" fill="#746b5b" font-size="13">02 OCT 2025 · INTRODUCTION</text><text x="38" y="333" fill="#746440" font-size="12">READ THE POST →</text></g>
-  <g transform="translate(747 65) rotate(7 85 110)"><rect x="8" y="8" width="160" height="224" rx="7" fill="#ded6c7"/><rect width="160" height="224" rx="7" fill="#fffdf7" stroke="#c8bdab"/><path d="M27 45h105M27 75h105M27 105h105M27 135h74M27 165h90" stroke="#d4ccbe" stroke-width="5"/><path d="M112 175l60-125 16 8-60 125-17 15z" fill="#c29446"/><path d="M112 175l16 8-17 15z" fill="#302c26"/></g>
-</svg>
