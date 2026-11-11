@@ -1,0 +1,6 @@
+<path d="M22 20V$bottom" stroke="#$accent" stroke-width="3" stroke-linecap="round"/>
+$opening_mark
+<g font-style="italic">
+$lines
+</g>
+$author

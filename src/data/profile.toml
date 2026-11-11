@@ -1,0 +1,41 @@
+username = "Cosipa"
+markdown = "README.md"
+regions = ["typing", "pgp", "posts47", "activity", "merged", "stats", "timeline", "snake", "quote"]
+generated_dir = "src/assets/generated"
+cache = "src/data/public.json"
+quotes = "src/data/quotes.txt"
+
+[blog]
+feed = "https://cosipa.dev/rss"
+rows = 3
+
+# GitHub-native backgrounds, blue/green chart accents, normal contribution greens.
+# Only the snake itself gets a contrasting pink colour.
+[colors.dark]
+background = "0d1117"
+border = "30363d"
+title = "c9d1d9"
+text = "8b949e"
+accent = "58a6ff"
+secondary = "3fb950"
+typing = "c4a7e7"
+snake = "f778ba"
+dots = ["161b22", "01311f", "034525", "0f6d31", "00c647"]
+
+[colors.light]
+background = "ffffff"
+border = "d0d7de"
+title = "24292f"
+text = "57606a"
+accent = "0969da"
+secondary = "1a7f37"
+typing = "6f42c1"
+snake = "bf3989"
+dots = ["ebedf0", "9be9a8", "40c463", "30a14e", "216e39"]
+
+[pgp]
+fingerprint = "2C92F4C9475DE7B8A84380E9A8523AE122FE6E85"
+
+# Paths above are relative to the repository root.
+# Typing copy lives in src/assets/source/typing-iosevka.svg.
+# Its exported SVG uses outlined glyphs, so GitHub cannot substitute the font.

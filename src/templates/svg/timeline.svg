@@ -1,0 +1,19 @@
+<defs>
+  <linearGradient id="line">
+    <stop stop-color="#$accent"/>
+    <stop offset="1" stop-color="#$secondary"/>
+  </linearGradient>
+  <linearGradient id="area" x2="0" y2="1">
+    <stop stop-color="#$accent" stop-opacity=".35"/>
+    <stop offset="1" stop-color="#$secondary" stop-opacity=".02"/>
+  </linearGradient>
+</defs>
+<rect x=".5" y=".5" width="$border_width" height="$border_height" rx="5" fill="none" stroke="#$border"/>
+$heading
+$grid
+<polygon points="$chart_left,$chart_bottom $points $chart_right,$chart_bottom" fill="url(#area)"/>
+<polyline points="$points" fill="none" stroke="url(#line)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="$peak_x" cy="$peak_y" r="4" fill="#$secondary" stroke="#$background" stroke-width="2">
+  <title>Peak week: $peak_total contributions</title>
+</circle>
+$caption

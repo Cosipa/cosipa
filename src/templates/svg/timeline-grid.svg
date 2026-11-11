@@ -1,0 +1,1 @@
+<path d="M${left} ${y}H$right" stroke="#$border" stroke-dasharray="3 6"/>
