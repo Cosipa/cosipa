@@ -1,9 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="900" height="350" viewBox="0 0 900 350" role="img" aria-labelledby="title desc">
-  <title id="title">A terminal-style profile mockup</title>
-  <desc id="desc">Example introduction, projects, and status rendered as shell output. The cursor blinks.</desc>
-  <rect width="900" height="350" rx="14" fill="#1a1b26"/><path d="M14 0H886Q900 0 900 14V40H0V14Q0 0 14 0" fill="#24283b"/>
-  <circle cx="24" cy="20" r="6" fill="#f7768e"/><circle cx="45" cy="20" r="6" fill="#e0af68"/><circle cx="66" cy="20" r="6" fill="#9ece6a"/>
-  <text x="450" y="25" text-anchor="middle" fill="#a9b1d6" font-size="13" font-family="monospace">cosipa@github: ~</text>
-  <g font-family="monospace" font-size="17"><text x="30" y="79" fill="#9ece6a">❯ whoami</text><text x="30" y="109" fill="#c0caf5">Cosipa — builder / tinkerer / professional tab collector</text><text x="30" y="154" fill="#9ece6a">❯ cat interests.txt</text><text x="30" y="184" fill="#7dcfff">[ demo ] Linux · automation · open source · side quests</text><text x="30" y="229" fill="#9ece6a">❯ systemctl status motivation</text><text x="30" y="259" fill="#c0caf5">● active (occasionally distracted)</text><text x="30" y="315" fill="#9ece6a">❯</text></g>
-  <rect x="53" y="299" width="10" height="20" fill="#c0caf5"><animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.49;0.5;1" dur="1.2s" repeatCount="indefinite"/></rect>
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="328" viewBox="0 0 1000 328" role="img" aria-labelledby="title desc">
+  <title id="title">Cosipa's terminal styling — Rosé Pine Moon and Fish with Starship</title>
+  <desc id="desc">A styling recreation based on the terminal and Starship configuration in NixOS. No window chrome. Two-line prompts, Rosé Pine Moon colors, and a steady beam cursor. Demonstration commands show the public profile repository and RSS URL, not a terminal screenshot.</desc>
+  <rect width="1000" height="328" fill="#232136"/>
+  <g font-family="'ZedMono NF', 'IosevkaTerm NFP', monospace" font-size="18" xml:space="preserve">
+    <text x="24" y="38"><tspan fill="#6e6a86">╭─ </tspan><tspan fill="#e0def4" font-weight="bold">~/cosipa </tspan><tspan fill="#9ccfd8">── main</tspan></text>
+    <text x="24" y="65"><tspan fill="#6e6a86">╰─</tspan><tspan fill="#9ccfd8" font-weight="bold">› </tspan><tspan fill="#c4a7e7">git </tspan><tspan fill="#ea9a97">remote get-url origin</tspan></text>
+    <text x="24" y="98" fill="#e0def4">git@github.com:Cosipa/cosipa.git</text>
+    <text x="24" y="158"><tspan fill="#6e6a86">╭─ </tspan><tspan fill="#e0def4" font-weight="bold">~/cosipa </tspan><tspan fill="#9ccfd8">── main</tspan></text>
+    <text x="24" y="185"><tspan fill="#6e6a86">╰─</tspan><tspan fill="#9ccfd8" font-weight="bold">› </tspan><tspan fill="#c4a7e7">printf </tspan><tspan fill="#f6c177">'%s\n' </tspan><tspan fill="#ea9a97">https://cosipa.dev/rss</tspan></text>
+    <text x="24" y="218" fill="#e0def4">https://cosipa.dev/rss</text>
+    <text x="24" y="278"><tspan fill="#6e6a86">╭─ </tspan><tspan fill="#e0def4" font-weight="bold">~/cosipa </tspan><tspan fill="#9ccfd8">── main</tspan></text>
+    <text x="24" y="305"><tspan fill="#6e6a86">╰─</tspan><tspan fill="#9ccfd8" font-weight="bold">›</tspan></text>
+  </g>
+  <path d="M63 288v21" stroke="#e0def4" stroke-width="2"/>
 </svg>

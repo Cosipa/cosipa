@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="900" height="400" viewBox="0 0 900 400" role="img" aria-labelledby="title desc">
-  <title id="title">Example project showcase card — Sidequest</title>
-  <desc id="desc">Illustrative project, not an actual Cosipa repository. A terminal task manager with three tasks.</desc>
-  <defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#17203b"/><stop offset="1" stop-color="#302341"/></linearGradient></defs>
-  <rect width="900" height="400" rx="18" fill="url(#bg)"/>
-  <g font-family="monospace"><text x="38" y="51" fill="#bb9af7" font-size="12">ILLUSTRATIVE PROJECT / NOT A REAL REPOSITORY</text><text x="38" y="112" fill="#c0caf5" font-size="42" font-weight="bold">sidequest</text><text x="38" y="151" fill="#a9b1d6" font-size="16">A tiny home for unfinished ideas.</text><text x="38" y="223" fill="#9ece6a" font-size="15">CLI-first</text><text x="38" y="255" fill="#7dcfff" font-size="15">Local-first</text><text x="38" y="287" fill="#e0af68" font-size="15">Zero accounts</text><text x="38" y="358" fill="#7aa2f7" font-size="14">SOURCE ↗   DOCUMENTATION ↗   DEMO ↗</text></g>
-  <rect x="450" y="65" width="410" height="270" rx="10" fill="#10131e" stroke="#414868"/>
-  <g font-family="monospace" font-size="15"><text x="474" y="102" fill="#9ece6a">$ sidequest list</text><text x="474" y="153" fill="#c0caf5">✓ ship the small thing</text><text x="474" y="193" fill="#e0af68">◷ tame the configuration</text><text x="474" y="233" fill="#a9b1d6">○ stop starting new projects</text><text x="474" y="298" fill="#565f89">1 done / 2 suspiciously ambitious</text></g>
-</svg>

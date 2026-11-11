@@ -1,70 +1,50 @@
-<!-- Experimental showroom, NOT the final profile. No workflows are installed by this file. -->
+<!-- Profile shortlist. Original example numbers are preserved for comparison. No automation is installed. -->
 
-<p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&amp;height=210&amp;text=COSIPA&amp;fontSize=70&amp;fontAlignY=38&amp;desc=the%20deliberately%20overloaded%20profile%20showroom&amp;descAlignY=62&amp;descSize=17&amp;color=gradient" alt="Cosipa — the deliberately overloaded profile showroom" width="1000">
-</p>
+![Cosipa profile shortlist](https://capsule-render.vercel.app/api?type=waving&height=160&text=COSIPA&fontSize=52&fontAlignY=38&color=232136&fontColor=e0def4)
 
-<p align="center">
-  <a href="#headers">Headers</a> ·
-  <a href="#badges">Badges</a> ·
-  <a href="#github-data">GitHub data</a> ·
-  <a href="#projects">Projects</a> ·
-  <a href="#personal">Personal stuff</a> ·
-  <a href="#markdown-tricks">GitHub tricks</a> ·
-  <a href="#recipes">How it works</a> ·
-  <a href="#shortlist">Shortlist</a>
-</p>
+# Profile shortlist
 
-# The everything profile
+[Headers](#headers) · [Badges](#badges) · [GitHub data](#github-data) · [Projects & activity](#projects) · [Other experiments](#other) · [Blog layouts](#real-posts)
 
-**This page is a tasting flight, not a design recommendation.** Scroll, look, pick favorites by number. Repetition and incompatible styles are intentional.
+Original numbers are kept so we can keep referring to them. Everything is visible—no expanding sections.
 
-> [!IMPORTANT]
-> **LIVE / COSIPA** = a widget requesting public data for `Cosipa`.
-> **UPSTREAM DEMO** = somebody else's published example, not your stats.
-> **LOCAL MOCKUP** = illustrative content committed with this page; not a claim about your interests, projects, listening history, or activity.
->
-> External images may be cached, unavailable, or change later. Embedded services receive image requests, often through GitHub's proxy. Nothing here has access to private data or credentials. No Actions or automatic updates have been enabled.
+**Live widgets** request public data. **Upstream demos** show someone else's data. **Mockups** remain labeled. Blog titles and excerpts are taken directly from your RSS; blog and activity sections are snapshots, not auto-updating yet.
 
 <a id="headers"></a>
 
-# A · Entrances, headers, and visual identity
+# Headers
 
 ## 01 · Animated typing introduction
 
-**LIVE SERVICE · sample copy.** This is an SVG image, not JavaScript running in GitHub.
+**Live service · sample copy.**
 
-[![Typing introduction: Hello, I'm Cosipa; building, breaking, and figuring things out; probably starting another side project](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=23&duration=3000&pause=1100&color=7AA2F7&width=950&height=70&lines=Hello%2C+I%27m+Cosipa.;Building%2C+breaking%2C+and+figuring+things+out.;Probably+starting+another+side+project.)](https://readme-typing-svg.demolab.com/)
+[![Typing introduction: Hello, I'm Cosipa; building, breaking, and figuring things out; probably starting another side project](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=23&duration=3000&pause=1100&color=C4A7E7&width=950&height=70&lines=Hello%2C+I%27m+Cosipa.;Building%2C+breaking%2C+and+figuring+things+out.;Probably+starting+another+side+project.)](https://readme-typing-svg.demolab.com/)
 
-[Customize the typing effect](https://readme-typing-svg.demolab.com/)
+## 02 · Type-only header
 
-## 02 · Custom banner that changes with GitHub's theme
+No generated banner artwork, gradients, orbit graphics, or invented tagline. Just type and real links.
 
-**LOCAL ASSET · sample copy.** Switch GitHub between light and dark themes to compare. Both SVGs live in this repository.
+<h1>Cosipa</h1>
+<p>
+  <a href="https://cosipa.dev/">cosipa.dev</a> /
+  <a href="https://github.com/Cosipa?tab=repositories">repositories</a> /
+  <a href="https://cosipa.dev/rss">rss</a> /
+  <a href="https://github.com/Cosipa.gpg">pgp</a>
+</p>
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./profile-showcase/header-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="./profile-showcase/header-light.svg">
-  <img src="./profile-showcase/header-light.svg" alt="Hello, I'm Cosipa. Build things. Break things. Understand things." width="1000">
-</picture>
+---
 
-<details>
-<summary>Compare both versions without changing your theme</summary>
+## 03 · Your terminal styling
 
-![Dark banner](./profile-showcase/header-dark.svg)
-![Light banner](./profile-showcase/header-light.svg)
+Rosé Pine Moon, a two-line Fish/Starship prompt, no title bar or window controls, and a steady beam cursor. Based on your Ghostty, Kitty, Fish, and Starship configurations in `~/NixOS`.
 
-</details>
+![Terminal styling recreation using Cosipa's Rosé Pine Moon palette and two-line Starship prompt](./profile-showcase/terminal.svg)
 
-## 03 · Terminal-style profile, including a blinking cursor
-
-**LOCAL MOCKUP.** The cursor is animated inside the SVG. Everything else is just an image.
-
-![Terminal-style profile mockup; illustrative interests and status](./profile-showcase/terminal.svg)
+<sub>A styling recreation with demonstration commands, not a screenshot. Uses ZedMono NF / IosevkaTerm NFP when available, with a monospace fallback.</sub>
 
 ## 04 · Native avatar + a centered intro
 
-**LIVE AVATAR · sample introduction.** More understated than the giant graphics.
+**Live avatar · sample introduction.**
 
 <p align="center">
   <img src="https://github.com/Cosipa.png?size=160" alt="Cosipa's GitHub avatar" width="96" height="96">
@@ -74,26 +54,16 @@
 <p align="center">
   <a href="https://github.com/Cosipa?tab=repositories">Projects</a> ·
   <a href="https://github.com/Cosipa?tab=stars">Things I find interesting</a> ·
-  <a href="#28--a-uses-page-hidden-in-plain-sight">My setup</a>
+  <a href="https://cosipa.dev/">Writing</a>
 </p>
 
 <a id="badges"></a>
 
-# B · Badge buffet
+# Badges
 
-## 05 · Four badge styles, same idea
+## 05 · Flat tool badges
 
-**LIVE SERVICE · sample stack, not an inventory of your skills.**
-
-**For the badge**
-
-![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
-![NixOS](https://img.shields.io/badge/NixOS-5277C3?style=for-the-badge&logo=nixos&logoColor=white)
-![Neovim](https://img.shields.io/badge/Neovim-57A143?style=for-the-badge&logo=neovim&logoColor=white)
-![Rust](https://img.shields.io/badge/Rust-000000?style=for-the-badge&logo=rust&logoColor=white)
-![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-
-**Flat**
+**Sample stack, not an inventory of your skills.** Only the flat style remains.
 
 ![Linux](https://img.shields.io/badge/Linux-FCC624?style=flat&logo=linux&logoColor=black)
 ![NixOS](https://img.shields.io/badge/NixOS-5277C3?style=flat&logo=nixos&logoColor=white)
@@ -101,126 +71,58 @@
 ![Rust](https://img.shields.io/badge/Rust-000000?style=flat&logo=rust&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
 
-**Flat square**
+## 07 · Muted live GitHub badges
 
-![Linux](https://img.shields.io/badge/Linux-FCC624?style=flat-square&logo=linux&logoColor=black)
-![NixOS](https://img.shields.io/badge/NixOS-5277C3?style=flat-square&logo=nixos&logoColor=white)
-![Neovim](https://img.shields.io/badge/Neovim-57A143?style=flat-square&logo=neovim&logoColor=white)
-![Rust](https://img.shields.io/badge/Rust-000000?style=flat-square&logo=rust&logoColor=white)
-![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
+**Live / Cosipa.** One flat style, neutral colors, no social counters or plastic effects.
 
-**Plastic / old-school**
+[![Followers](https://img.shields.io/github/followers/Cosipa?style=flat&label=followers&labelColor=545454&color=313131)](https://github.com/Cosipa?tab=followers)
+[![Profile repository stars](https://img.shields.io/github/stars/Cosipa/cosipa?style=flat&label=stars&labelColor=545454&color=313131)](https://github.com/Cosipa/cosipa/stargazers)
+[![Last commit](https://img.shields.io/github/last-commit/Cosipa/cosipa?style=flat&label=updated&labelColor=545454&color=313131)](https://github.com/Cosipa/cosipa/commits)
+[![Public repository count](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.github.com%2Fusers%2FCosipa&query=%24.public_repos&label=repos&style=flat&labelColor=545454&color=313131)](https://github.com/Cosipa?tab=repositories)
 
-![Linux](https://img.shields.io/badge/Linux-FCC624?style=plastic&logo=linux&logoColor=black)
-![NixOS](https://img.shields.io/badge/NixOS-5277C3?style=plastic&logo=nixos&logoColor=white)
-![Neovim](https://img.shields.io/badge/Neovim-57A143?style=plastic&logo=neovim&logoColor=white)
-![Rust](https://img.shields.io/badge/Rust-000000?style=plastic&logo=rust&logoColor=white)
-![Python](https://img.shields.io/badge/Python-3776AB?style=plastic&logo=python&logoColor=white)
+## 18 · PGP + profile views
 
-## 06 · Icon tiles instead of text badges
+[![PGP: 0xA8523AE122FE6E85](https://img.shields.io/badge/pgp-0xA8523AE122FE6E85-313131?style=flat&labelColor=545454&color=313131)](https://github.com/Cosipa.gpg)
+[![Profile views](https://komarev.com/ghpvc/?username=Cosipa&style=flat&color=313131&label=views)](https://github.com/Cosipa)
 
-**LIVE SERVICE · sample stack.** Tiles link to the icon generator, not to a claim of proficiency.
-
-[![Example tool icons: Linux, Nix, Neovim, Git, Bash, Python, Rust, Docker, TypeScript, PostgreSQL, Go, and GitHub Actions](https://skillicons.dev/icons?i=linux,nix,neovim,git,bash,python,rust,docker,ts,postgres,go,githubactions&perline=6&theme=dark)](https://skillicons.dev/)
-
-<details>
-<summary>Light tile variant</summary>
-
-[![The same tool icons with light backgrounds](https://skillicons.dev/icons?i=linux,nix,neovim,git,bash,python,rust,docker,ts,postgres,go,githubactions&perline=6&theme=light)](https://skillicons.dev/)
-
-</details>
-
-## 07 · Live GitHub badges
-
-**LIVE / COSIPA.** Click through to the underlying GitHub pages.
-
-[![GitHub followers](https://img.shields.io/github/followers/Cosipa?style=social)](https://github.com/Cosipa?tab=followers)
-[![Profile repository stars](https://img.shields.io/github/stars/Cosipa/cosipa?style=social)](https://github.com/Cosipa/cosipa/stargazers)
-[![Profile repository last commit](https://img.shields.io/github/last-commit/Cosipa/cosipa?style=flat-square&color=7aa2f7)](https://github.com/Cosipa/cosipa/commits)
-[![Public repository count](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.github.com%2Fusers%2FCosipa&query=%24.public_repos&label=public%20repos&color=bb9af7&style=flat-square)](https://github.com/Cosipa?tab=repositories)
-
-The final badge reads a JSON API. The same pattern can display a value from **your own public endpoint**.
-
-## 08 · Personality badges
-
-**STATIC LABELS · sample copy.** These can be links, jokes, or actual status labels.
-
-![Powered by curiosity](https://img.shields.io/badge/powered_by-curiosity-bb9af7?style=for-the-badge)
-![Side quests enabled](https://img.shields.io/badge/side_quests-enabled-9ece6a?style=for-the-badge)
-![Works on my machine](https://img.shields.io/badge/works-on_my_machine-e0af68?style=for-the-badge)
-![Tabs open too many](https://img.shields.io/badge/tabs_open-too_many-f7768e?style=for-the-badge)
+<sub>The key ID is from the primary public key served by your GitHub `.gpg` URL. Views are approximate image requests, not unique visitors.</sub>
 
 <a id="github-data"></a>
 
-# C · GitHub data, graphs, and gratuitous animation
+# GitHub data
 
 ## 09 · Classic stats card
 
-**LIVE / COSIPA.** Public GitHub data via a community-hosted stats service. The grade is the service's opinion, not an objective developer rating.
+**Live / Cosipa.** Public data via a community service; its grade is not an objective developer rating.
 
 ![Cosipa's public GitHub statistics](https://github-readme-stats-fast.vercel.app/api?username=Cosipa&show_icons=true&theme=tokyonight&hide_border=true)
 
-[Service source](https://github.com/pranesh-2005/github-readme-stats-fast) · [Original stats-card project](https://github.com/anuraghazra/github-readme-stats)
-
-## 10 · Language card
-
-**LIVE / COSIPA.** Repository language distribution, **not** a skill ranking or a record of all your coding.
-
-![Language distribution across Cosipa's public repositories](https://github-readme-stats-fast.vercel.app/api/top-langs/?username=Cosipa&layout=compact&theme=tokyonight&hide_border=true)
-
-## 11 · Streak card
-
-**LIVE / COSIPA.** A very different visual treatment of contribution history.
-
-[![Cosipa's contribution streak](https://streak-stats.demolab.com?user=Cosipa&theme=tokyonight&hide_border=true)](https://github.com/DenverCoder1/github-readme-streak-stats)
+[Service source](https://github.com/pranesh-2005/github-readme-stats-fast) · [Original project](https://github.com/anuraghazra/github-readme-stats)
 
 ## 12 · Wide contribution timeline
 
-**LIVE / COSIPA.** A full-width card rather than a collection of small boxes.
+**Live / Cosipa.** This service's headline count previously differed from GitHub's own calendar; don't read it as a verified annual total.
 
 [![Cosipa's contribution timeline and public profile summary](https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=Cosipa&theme=tokyonight)](https://github.com/vn7n24fzkq/github-profile-summary-cards)
 
-## 13 · The tiny dashboard wall
+[GitHub's own contribution calendar](https://github.com/users/Cosipa/contributions)
 
-**LIVE / COSIPA.** Compare a few chart types side by side. The time-of-day chart uses UTC, not an inferred personal timezone.
+## 14 · Contribution snake
 
-<p>
-  <img src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=Cosipa&amp;theme=tokyonight" alt="Cosipa's repositories per language" width="32%">
-  <img src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=Cosipa&amp;theme=tokyonight" alt="Cosipa's most committed languages" width="32%">
-  <img src="https://github-profile-summary-cards.vercel.app/api/cards/productive-time?username=Cosipa&amp;theme=tokyonight&amp;utcOffset=0" alt="Cosipa's commit times in UTC" width="32%">
-</p>
-
-## 14 · A snake eats the contribution grid
-
-**UPSTREAM DEMO · Platane's contribution data, not yours.** An Action can generate the same animation using `Cosipa` later. See the recipe at the bottom.
+**Upstream demo · Platane's data, not yours.** Can be generated for your account later.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Platane/snk/output/github-contribution-grid-snake-dark.svg">
-  <img src="https://raw.githubusercontent.com/Platane/snk/output/github-contribution-grid-snake.svg" alt="Demo animation: a snake eating Platane's contribution grid" width="1000">
+  <img src="https://raw.githubusercontent.com/Platane/snk/output/github-contribution-grid-snake.svg" alt="Upstream demo: a snake eating Platane's contribution grid" width="1000">
 </picture>
 
-[Generator: Platane/snk](https://github.com/Platane/snk)
+[Generator](https://github.com/Platane/snk)
 
-## 15 · Your contributions become a 3D city
+## 17 · Metrics panels
 
-**UPSTREAM DEMO · yoshi389111's data, not yours.** The generated image is static, not an interactive 3D canvas.
-
-[![Example 3D contribution city using yoshi389111's contribution data](https://raw.githubusercontent.com/yoshi389111/yoshi389111/main/profile-3d-contrib/profile-night-rainbow.svg)](https://github.com/yoshi389111/github-profile-3d-contrib)
-
-## 16 · Isometric contribution calendar
-
-**UPSTREAM DEMO · lowlighter/metrics example data.** Similar information, completely different aesthetic.
-
-[![Metrics example: isometric contribution calendar](https://raw.githubusercontent.com/lowlighter/metrics/examples/metrics.plugin.isocalendar.fullyear.svg)](https://github.com/lowlighter/metrics/tree/master/source/plugins/isocalendar)
-
-## 17 · All-in-one metrics panel
-
-**UPSTREAM DEMO · not your account.** Metrics can generate a custom composition of modules instead of embedding five unrelated services.
+**Upstream demos · not your account.** All panels are visible, not hidden behind a toggle.
 
 [![Metrics example: classic profile dashboard](https://raw.githubusercontent.com/lowlighter/metrics/examples/metrics.classic.svg)](https://github.com/lowlighter/metrics)
-
-<details>
-<summary>MORE DASHBOARDS: language analysis, habits, achievements, and star history</summary>
 
 ### Language analysis
 
@@ -238,37 +140,19 @@ The final badge reads a JSON API. The same pattern can display a value from **yo
 
 ![Metrics example: star history](https://raw.githubusercontent.com/lowlighter/metrics/examples/metrics.plugin.stargazers.svg)
 
-All four are upstream examples. The habits and achievement modules have their own definitions; they are not authoritative measures of productivity.
-
-</details>
-
-## 18 · Visitor counter
-
-**LIVE SERVICE.** Included because it is a common trick, not because the number is meaningful. Image caching, bots, proxy requests, and reloads make this **not a unique-person count**. Viewing this demo may increment it.
-
-![Approximate profile-image request counter](https://komarev.com/ghpvc/?username=Cosipa&label=approximate%20image%20views&style=for-the-badge&color=7aa2f7)
-
-[Counter source](https://github.com/antonkomarev/github-profile-views-counter)
-
 <a id="projects"></a>
 
-# D · Show the work, not just the numbers
+# Projects & activity
 
 ## 19 · Repository preview card
 
-**LIVE / COSIPA.** This points at the profile repository itself; later we'd feature actual projects.
+**Live / Cosipa.** Using the profile repository until you choose projects to feature.
 
 [![Cosipa profile repository card](https://github-readme-stats-fast.vercel.app/api/pin/?username=Cosipa&repo=cosipa&theme=tokyonight&hide_border=true)](https://github.com/Cosipa/cosipa)
 
-## 20 · Big clickable project screenshot / cover
-
-**LOCAL MOCKUP · fictional project.** Click it to see the example SVG source, not a nonexistent repository. A real version could use a screenshot or animated GIF of your app.
-
-[![Sidequest: example project cover for a fictional local-first task manager](./profile-showcase/project-preview.svg)](./profile-showcase/project-preview.svg)
-
 ## 21 · Two-column project gallery
 
-**ILLUSTRATIVE COPY.** A plain HTML table gives you predictable columns without CSS. On narrow screens, expect less room.
+**Illustrative copy, not actual project descriptions.**
 
 <table>
 <tr>
@@ -278,10 +162,10 @@ All four are upstream examples. The habits and achievement modules have their ow
 
 One sentence explaining the problem it solves, not just the language it's written in.
 
-![CLI](https://img.shields.io/badge/CLI-7aa2f7?style=flat-square)
-![Local first](https://img.shields.io/badge/local_first-9ece6a?style=flat-square)
+![CLI](https://img.shields.io/badge/CLI-7aa2f7?style=flat)
+![Local first](https://img.shields.io/badge/local_first-9ece6a?style=flat)
 
-**Example links:** [Source](https://github.com/Cosipa?tab=repositories) · [Preview style](#20--big-clickable-project-screenshot--cover)
+[Source](https://github.com/Cosipa?tab=repositories)
 
 </td>
 <td width="50%" valign="top">
@@ -290,10 +174,10 @@ One sentence explaining the problem it solves, not just the language it's writte
 
 The one that exists because you wanted to understand how something works.
 
-![Experiment](https://img.shields.io/badge/experiment-bb9af7?style=flat-square)
-![Work in progress](https://img.shields.io/badge/work_in_progress-e0af68?style=flat-square)
+![Experiment](https://img.shields.io/badge/experiment-bb9af7?style=flat)
+![Work in progress](https://img.shields.io/badge/work_in_progress-e0af68?style=flat)
 
-**Example links:** [Source](https://github.com/Cosipa?tab=repositories) · [Architecture style](#30--mermaid-diagrams-rendered-by-github)
+[Source](https://github.com/Cosipa?tab=repositories)
 
 </td>
 </tr>
@@ -301,448 +185,97 @@ The one that exists because you wanted to understand how something works.
 
 ## 22 · Release board
 
-**LOCAL MOCKUP · fictional project names and versions.** A workflow could replace these rows with real GitHub release data.
+**Mockup · fictional projects and versions.**
 
 | Project | Latest | What's new |
 | :-- | :-- | :-- |
-| `sidequest` | ![Demo version 1.4.0](https://img.shields.io/badge/demo-v1.4.0-7aa2f7?style=flat-square) | Startup is no longer a coffee break. |
-| `tiny-parser` | ![Demo version 0.8.2](https://img.shields.io/badge/demo-v0.8.2-bb9af7?style=flat-square) | Error messages now attempt to help. |
-| `homelab-notes` | ![Demo rolling release](https://img.shields.io/badge/demo-rolling-9ece6a?style=flat-square) | Another diagram of the same server. |
+| `sidequest` | ![Demo version 1.4.0](https://img.shields.io/badge/demo-v1.4.0-7aa2f7?style=flat) | Startup is no longer a coffee break. |
+| `tiny-parser` | ![Demo version 0.8.2](https://img.shields.io/badge/demo-v0.8.2-bb9af7?style=flat) | Error messages now attempt to help. |
+| `homelab-notes` | ![Demo rolling release](https://img.shields.io/badge/demo-rolling-9ece6a?style=flat) | Another diagram of the same server. |
 
-## 23 · Latest writing / videos / talks
+## 24 · Activity with status badges and callouts
 
-**LOCAL MOCKUP.** This is what an RSS-updated section can look like. No fake article links, no feed configured yet.
+**Actual public PRs/issues · snapshot.** States were checked through GitHub's API; these badges are presentation labels, not live status checks. No invented events.
 
-<!-- BLOG-POST-LIST:START -->
-- **[Example]** The tiny tool that replaced my increasingly complicated shell alias
-- **[Example]** What I learned by breaking my home lab
-- **[Example]** Notes from building a thing nobody asked for
-<!-- BLOG-POST-LIST:END -->
+> [!NOTE]
+> ![PR open](https://img.shields.io/badge/PR-open-313131?style=flat&labelColor=3e8fb0)
+> **[zap: install desktop icons](https://github.com/NixOS/nixpkgs/pull/585770)** · `NixOS/nixpkgs #585770`
+>
+> ![PR open](https://img.shields.io/badge/PR-open-313131?style=flat&labelColor=3e8fb0)
+> **[fido2-manage: update to 0.2.2](https://github.com/NixOS/nixpkgs/pull/585745)** · `NixOS/nixpkgs #585745`
+>
+> ![PR open](https://img.shields.io/badge/PR-open-313131?style=flat&labelColor=3e8fb0)
+> **[iproute2: 7.2.0 -> 7.3.0](https://github.com/NixOS/nixpkgs/pull/585573)** · `NixOS/nixpkgs #585573`
 
-The same pattern can list YouTube videos, podcast episodes, release notes, or conference talks. See the RSS recipe below.
+<!-- -->
 
-## 24 · Recent activity feed
+> [!NOTE]
+> ![PR closed](https://img.shields.io/badge/PR-closed-313131?style=flat&labelColor=eb6f92)
+> **[Update install-with-flux.md (https://charts.longhorn.io url deprecated)](https://github.com/longhorn/website/pull/1150)** · `longhorn/website #1150`
+>
+> <sub>Closed without merging · July 6, 2025.</sub>
 
-**LOCAL MOCKUP.** This could be generated from public GitHub events instead of manually maintained.
+<!-- -->
 
-```text
-[example] merged       a small fix with a disproportionately long explanation
-[example] released     the thing that finally has a version number
-[example] opened       an issue with a minimal reproduction (a good day)
-[example] contributed  documentation to somebody else's project
-```
+> [!NOTE]
+> ![Issue open](https://img.shields.io/badge/issue-open-313131?style=flat&labelColor=3e8fb0)
+> **[\[BUG\] Prowlarr magnet redirect is discarded before Transmission grab](https://github.com/maxdorninger/MediaManager/issues/574)** · `maxdorninger/MediaManager #574`
 
-<a id="personal"></a>
+<a id="other"></a>
 
-# E · Personality, music, and side quests
+# Other experiments
 
-## 25 · Now-playing music card
+## 29 · Personal telemetry
 
-**LOCAL ANIMATED MOCKUP.** Not connected to Spotify, Last.fm, or any listening history. A real integration can generate an image like this using your account's authorized data.
+**Mockup · invented numbers, not your personal data.**
 
-![Illustrative now-playing card with animated equalizer bars](./profile-showcase/now-playing.svg)
+![Personal telemetry mockup with illustrative books, projects, home-lab days, and side quests](./profile-showcase/dashboard.svg)
 
-[Spotify widget project](https://github.com/kittinan/spotify-github-profile) · [Last.fm API](https://www.last.fm/api)
-
-GitHub's image cache means “now playing” may lag. Tokens belong on the generator/server, **never** in the README or image URL.
-
-## 26 · Coding-time dashboard
-
-**UPSTREAM DEMO · not your work patterns.** Requires a time-tracking setup such as WakaTime if you want actual personal numbers.
-
-[![Metrics example: WakaTime coding-time dashboard](https://raw.githubusercontent.com/lowlighter/metrics/examples/metrics.plugin.wakatime.svg)](https://github.com/athul/waka-readme)
-
-## 27 · A now page
-
-**LOCAL MOCKUP · replace every line with something true.** This is deliberately more human than a chart.
-
-| | Currently… |
-| :-- | :-- |
-| 🔨 Building | One useful thing and three distractions |
-| 🌱 Learning | The part I thought I already understood |
-| 📖 Reading | Something with too many sticky notes |
-| 🎮 Playing | The backlog, in theory |
-| 💬 Happy to discuss | Tiny tools, good defaults, and questionable side projects |
-
-## 28 · A uses page, hidden in plain sight
-
-**LOCAL MOCKUP.** You can keep the first screen short without losing the nerdy details.
-
-<details>
-<summary><b>🖥️ Expand the setup / dotfiles / home-lab rabbit hole</b></summary>
-
-### Daily drivers
-
-| Category | Example placeholder |
-| :-- | :-- |
-| OS | Your distro / desktop |
-| Editor | Your editor and the one plugin you won't stop recommending |
-| Shell | Your shell, terminal, and prompt |
-| Keyboard | The normal one or the expensive rabbit hole |
-| Dotfiles | Add an actual repository link here |
-
-### Things running somewhere
-
-- A service you genuinely use.
-- A backup system you actually test.
-- One machine with a name that made sense at the time.
-
-<details>
-<summary>Even deeper: needlessly strong opinions</summary>
-
-- A good error message is a feature.
-- The best dependency is sometimes a small function.
-- Every temporary script deserves the chance to become infrastructure.
-
-*All of this is sample copy, not a declaration of your beliefs.*
-
-</details>
-</details>
-
-## 29 · Personal telemetry, generated your way
-
-**LOCAL MOCKUP · invented numbers.** Could be generated from a small YAML file, a books API, public package downloads, or your own services.
-
-![Personal telemetry mockup: books, projects, home-lab days, and side quests; all numbers illustrative](./profile-showcase/dashboard.svg)
-
-<details>
-<summary>Possible source data</summary>
+Example source data, now visible inline:
 
 ```yaml
-# Example values only. A generator could turn this into an SVG.
 books_read: 12
 active_projects: 3
 homelab_days: 42
 side_quests: 7
-currently_building: "A tiny useful thing"
 ```
 
-</details>
-
-<a id="markdown-tricks"></a>
-
-# F · Things GitHub itself can render
-
-## 30 · Mermaid diagrams, rendered by GitHub
-
-**NATIVE GITHUB FEATURE · example architecture.** No image service needed. Useful for showing how a project works.
-
-```mermaid
-flowchart LR
-    A[An unreasonable idea] --> B[A tiny prototype]
-    B --> C{Actually useful?}
-    C -->|Yes| D[Tests + docs]
-    C -->|Not yet| E[Another side quest]
-    E --> B
-    D --> F[Ship it]
-    F --> G[Somebody opens an issue]
-    G --> B
-```
-
-## 31 · Callouts, keyboard keys, math, and footnotes
+## 31 · Native GitHub formatting
 
 > [!NOTE]
 > GitHub renders these callouts natively. They can highlight project status or contribution instructions.
 
+<!-- -->
+
 > [!TIP]
 > A few carefully chosen links often beat ten dashboards.
 
+<!-- -->
+
 > [!WARNING]
-> This showroom contains a medically inadvisable amount of profile decoration.
+> External widgets can break or return cached data.
 
 **Keyboard styling:** <kbd>Ctrl</kbd> + <kbd>K</kbd>, then <kbd>Enter</kbd>.
 
 **Math rendering:** $\text{side projects}_{n+1} = \text{side projects}_n + 1$
 
-**Footnote:** Give a short statement a longer explanation without interrupting the page.[^footnote-demo]
+**Footnote:** Extra context without interrupting the page.[^footnote-demo]
 
-[^footnote-demo]: This is a native GitHub Markdown footnote. In a final profile, it could explain a metric, a source, or an unusually specific joke.
-
-## 32 · Expandable code and a readable diff
-
-<details>
-<summary>Open the profile configuration diff</summary>
-
-```diff
-- collect_every_widget: true
-- introduce_myself: eventually
-+ introduce_myself: first
-+ favorite_widgets: a_few
-+ show_actual_projects: absolutely
-```
-
-</details>
-
-## 33 · ASCII identity, no external image required
-
-```text
-┌──────────────────────────────────────────────────────────────┐
-│  cosipa@github                                               │
-│                                                              │
-│  status    exploring                                         │
-│  projects  some useful / some educational / some inexplicable │
-│  uptime    until the next interesting idea                   │
-│                                                              │
-│  [ sample copy — replace with actual personality ]            │
-└──────────────────────────────────────────────────────────────┘
-```
-
-## 34 · A map inside Markdown
-
-**NATIVE GITHUB FEATURE · example location, NOT your location.** GitHub can render GeoJSON. This point is the Royal Observatory in Greenwich, just to demonstrate the viewer. It may require loading the map when viewed on GitHub.
-
-```geojson
-{
-  "type": "FeatureCollection",
-  "features": [
-    {
-      "type": "Feature",
-      "properties": { "name": "Example only: Royal Observatory, Greenwich" },
-      "geometry": { "type": "Point", "coordinates": [-0.0015, 51.4779] }
-    }
-  ]
-}
-```
-
-# G · The properly unnecessary stuff
-
-## 35 · A daily generated scene
-
-**LOCAL ANIMATED MOCKUP.** Tiny stars blink. This image does not currently change by day or reflect actual weather. A scheduled generator could change the moon, season, landscape, or colors.
-
-![Moonlit pixel landscape with a cabin and blinking stars](./profile-showcase/daily-scene.svg)
-
-## 36 · A community game in your README
-
-**LOCAL MOCKUP · no game is running.** A real version uses prefilled issue links to collect moves, then an Action validates the move and redraws the board. It needs spam protection, input validation, and carefully scoped permissions.
-
-![Community Connect Four concept; visual mockup, not an interactive board](./profile-showcase/game.svg)
-
-A README cannot run the game client-side. The interaction happens through GitHub issues and a trusted generator. **Never interpolate issue text directly into shell commands.**
+[^footnote-demo]: A native GitHub Markdown footnote, useful for explaining a metric or its source.
 
 ## 37 · Rotating quote card
 
-**LIVE SERVICE · not a personal endorsement of whatever quote appears.** Another example of content generated as an image. “Rotating” is subject to image caching.
+**Live service · not a personal endorsement of the generated quote.** Subject to image caching.
 
 [![Quote generated by the GitHub README quotes service](https://quotes-github-readme.vercel.app/api?type=horizontal&theme=tokyonight)](https://github.com/PiyushSuthar/github-readme-quotes)
 
-## 38 · The secret room
-
-<details>
-<summary>There is definitely nothing interesting behind this triangle.</summary>
-
-```text
-       /\_/\\
-      ( o.o )   You made it through the widget swamp.
-       > ^ <
-
-      Achievement unlocked: actually scrolled the profile.
-```
-
-A place for a tiny joke, an Easter egg, a setup photo, or an explanation of how the profile generates itself.
-
-</details>
-
-<a id="recipes"></a>
-
-# H · Recipes for things that need automation
-
-**Reference snippets only.** These aren't installed, and this repository has no new workflows. Keep secrets in GitHub Actions secrets. Before enabling third-party actions, review them and pin them to reviewed commit SHAs; readable version tags below are only recipe examples.
-
-<details>
-<summary><b>Recipe: generate Cosipa's own snake on a separate asset branch</b></summary>
-
-Put a reviewed version of this in `.github/workflows/profile-snake.yml`. It would create/update the **`profile-assets` branch**, not your main README. It runs daily or manually.
-
-```yaml
-name: Profile snake
-on:
-  workflow_dispatch:
-  schedule:
-    - cron: "23 5 * * *"
-permissions:
-  contents: write
-concurrency:
-  group: profile-snake
-  cancel-in-progress: false
-jobs:
-  generate:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: Platane/snk/svg-only@v3
-        with:
-          github_user_name: ${{ github.repository_owner }}
-          outputs: |
-            .profile-output/snake.svg
-            .profile-output/snake-dark.svg?palette=github-dark
-      - uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: .profile-output
-          publish_branch: profile-assets
-```
-
-Then embed:
-
-```html
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Cosipa/cosipa/profile-assets/snake-dark.svg">
-  <img alt="My contribution snake" src="https://raw.githubusercontent.com/Cosipa/cosipa/profile-assets/snake.svg">
-</picture>
-```
-
-Branch protection or repository policy may need additional configuration. Scheduled workflows can be delayed or disabled after long inactivity in public repositories.
-
-</details>
-
-<details>
-<summary><b>Recipe: replace the example writing list from an RSS feed</b></summary>
-
-Put a reviewed version in `.github/workflows/profile-posts.yml`. Replace the feed URL before enabling it. This example updates **`test.md`**, not `README.md`.
-
-```yaml
-name: Latest writing
-on:
-  workflow_dispatch:
-  schedule:
-    - cron: "41 6 * * *"
-permissions:
-  contents: write
-concurrency:
-  group: profile-posts
-  cancel-in-progress: false
-jobs:
-  update:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: gautamkrishnar/blog-post-workflow@v1
-        with:
-          readme_path: ./test.md
-          feed_list: "https://YOUR-BLOG.example/feed.xml"
-          max_post_count: 5
-```
-
-The Action writes between `BLOG-POST-LIST` markers. It needs a real reachable feed and permission to push the update. Protected branches can require a pull-request-based setup instead.
-
-</details>
-
-<details>
-<summary><b>Recipe: your own dynamic widget without a public widget host</b></summary>
-
-1. Keep a small input file in the repository, or fetch an API using an Actions secret.
-2. Run a script on a schedule to produce an SVG or update a marked Markdown section.
-3. Escape external strings before inserting them into XML/HTML. Never execute feed or issue content.
-4. Publish the generated assets to a dedicated branch, or commit only when output changes.
-5. Embed the raw SVG URL; keep important information available as ordinary text too.
-
-This works for now-playing cards, books, public package downloads, recent releases, a personal now page, weather art, or a procedural pet.
-
-**Why do it this way?** Your README can keep showing the last successful output even if the source API is temporarily unavailable. Do not publish private data accidentally: a secret used to fetch data does not make the resulting image private.
-
-</details>
-
-<details>
-<summary><b>Why some famous widgets aren't embedded here</b></summary>
-
-During construction, the original shared `github-readme-stats.vercel.app` endpoints returned HTTP 503, and the tested activity-graph and trophy shared hosts returned HTTP 402. A tested public Spotify example was also broken. Rather than knowingly embedding those failures, this page uses a working alternate stats host, summary-card graphs, Metrics achievement examples, and a local music mockup.
-
-These are point-in-time checks, not a promise that any service will keep working. Also, HTTP 200 alone doesn't guarantee an SVG contains useful data.
-
-GitHub sanitizes HTML. No arbitrary CSS, JavaScript, forms, iframe dashboards, autoplaying audio players, or client-side games. SVGs embedded as images cannot run scripts. Light/dark pictures, supported HTML attributes, declarative SVG animation, generated images, Mermaid, and Actions are the workarounds.
-
-</details>
-
-<a id="shortlist"></a>
-
-# I · Keep / maybe / absolutely not
-
-Pick numbers after viewing. Nothing is precious.
-
-| Direction | Pieces to try |
-| :-- | :-- |
-| Clean builder | **02**, **19–23**, **27** |
-| Terminal gremlin | **01**, **03**, **08**, **28**, **33**, **38** |
-| Data dashboard | **09–13**, **16–17**, **26**, **29** |
-| Pixel playground | **14–15**, **35–36** |
-| Personal homepage | **04**, **20**, **23**, **25**, **27–28** |
-| Just one nice thing | **02** + your actual projects |
-
-- **Keep:**
-- **Maybe:**
-- **Nope:**
-
----
-
-<p align="center"><a href="#the-everything-profile">↑ Back to the excessive amount of stuff ↑</a></p>
-
-![Decorative waving footer](https://capsule-render.vercel.app/api?type=waving&height=110&section=footer&color=gradient)
-
----
-
 <a id="real-posts"></a>
 
-# J · Actual posts from cosipa.dev, ten different ways
+# Writing · cosipa.dev
 
-**REAL POSTS · RSS SNAPSHOT.** Titles, publication dates, categories, and article links come from [cosipa.dev/rss](https://cosipa.dev/rss). Blockquotes are verbatim excerpts from the feed, not rewritten summaries. No invented article headings or generated cover art. Only the presentation varies. These sections are not automatically updating yet.
+Only **42**, **47**, and **48** remain. Titles, dates, and quoted excerpts are from [your RSS feed](https://cosipa.dev/rss). No rewritten headlines or generated article images. These are snapshots, not automatic feed readers yet.
 
-[Minimal](#39--minimal-dated-list) · [Excerpts](#40--editorial-list-with-excerpts) · [Featured](#41--one-big-featured-post) · [Text cards](#42--two-column-text-cards) · [Inline](#43--inline-reading-list) · [Archive](#44--chronological-archive) · [Topics](#45--topic-shelves) · [Expandable](#46--expandable-post-previews) · [Table](#47--compact-magazine-rows) · [Callout](#48--native-callout)
-
-## 39 · Minimal dated list
-
-### Latest writing
-
-- **Oct 18, 2026** — [A user in the Docker group can become root](https://cosipa.dev/posts/docker-group-security-risk/)
-- **Aug 05, 2026** — [How to setup a pull-through Docker registry](https://cosipa.dev/posts/docker-registry-cache-setup/)
-- **Jul 25, 2026** — [How to speed up Linux disk encryption](https://cosipa.dev/posts/full-disk-encryption-tweaks/)
-- **Oct 02, 2025** — [First post ever](https://cosipa.dev/posts/first-post-ever/)
-
-[All posts →](https://cosipa.dev/) · [Subscribe via RSS](https://cosipa.dev/rss)
-
-## 40 · Editorial list with excerpts
-
-### Notes from the technical rabbit hole
-
-#### [A user in the Docker group can become root](https://cosipa.dev/posts/docker-group-security-risk/)
-
-**October 18, 2026 · Linux / Docker / Cybersecurity**
-
-> This is a well-known (very old) Docker security risk, that everybody knows
-> exists, yet sometimes we underestimate the impact of it.
-
-#### [How to setup a pull-through Docker registry](https://cosipa.dev/posts/docker-registry-cache-setup/)
-
-**August 5, 2026 · Docker / DockerHub / Cache**
-
-> A pull-through Docker registry is basically just a cached proxy to DockerHub,
-> instead of having your servers pulling images from DockerHub directly, they
-> could pull them from your own registry.
-
-#### [How to speed up Linux disk encryption](https://cosipa.dev/posts/full-disk-encryption-tweaks/)
-
-**July 25, 2026 · Linux / Encryption / Performance**
-
-> What is dm-crypt: Device-Mapper’s crypt provides transparent encryption of
-> block devices using the kernel crypto API.
-
-<sub>[First post ever](https://cosipa.dev/posts/first-post-ever/) · October 2, 2025</sub>
-
-## 41 · One big featured post
-
-### Featured writing
-
-### [A user in the Docker group can become root](https://cosipa.dev/posts/docker-group-security-risk/)
-
-<sub>October 18, 2026 · Linux / Docker / Cybersecurity / Root</sub>
-
-> This is a well-known (very old) Docker security risk, that everybody knows
-> exists, yet sometimes we underestimate the impact of it.
-
----
-
-- [How to setup a pull-through Docker registry](https://cosipa.dev/posts/docker-registry-cache-setup/)
-- [How to speed up Linux disk encryption](https://cosipa.dev/posts/full-disk-encryption-tweaks/)
-- [First post ever](https://cosipa.dev/posts/first-post-ever/)
+[42 · Cards](#42--two-column-text-cards) · [47 · Rows](#47--compact-magazine-rows) · [48 · Compact callouts](#48--three-compact-callouts)
 
 ## 42 · Two-column text cards
 
@@ -801,94 +334,6 @@ Pick numbers after viewing. Nothing is precious.
 </tr>
 </table>
 
-## 43 · Inline reading list
-
-[A user in the Docker group can become root](https://cosipa.dev/posts/docker-group-security-risk/) · [How to setup a pull-through Docker registry](https://cosipa.dev/posts/docker-registry-cache-setup/) · [How to speed up Linux disk encryption](https://cosipa.dev/posts/full-disk-encryption-tweaks/) · [First post ever](https://cosipa.dev/posts/first-post-ever/)
-
-## 44 · Chronological archive
-
-### 2026
-
-| Date | Article | Feed categories |
-| :-- | :-- | :-- |
-| `Oct 18` | [A user in the Docker group can become root](https://cosipa.dev/posts/docker-group-security-risk/) | Linux, Docker, Cybersecurity, Root |
-| `Aug 05` | [How to setup a pull-through Docker registry](https://cosipa.dev/posts/docker-registry-cache-setup/) | Docker, DockerHub, Cache |
-| `Jul 25` | [How to speed up Linux disk encryption](https://cosipa.dev/posts/full-disk-encryption-tweaks/) | Linux, Encryption, Performance |
-
-### 2025
-
-| Date | Article | Feed categories |
-| :-- | :-- | :-- |
-| `Oct 02` | [First post ever](https://cosipa.dev/posts/first-post-ever/) | — |
-
-## 45 · Topic shelves
-
-*An editorial grouping, rather than a chronological feed. An article can appear on more than one shelf.*
-
-### 🐧 Linux, security, and the host underneath
-
-- **[A user in the Docker group can become root](https://cosipa.dev/posts/docker-group-security-risk/)**
-- **[How to speed up Linux disk encryption](https://cosipa.dev/posts/full-disk-encryption-tweaks/)**
-
-### 🐳 Containers and infrastructure
-
-- **[How to setup a pull-through Docker registry](https://cosipa.dev/posts/docker-registry-cache-setup/)**
-- **[A user in the Docker group can become root](https://cosipa.dev/posts/docker-group-security-risk/)**
-
-### 🌱 The beginning
-
-- **[First post ever](https://cosipa.dev/posts/first-post-ever/)**
-
-## 46 · Expandable post previews
-
-**A small footprint until someone wants details.** Each title opens a preview; the link inside opens the article.
-
-<details>
-<summary><b>A user in the Docker group can become root</b> · Oct 18, 2026</summary>
-
-> This is a well-known (very old) Docker security risk, that everybody knows
-> exists, yet sometimes we underestimate the impact of it.
-
-**Feed categories:** Linux, Docker, Cybersecurity, Root.
-
-[Read on cosipa.dev →](https://cosipa.dev/posts/docker-group-security-risk/)
-
-</details>
-
-<details>
-<summary><b>How to setup a pull-through Docker registry</b> · Aug 05, 2026</summary>
-
-> A pull-through Docker registry is basically just a cached proxy to DockerHub,
-> instead of having your servers pulling images from DockerHub directly, they
-> could pull them from your own registry.
-
-**Feed categories:** Docker, DockerHub, Cache.
-
-[Read on cosipa.dev →](https://cosipa.dev/posts/docker-registry-cache-setup/)
-
-</details>
-
-<details>
-<summary><b>How to speed up Linux disk encryption</b> · Jul 25, 2026</summary>
-
-> What is dm-crypt: Device-Mapper’s crypt provides transparent encryption of
-> block devices using the kernel crypto API.
-
-**Feed categories:** Linux, Encryption, Performance.
-
-[Read on cosipa.dev →](https://cosipa.dev/posts/full-disk-encryption-tweaks/)
-
-</details>
-
-<details>
-<summary><b>First post ever</b> · Oct 02, 2025</summary>
-
-> Welcome to my tech blog, this post just serves as a placeholder until I write a full post.
-
-[Read on cosipa.dev →](https://cosipa.dev/posts/first-post-ever/)
-
-</details>
-
 ## 47 · Compact magazine rows
 
 <table>
@@ -928,22 +373,21 @@ Pick numbers after viewing. Nothing is precious.
 </tr>
 </table>
 
-[Browse the full blog →](https://cosipa.dev/)
-
-## 48 · Native callout
+## 48 · Three compact callouts
 
 > [!NOTE]
-> **[A user in the Docker group can become root](https://cosipa.dev/posts/docker-group-security-risk/)**
->
-> October 18, 2026 · [cosipa.dev](https://cosipa.dev/)
->
-> This is a well-known (very old) Docker security risk, that everybody knows
-> exists, yet sometimes we underestimate the impact of it.
+> **[A user in the Docker group can become root](https://cosipa.dev/posts/docker-group-security-risk/)** · <sub>Oct 18, 2026</sub>
 
-[RSS](https://cosipa.dev/rss)
+<!-- -->
 
----
+> [!NOTE]
+> **[How to setup a pull-through Docker registry](https://cosipa.dev/posts/docker-registry-cache-setup/)** · <sub>Aug 05, 2026</sub>
 
-**Writing layout shortlist:** `39` minimal · `40` excerpts · `41` featured · `42` text cards · `43` inline · `44` archive · `45` topics · `46` expandable · `47` table · `48` callout.
+<!-- -->
 
-[↑ Back to the real-post layouts](#real-posts) · [Visit cosipa.dev](https://cosipa.dev/) · [RSS](https://cosipa.dev/rss)
+> [!NOTE]
+> **[How to speed up Linux disk encryption](https://cosipa.dev/posts/full-disk-encryption-tweaks/)** · <sub>Jul 25, 2026</sub>
+
+[cosipa.dev](https://cosipa.dev/) · [RSS](https://cosipa.dev/rss) · [↑ Back to top](#profile-shortlist)
+
+![Decorative waving footer](https://capsule-render.vercel.app/api?type=waving&height=110&section=footer&color=gradient)
