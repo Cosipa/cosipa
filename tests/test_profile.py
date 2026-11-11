@@ -624,11 +624,11 @@ class WorkflowAndCacheTests(unittest.TestCase):
         self.assertEqual(config["showcase_markdown"], "test.md")
         markdown = (ROOT / config["markdown"]).read_text()
         profile.validate(ROOT, config, markdown, regions=config["regions"])
-        expected = ["typing", "pgp", "posts47", "activity", "merged", "stats", "timeline", "snake", "quote"]
+        expected = ["typing", "pgp", "posts47", "activity", "merged", "snake", "stats", "timeline", "quote"]
         self.assertEqual(re.findall(r"profile:([\w-]+):start", markdown), expected)
         self.assertLess(markdown.index("github.com/Cosipa.png"), markdown.index('<h3 align="center">Cosipa'))
-        self.assertLess(markdown.index("Code, experiments"), markdown.index("profile:typing:start"))
-        self.assertLess(markdown.index("## Toolbox"), markdown.index("## Latest writing"))
+        self.assertLess(markdown.index("Welcome, hope you find what you are looking for."), markdown.index("profile:typing:start"))
+        self.assertLess(markdown.index("## Toolbox"), markdown.index("## Latest posts"))
         for tool in ("linux", "nixos", "neovim", "rust", "python"):
             self.assertIn(f"badge-{tool}.svg", markdown)
         self.assertIn("komarev.com/ghpvc/", markdown)
