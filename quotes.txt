@@ -1,8 +1,7 @@
-# Temporary demo text to preview the card; these are NOT real quotations.
-# Replace these entries with your own quotes. No random quotes are fetched.
-# One quote per line. Optional attribution follows a literal TAB character.
-# Lines beginning with # and blank lines are ignored.
-# Removing all entries produces an explicit no-quotes-configured notice.
-
-Demo quote — replace this with something you actually want to keep.	Placeholder, not a real quotation
-Another demo quote, just to preview line wrapping and the attribution layout.	Placeholder, not a real quotation
+# One quote per line. Optional attribution with a TAB character
+The best way to predict the future is to invent it. 	Alan Kay
+The only way to do great work is to love what you do. 	Grace Hopper
+Talk is cheap. Show me the code. 	Linus Torvalds
+Increasingly, people seem to misinterpret complexity as sophistication, which is baffling — the incomprehensible should cause suspicion rather than admiration  	Niklaus Wirth
+A computer is like air conditioning – it becomes useless when you open Windows  	Linus Torvalds
+All operating systems suck, but Linux just sucks less 	Linus Torvalds
