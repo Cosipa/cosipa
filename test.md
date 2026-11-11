@@ -677,3 +677,275 @@ Pick numbers after viewing. Nothing is precious.
 <p align="center"><a href="#the-everything-profile">↑ Back to the excessive amount of stuff ↑</a></p>
 
 ![Decorative waving footer](https://capsule-render.vercel.app/api?type=waving&height=110&section=footer&color=gradient)
+
+---
+
+<a id="real-posts"></a>
+
+# J · Actual posts from cosipa.dev, ten different ways
+
+**REAL POSTS · RSS SNAPSHOT.** All four titles, publication dates, and article links below come from [cosipa.dev/rss](https://cosipa.dev/rss). Summaries are paraphrased from the feed. The custom cover illustrations are local showcase assets, not original article images. These sections are not automatically updating yet.
+
+[Minimal](#39--minimal-dated-list) · [Editorial](#40--editorial-list-with-excerpts) · [Featured](#41--one-big-featured-post) · [Text cards](#42--two-column-text-cards) · [Image cards](#43--clickable-cover-gallery) · [Archive](#44--chronological-archive) · [Topics](#45--topic-shelves) · [Expandable](#46--expandable-post-previews) · [Magazine](#47--compact-magazine-rows) · [Badges](#48--ultra-compact-badge-links)
+
+## 39 · Minimal dated list
+
+### Latest writing
+
+- **Oct 18, 2026** — [A user in the Docker group can become root](https://cosipa.dev/posts/docker-group-security-risk/)
+- **Aug 05, 2026** — [How to setup a pull-through Docker registry](https://cosipa.dev/posts/docker-registry-cache-setup/)
+- **Jul 25, 2026** — [How to speed up Linux disk encryption](https://cosipa.dev/posts/full-disk-encryption-tweaks/)
+- **Oct 02, 2025** — [First post ever](https://cosipa.dev/posts/first-post-ever/)
+
+[All posts →](https://cosipa.dev/) · [Subscribe via RSS](https://cosipa.dev/rss)
+
+## 40 · Editorial list with excerpts
+
+### Notes from the technical rabbit hole
+
+#### [A user in the Docker group can become root](https://cosipa.dev/posts/docker-group-security-risk/)
+
+**October 18, 2026 · Linux / Docker / Cybersecurity**
+
+Docker socket access is more powerful than it looks. Why membership in the `docker` group can effectively grant root access, and why that matters for the host's security boundary.
+
+#### [How to setup a pull-through Docker registry](https://cosipa.dev/posts/docker-registry-cache-setup/)
+
+**August 5, 2026 · Docker / DockerHub / Cache**
+
+Put a caching registry between your servers and DockerHub. A setup using a VPS and S3 storage, with fewer repeated pulls from upstream and less exposure to rate limits.
+
+#### [How to speed up Linux disk encryption](https://cosipa.dev/posts/full-disk-encryption-tweaks/)
+
+**July 25, 2026 · Linux / Encryption / Performance**
+
+A look at `dm-crypt` performance tweaks on Linux 5.9 and later, including workqueue bypasses and the information-leakage tradeoff of passing discard requests through encryption.
+
+<sub>And where it started: [First post ever · October 2, 2025](https://cosipa.dev/posts/first-post-ever/).</sub>
+
+## 41 · One big featured post
+
+### Featured writing
+
+[![A user in the Docker group can become root — October 18, 2026, cosipa.dev](./profile-showcase/post-docker-security.svg)](https://cosipa.dev/posts/docker-group-security-risk/)
+
+**The `docker` group is not an ordinary convenience permission.** A closer look at the Docker socket, the root-running daemon, and what access to that API means.
+
+**[Read the article →](https://cosipa.dev/posts/docker-group-security-risk/)**
+
+**Also worth a look**
+- [Build a pull-through Docker registry](https://cosipa.dev/posts/docker-registry-cache-setup/) — cache image pulls with a VPS and S3 storage.
+- [Speed up Linux disk encryption](https://cosipa.dev/posts/full-disk-encryption-tweaks/) — performance tweaks and their tradeoffs.
+
+## 42 · Two-column text cards
+
+<table>
+<tr>
+<td width="50%" valign="top">
+
+### 🛡️ Docker group → root
+
+<sub>October 18, 2026 · Security</sub>
+
+Docker socket access can effectively grant root privileges. A familiar warning, with consequences worth understanding.
+
+**[A user in the Docker group can become root →](https://cosipa.dev/posts/docker-group-security-risk/)**
+
+</td>
+<td width="50%" valign="top">
+
+### 📦 Pull once, cache it
+
+<sub>August 5, 2026 · Infrastructure</sub>
+
+A pull-through registry backed by S3, for repeated image pulls and DockerHub rate limits.
+
+**[How to setup a pull-through Docker registry →](https://cosipa.dev/posts/docker-registry-cache-setup/)**
+
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+
+### 🔐 Faster encrypted disks
+
+<sub>July 25, 2026 · Linux</sub>
+
+Tuning `dm-crypt` workqueues and discard behavior, without pretending performance has no security tradeoffs.
+
+**[How to speed up Linux disk encryption →](https://cosipa.dev/posts/full-disk-encryption-tweaks/)**
+
+</td>
+<td width="50%" valign="top">
+
+### ✏️ Before the rabbit holes
+
+<sub>October 2, 2025 · Introduction</sub>
+
+The introductory placeholder that opened the blog, before the technical posts arrived.
+
+**[First post ever →](https://cosipa.dev/posts/first-post-ever/)**
+
+</td>
+</tr>
+</table>
+
+## 43 · Clickable cover gallery
+
+**All four images are links.** Custom SVG covers; text remains available in the other layouts. No external card-rendering service needed.
+
+<p>
+  <a href="https://cosipa.dev/posts/docker-group-security-risk/"><img src="./profile-showcase/post-docker-security.svg" alt="A user in the Docker group can become root — October 18, 2026" width="49%"></a>
+  <a href="https://cosipa.dev/posts/docker-registry-cache-setup/"><img src="./profile-showcase/post-docker-cache.svg" alt="How to setup a pull-through Docker registry — August 5, 2026" width="49%"></a>
+</p>
+<p>
+  <a href="https://cosipa.dev/posts/full-disk-encryption-tweaks/"><img src="./profile-showcase/post-disk-encryption.svg" alt="How to speed up Linux disk encryption — July 25, 2026" width="49%"></a>
+  <a href="https://cosipa.dev/posts/first-post-ever/"><img src="./profile-showcase/post-first-post.svg" alt="First post ever — October 2, 2025" width="49%"></a>
+</p>
+
+[More on cosipa.dev →](https://cosipa.dev/)
+
+## 44 · Chronological archive
+
+### 2026
+
+| Date | Article | Feed categories |
+| :-- | :-- | :-- |
+| `Oct 18` | [A user in the Docker group can become root](https://cosipa.dev/posts/docker-group-security-risk/) | Linux, Docker, Cybersecurity, Root |
+| `Aug 05` | [How to setup a pull-through Docker registry](https://cosipa.dev/posts/docker-registry-cache-setup/) | Docker, DockerHub, Cache |
+| `Jul 25` | [How to speed up Linux disk encryption](https://cosipa.dev/posts/full-disk-encryption-tweaks/) | Linux, Encryption, Performance |
+
+### 2025
+
+| Date | Article | Feed categories |
+| :-- | :-- | :-- |
+| `Oct 02` | [First post ever](https://cosipa.dev/posts/first-post-ever/) | — |
+
+## 45 · Topic shelves
+
+*An editorial grouping, rather than a chronological feed. An article can appear on more than one shelf.*
+
+### 🐧 Linux, security, and the host underneath
+
+- **[A user in the Docker group can become root](https://cosipa.dev/posts/docker-group-security-risk/)** — understanding what Docker socket access permits.
+- **[How to speed up Linux disk encryption](https://cosipa.dev/posts/full-disk-encryption-tweaks/)** — `dm-crypt` performance and security tradeoffs.
+
+### 🐳 Containers and infrastructure
+
+- **[How to setup a pull-through Docker registry](https://cosipa.dev/posts/docker-registry-cache-setup/)** — a caching proxy with S3-backed storage.
+- **[A user in the Docker group can become root](https://cosipa.dev/posts/docker-group-security-risk/)** — why container administration is also host security.
+
+### 🌱 The beginning
+
+- **[First post ever](https://cosipa.dev/posts/first-post-ever/)** — the blog's initial hello.
+
+## 46 · Expandable post previews
+
+**A small footprint until someone wants details.** Each title opens a preview; the link inside opens the article.
+
+<details>
+<summary><b>A user in the Docker group can become root</b> · Oct 18, 2026</summary>
+
+The Docker socket is the communication channel between clients and the daemon. The feed explains why permission to talk to that root-running daemon can effectively mean permission to become root on the host.
+
+**Feed categories:** Linux, Docker, Cybersecurity, Root.
+
+[Read on cosipa.dev →](https://cosipa.dev/posts/docker-group-security-risk/)
+
+</details>
+
+<details>
+<summary><b>How to setup a pull-through Docker registry</b> · Aug 05, 2026</summary>
+
+Instead of pulling every image directly from DockerHub, use your own caching registry. The post describes a setup on a VPS with S3 storage and discusses repeated pulls, upstream availability, and rate limits.
+
+**Feed categories:** Docker, DockerHub, Cache.
+
+[Read on cosipa.dev →](https://cosipa.dev/posts/docker-registry-cache-setup/)
+
+</details>
+
+<details>
+<summary><b>How to speed up Linux disk encryption</b> · Jul 25, 2026</summary>
+
+For Linux 5.9 and later: a discussion of `dm-crypt` workqueue bypasses and discard passthrough. The latter can help SSD space reclamation while revealing which encrypted blocks are unused.
+
+**Feed categories:** Linux, Encryption, Performance.
+
+[Read on cosipa.dev →](https://cosipa.dev/posts/full-disk-encryption-tweaks/)
+
+</details>
+
+<details>
+<summary><b>First post ever</b> · Oct 02, 2025</summary>
+
+The short welcome post that served as a placeholder while future technical articles were being planned.
+
+[Read on cosipa.dev →](https://cosipa.dev/posts/first-post-ever/)
+
+</details>
+
+## 47 · Compact magazine rows
+
+<table>
+<tr>
+<td width="35%" valign="middle">
+<a href="https://cosipa.dev/posts/docker-group-security-risk/"><img src="./profile-showcase/post-docker-security.svg" alt="Docker group security article cover" width="330"></a>
+</td>
+<td valign="top">
+
+**[A user in the Docker group can become root](https://cosipa.dev/posts/docker-group-security-risk/)**
+
+<sub>October 18, 2026</sub>
+
+Socket permissions, a root-running daemon, and the real power of the `docker` group.
+
+</td>
+</tr>
+<tr>
+<td width="35%" valign="middle">
+<a href="https://cosipa.dev/posts/docker-registry-cache-setup/"><img src="./profile-showcase/post-docker-cache.svg" alt="Pull-through Docker registry article cover" width="330"></a>
+</td>
+<td valign="top">
+
+**[How to setup a pull-through Docker registry](https://cosipa.dev/posts/docker-registry-cache-setup/)**
+
+<sub>August 5, 2026</sub>
+
+A caching proxy for DockerHub pulls, hosted on a VPS with S3 storage.
+
+</td>
+</tr>
+<tr>
+<td width="35%" valign="middle">
+<a href="https://cosipa.dev/posts/full-disk-encryption-tweaks/"><img src="./profile-showcase/post-disk-encryption.svg" alt="Linux disk encryption article cover" width="330"></a>
+</td>
+<td valign="top">
+
+**[How to speed up Linux disk encryption](https://cosipa.dev/posts/full-disk-encryption-tweaks/)**
+
+<sub>July 25, 2026</sub>
+
+Performance tweaks for encrypted Linux disks, with the security tradeoffs included.
+
+</td>
+</tr>
+</table>
+
+[Browse the full blog →](https://cosipa.dev/)
+
+## 48 · Ultra-compact badge links
+
+**One small strip instead of a section full of cards.** Short labels link to the real posts; these badges are static labels, not live feed readers.
+
+[![Read: Docker group security](https://img.shields.io/badge/read-Docker_group_security-f7768e?style=for-the-badge&logo=docker&logoColor=white)](https://cosipa.dev/posts/docker-group-security-risk/)
+[![Read: Registry cache](https://img.shields.io/badge/read-Registry_cache-7dcfff?style=for-the-badge&logo=docker&logoColor=black)](https://cosipa.dev/posts/docker-registry-cache-setup/)
+[![Read: Disk encryption](https://img.shields.io/badge/read-Disk_encryption-bb9af7?style=for-the-badge&logo=linux&logoColor=white)](https://cosipa.dev/posts/full-disk-encryption-tweaks/)
+[![Read: First post](https://img.shields.io/badge/read-First_post-e0af68?style=for-the-badge)](https://cosipa.dev/posts/first-post-ever/)
+[![Subscribe via RSS](https://img.shields.io/badge/subscribe-RSS-FF6600?style=for-the-badge&logo=rss&logoColor=white)](https://cosipa.dev/rss)
+
+---
+
+**Writing layout shortlist:** `39` minimal · `40` editorial · `41` featured · `42` text cards · `43` cover gallery · `44` archive · `45` topics · `46` expandable · `47` magazine · `48` badges.
+
+[↑ Back to the real-post layouts](#real-posts) · [Visit cosipa.dev](https://cosipa.dev/) · [RSS](https://cosipa.dev/rss)

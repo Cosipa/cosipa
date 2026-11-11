@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="360" viewBox="0 0 1000 360" role="img" aria-labelledby="title desc">
+  <title id="title">How to setup a pull-through Docker registry</title>
+  <desc id="desc">Cosipa.dev article, August 5, 2026. Custom showcase cover with a diagram of clients connecting through a cache to DockerHub.</desc>
+  <defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#14253b"/><stop offset="1" stop-color="#123544"/></linearGradient></defs>
+  <rect width="1000" height="360" rx="18" fill="url(#bg)"/>
+  <g font-family="monospace"><text x="38" y="48" fill="#7dcfff" font-size="13" letter-spacing="2">COSIPA.DEV / INFRASTRUCTURE</text><g fill="#e2f2ff" font-family="sans-serif" font-size="36" font-weight="bold"><text x="38" y="118">How to setup a</text><text x="38" y="166">pull-through Docker registry</text></g><text x="38" y="218" fill="#a1c4d6" font-size="16">Pull once. Cache it. Keep things moving.</text><text x="38" y="306" fill="#a1c4d6" font-size="13">05 AUG 2026 · DOCKER / DOCKERHUB / CACHE</text><text x="38" y="333" fill="#7dcfff" font-size="12">READ THE POST →</text></g>
+  <g fill="none" stroke="#7dcfff" stroke-width="2"><rect x="748" y="57" width="190" height="60" rx="9"/><rect x="748" y="157" width="190" height="60" rx="9" fill="#204758"/><rect x="748" y="257" width="190" height="60" rx="9"/><path d="M843 120v34m-6-7 6 7 6-7m0 72v34m-6-7 6 7 6-7"/></g>
+  <g font-family="monospace" text-anchor="middle" font-size="16" fill="#d7f1ff"><text x="843" y="94">clients</text><text x="843" y="194">your cache</text><text x="843" y="294">DockerHub</text></g>
+</svg>
