@@ -1,13 +1,21 @@
 {
   "schema": 1,
   "snake": {
-    "dark": "./src/assets/generated/snake-dark.ef6d6553e4c0.svg",
-    "light": "./src/assets/generated/snake-light.c1bf519a119c.svg"
+    "dark": "./src/assets/generated/snake-dark.acac16939fb8.svg",
+    "light": "./src/assets/generated/snake-light.f3d180715a70.svg"
   },
   "sources": {
     "activity": {
       "as_of": "2026-11-13",
       "items": [
+        {
+          "kind": "pr",
+          "number": 585573,
+          "repository": "NixOS/nixpkgs",
+          "title": "iproute2: 7.2.0 -> 7.3.0",
+          "updated_at": "2026-11-13T14:59:56Z",
+          "url": "https://github.com/NixOS/nixpkgs/pull/585573"
+        },
         {
           "kind": "pr",
           "number": 585770,
@@ -25,14 +33,6 @@
           "url": "https://github.com/NixOS/nixpkgs/pull/585745"
         },
         {
-          "kind": "pr",
-          "number": 585573,
-          "repository": "NixOS/nixpkgs",
-          "title": "iproute2: 7.2.0 -> 7.3.0",
-          "updated_at": "2026-11-09T17:12:53Z",
-          "url": "https://github.com/NixOS/nixpkgs/pull/585573"
-        },
-        {
           "kind": "issue",
           "number": 574,
           "repository": "maxdorninger/MediaManager",
@@ -46,7 +46,7 @@
       "as_of": "2026-11-13",
       "calendar_end": "2026-11-13",
       "calendar_start": "2025-11-14",
-      "calendar_total": 1080,
+      "calendar_total": 1085,
       "days": {
         "2025-11-14": 0,
         "2025-11-15": 0,
@@ -412,9 +412,9 @@
         "2026-11-10": 1,
         "2026-11-11": 50,
         "2026-11-12": 0,
-        "2026-11-13": 0
+        "2026-11-13": 5
       },
-      "source_calendar_total": 1152
+      "source_calendar_total": 1157
     },
     "contributions": {
       "as_of": "2026-11-13",
@@ -422,7 +422,7 @@
       "public_issues": 1,
       "public_prs": 3,
       "public_reviews": 1,
-      "published_private": 842,
+      "published_private": 847,
       "year": 2026
     },
     "merged": {

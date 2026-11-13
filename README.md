@@ -105,9 +105,9 @@
 <!-- profile:activity:start -->
 | Status | Repository | Title |
 | :---: | :-- | :-- |
+| <a href="https://github.com/NixOS/nixpkgs/pull/585573"><img src="./src/assets/generated/status-pr-open.05cacbdfd7d3.svg" alt="PR open" align="top"></a> | `NixOS/nixpkgs` | [iproute2: 7.2.0 \-&gt; 7.3.0](https://github.com/NixOS/nixpkgs/pull/585573) · #585573 |
 | <a href="https://github.com/NixOS/nixpkgs/pull/585770"><img src="./src/assets/generated/status-pr-open.05cacbdfd7d3.svg" alt="PR open" align="top"></a> | `NixOS/nixpkgs` | [zap: install desktop icons](https://github.com/NixOS/nixpkgs/pull/585770) · #585770 |
 | <a href="https://github.com/NixOS/nixpkgs/pull/585745"><img src="./src/assets/generated/status-pr-open.05cacbdfd7d3.svg" alt="PR open" align="top"></a> | `NixOS/nixpkgs` | [fido2-manage: update to 0.2.2](https://github.com/NixOS/nixpkgs/pull/585745) · #585745 |
-| <a href="https://github.com/NixOS/nixpkgs/pull/585573"><img src="./src/assets/generated/status-pr-open.05cacbdfd7d3.svg" alt="PR open" align="top"></a> | `NixOS/nixpkgs` | [iproute2: 7.2.0 \-&gt; 7.3.0](https://github.com/NixOS/nixpkgs/pull/585573) · #585573 |
 | <a href="https://github.com/maxdorninger/MediaManager/issues/574"><img src="./src/assets/generated/status-issue-open.de17ea530027.svg" alt="Issue open" align="top"></a> | `maxdorninger/MediaManager` | [\[BUG\] Prowlarr magnet redirect is discarded before Transmission grab](https://github.com/maxdorninger/MediaManager/issues/574) · #574 |
 <!-- profile:activity:end -->
 
@@ -122,33 +122,33 @@
 ## GitHub activity
 
 <!-- profile:snake:start -->
-<a href="./src/assets/generated/snake-dark.ef6d6553e4c0.svg#gh-dark-mode-only">
-  <img src="./src/assets/generated/snake-dark.ef6d6553e4c0.svg" alt="Cosipa&#x27;s contribution snake" width="1000">
+<a href="./src/assets/generated/snake-dark.acac16939fb8.svg#gh-dark-mode-only">
+  <img src="./src/assets/generated/snake-dark.acac16939fb8.svg" alt="Cosipa&#x27;s contribution snake" width="1000">
 </a>
-<a href="./src/assets/generated/snake-light.c1bf519a119c.svg#gh-light-mode-only">
-  <img src="./src/assets/generated/snake-light.c1bf519a119c.svg" alt="Cosipa&#x27;s contribution snake" width="1000">
+<a href="./src/assets/generated/snake-light.f3d180715a70.svg#gh-light-mode-only">
+  <img src="./src/assets/generated/snake-light.f3d180715a70.svg" alt="Cosipa&#x27;s contribution snake" width="1000">
 </a>
 <!-- profile:snake:end -->
 
 ### Public contribution stats
 
 <!-- profile:stats:start -->
-<a href="./src/assets/generated/stats-dark.88a58cede7d6.svg#gh-dark-mode-only">
-  <img src="./src/assets/generated/stats-dark.88a58cede7d6.svg" alt="Cosipa&#x27;s public GitHub contribution statistics" width="467">
+<a href="./src/assets/generated/stats-dark.276dfa6c315f.svg#gh-dark-mode-only">
+  <img src="./src/assets/generated/stats-dark.276dfa6c315f.svg" alt="Cosipa&#x27;s public GitHub contribution statistics" width="467">
 </a>
-<a href="./src/assets/generated/stats-light.13e77d8435ff.svg#gh-light-mode-only">
-  <img src="./src/assets/generated/stats-light.13e77d8435ff.svg" alt="Cosipa&#x27;s public GitHub contribution statistics" width="467">
+<a href="./src/assets/generated/stats-light.ec2d285ec307.svg#gh-light-mode-only">
+  <img src="./src/assets/generated/stats-light.ec2d285ec307.svg" alt="Cosipa&#x27;s public GitHub contribution statistics" width="467">
 </a>
 <!-- profile:stats:end -->
 
 ### This year's weekly line graph
 
 <!-- profile:timeline:start -->
-<a href="./src/assets/generated/timeline-dark.6e3afcb6789e.svg#gh-dark-mode-only">
-  <img src="./src/assets/generated/timeline-dark.6e3afcb6789e.svg" alt="Cosipa&#x27;s 365-day contribution timeline">
+<a href="./src/assets/generated/timeline-dark.f75d54b03a67.svg#gh-dark-mode-only">
+  <img src="./src/assets/generated/timeline-dark.f75d54b03a67.svg" alt="Cosipa&#x27;s 365-day contribution timeline">
 </a>
-<a href="./src/assets/generated/timeline-light.02ce6109dde3.svg#gh-light-mode-only">
-  <img src="./src/assets/generated/timeline-light.02ce6109dde3.svg" alt="Cosipa&#x27;s 365-day contribution timeline">
+<a href="./src/assets/generated/timeline-light.fdcdc38b29ff.svg#gh-light-mode-only">
+  <img src="./src/assets/generated/timeline-light.fdcdc38b29ff.svg" alt="Cosipa&#x27;s 365-day contribution timeline">
 </a>
 <!-- profile:timeline:end -->
 

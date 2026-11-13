@@ -14,7 +14,7 @@
 <text x="20" y="151" fill="#57606a" font-size="12" text-anchor="start" font-weight="normal">Public PR reviews</text>
 <text x="445" y="151" fill="#0969da" font-size="12" text-anchor="end" font-weight="normal">1</text>
 <text x="20" y="174" fill="#57606a" font-size="12" text-anchor="start" font-weight="normal">Published restricted contributions</text>
-<text x="445" y="174" fill="#0969da" font-size="12" text-anchor="end" font-weight="normal">842</text>
+<text x="445" y="174" fill="#0969da" font-size="12" text-anchor="end" font-weight="normal">847</text>
 <text x="20" y="211" fill="#57606a" font-size="10" text-anchor="start" font-weight="normal">Restricted private activity: all types, not just commits.</text>
 
   </g>
