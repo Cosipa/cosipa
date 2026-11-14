@@ -10,14 +10,6 @@
       "items": [
         {
           "kind": "pr",
-          "number": 585573,
-          "repository": "NixOS/nixpkgs",
-          "title": "iproute2: 7.2.0 -> 7.3.0",
-          "updated_at": "2026-11-13T23:36:11Z",
-          "url": "https://github.com/NixOS/nixpkgs/pull/585573"
-        },
-        {
-          "kind": "pr",
           "number": 585770,
           "repository": "NixOS/nixpkgs",
           "title": "zap: install desktop icons",

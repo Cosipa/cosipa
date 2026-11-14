@@ -105,7 +105,6 @@
 <!-- profile:activity:start -->
 | Status | Repository | Title |
 | :---: | :-- | :-- |
-| <a href="https://github.com/NixOS/nixpkgs/pull/585573"><img src="./src/assets/generated/status-pr-open.05cacbdfd7d3.svg" alt="PR open" align="top"></a> | `NixOS/nixpkgs` | [iproute2: 7.2.0 \-&gt; 7.3.0](https://github.com/NixOS/nixpkgs/pull/585573) · #585573 |
 | <a href="https://github.com/NixOS/nixpkgs/pull/585770"><img src="./src/assets/generated/status-pr-open.05cacbdfd7d3.svg" alt="PR open" align="top"></a> | `NixOS/nixpkgs` | [zap: install desktop icons](https://github.com/NixOS/nixpkgs/pull/585770) · #585770 |
 | <a href="https://github.com/NixOS/nixpkgs/pull/585745"><img src="./src/assets/generated/status-pr-open.05cacbdfd7d3.svg" alt="PR open" align="top"></a> | `NixOS/nixpkgs` | [fido2-manage: update to 0.2.2](https://github.com/NixOS/nixpkgs/pull/585745) · #585745 |
 | <a href="https://github.com/maxdorninger/MediaManager/issues/574"><img src="./src/assets/generated/status-issue-open.de17ea530027.svg" alt="Issue open" align="top"></a> | `maxdorninger/MediaManager` | [\[BUG\] Prowlarr magnet redirect is discarded before Transmission grab](https://github.com/maxdorninger/MediaManager/issues/574) · #574 |
