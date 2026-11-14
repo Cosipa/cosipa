@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "snake": {
-    "dark": "./src/assets/generated/snake-dark.d5cd8d93dc21.svg",
-    "light": "./src/assets/generated/snake-light.f21bf31e9d1b.svg"
+    "dark": "./src/assets/generated/snake-dark.7f774b21de6b.svg",
+    "light": "./src/assets/generated/snake-light.bd5a4932ce7c.svg"
   },
   "sources": {
     "activity": {
@@ -10,11 +10,11 @@
       "items": [
         {
           "kind": "pr",
-          "number": 585770,
+          "number": 588090,
           "repository": "NixOS/nixpkgs",
-          "title": "zap: install desktop icons",
-          "updated_at": "2026-11-09T23:17:06Z",
-          "url": "https://github.com/NixOS/nixpkgs/pull/585770"
+          "title": "iproute2: add Cosipa to maintainers",
+          "updated_at": "2026-11-14T13:01:32Z",
+          "url": "https://github.com/NixOS/nixpkgs/pull/588090"
         },
         {
           "kind": "pr",
@@ -38,7 +38,7 @@
       "as_of": "2026-11-14",
       "calendar_end": "2026-11-14",
       "calendar_start": "2025-11-15",
-      "calendar_total": 1085,
+      "calendar_total": 1087,
       "days": {
         "2025-11-15": 0,
         "2025-11-16": 0,
@@ -400,26 +400,35 @@
         "2026-11-07": 23,
         "2026-11-08": 3,
         "2026-11-09": 6,
-        "2026-11-10": 1,
+        "2026-11-10": 2,
         "2026-11-11": 50,
         "2026-11-12": 0,
         "2026-11-13": 5,
-        "2026-11-14": 0
+        "2026-11-14": 1
       },
-      "source_calendar_total": 1157
+      "source_calendar_total": 1159
     },
     "contributions": {
       "as_of": "2026-11-14",
-      "public_commits": 98,
+      "public_commits": 99,
       "public_issues": 1,
-      "public_prs": 3,
+      "public_prs": 4,
       "public_reviews": 1,
       "published_private": 847,
       "year": 2026
     },
     "merged": {
       "as_of": "2026-11-14",
-      "items": []
+      "items": [
+        {
+          "kind": "pr",
+          "merged_at": "2026-11-14T17:05:55+00:00",
+          "number": 585770,
+          "repository": "NixOS/nixpkgs",
+          "title": "zap: install desktop icons",
+          "url": "https://github.com/NixOS/nixpkgs/pull/585770"
+        }
+      ]
     },
     "posts": {
       "as_of": "2026-11-14",

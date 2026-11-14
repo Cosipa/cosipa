@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="846" height="208" viewBox="0 0 846 208" role="img" aria-labelledby="title desc">
+  <title id="title">Cosipa&#x27;s 365-day contribution timeline</title>
+  <desc id="desc">Cosipa&#x27;s 365-day contribution timeline</desc>
+  <rect width="846" height="208" rx="5" fill="#ffffff"/>
+  <g font-family="Verdana,DejaVu Sans,sans-serif">
+<defs>
+  <linearGradient id="line">
+    <stop stop-color="#0969da"/>
+    <stop offset="1" stop-color="#1a7f37"/>
+  </linearGradient>
+  <linearGradient id="area" x2="0" y2="1">
+    <stop stop-color="#0969da" stop-opacity=".35"/>
+    <stop offset="1" stop-color="#1a7f37" stop-opacity=".02"/>
+  </linearGradient>
+</defs>
+<rect x=".5" y=".5" width="845" height="207" rx="5" fill="none" stroke="#d0d7de"/>
+<text x="24" y="31" fill="#24292f" font-size="20" text-anchor="start" font-weight="bold">Cosipa</text>
+<text x="822" y="31" fill="#1a7f37" font-size="19" text-anchor="end" font-weight="bold">1,087 contributions</text>
+<text x="24" y="54" fill="#57606a" font-size="11" text-anchor="start" font-weight="normal">365 days: 2025-11-15 – 2026-11-14</text>
+
+<path d="M24 76H822" stroke="#d0d7de" stroke-dasharray="3 6"/>
+<path d="M24 106H822" stroke="#d0d7de" stroke-dasharray="3 6"/>
+<path d="M24 136H822" stroke="#d0d7de" stroke-dasharray="3 6"/>
+<path d="M24 166H822" stroke="#d0d7de" stroke-dasharray="3 6"/>
+
+<polygon points="24,166 24.0,147.8 39.3,156.9 54.7,156.9 70.0,113.4 85.4,143.8 100.7,150.8 116.1,160.9 131.4,162.0 146.8,125.6 162.1,156.9 177.5,135.7 192.8,150.8 208.2,140.7 223.5,151.8 238.8,145.8 254.2,149.8 269.5,132.6 284.9,100.3 300.2,160.9 315.6,145.8 330.9,102.3 346.3,134.7 361.6,164.0 377.0,121.5 392.3,105.3 407.7,106.3 423.0,155.9 438.3,156.9 453.7,164.0 469.0,150.8 484.4,140.7 499.7,137.7 515.1,154.9 530.4,150.8 545.8,166.0 561.1,158.9 576.5,166.0 591.8,135.7 607.2,160.9 622.5,150.8 637.8,151.8 653.2,156.9 668.5,166.0 683.9,141.7 699.2,153.9 714.6,135.7 729.9,154.9 745.3,152.9 760.6,160.9 776.0,159.9 791.3,149.8 806.7,76.0 822.0,165.0 822,166" fill="url(#area)"/>
+<polyline points="24.0,147.8 39.3,156.9 54.7,156.9 70.0,113.4 85.4,143.8 100.7,150.8 116.1,160.9 131.4,162.0 146.8,125.6 162.1,156.9 177.5,135.7 192.8,150.8 208.2,140.7 223.5,151.8 238.8,145.8 254.2,149.8 269.5,132.6 284.9,100.3 300.2,160.9 315.6,145.8 330.9,102.3 346.3,134.7 361.6,164.0 377.0,121.5 392.3,105.3 407.7,106.3 423.0,155.9 438.3,156.9 453.7,164.0 469.0,150.8 484.4,140.7 499.7,137.7 515.1,154.9 530.4,150.8 545.8,166.0 561.1,158.9 576.5,166.0 591.8,135.7 607.2,160.9 622.5,150.8 637.8,151.8 653.2,156.9 668.5,166.0 683.9,141.7 699.2,153.9 714.6,135.7 729.9,154.9 745.3,152.9 760.6,160.9 776.0,159.9 791.3,149.8 806.7,76.0 822.0,165.0" fill="none" stroke="url(#line)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="806.7" cy="76.0" r="4" fill="#1a7f37" stroke="#ffffff" stroke-width="2">
+  <title>Peak week: 89 contributions</title>
+</circle>
+<text x="24" y="193" fill="#57606a" font-size="10" text-anchor="start" font-weight="normal">Weekly totals · includes anonymized private activity only when publicly visible</text>
+
+
+  </g>
+</svg>
