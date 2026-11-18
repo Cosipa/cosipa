@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "snake": {
-    "dark": "./src/assets/generated/snake-dark.6bdb01d43129.svg",
-    "light": "./src/assets/generated/snake-light.9291ca1cdd2b.svg"
+    "dark": "./src/assets/generated/snake-dark.697d76e077d3.svg",
+    "light": "./src/assets/generated/snake-light.bec6ca6ea1ba.svg"
   },
   "sources": {
     "activity": {
@@ -38,7 +38,7 @@
       "as_of": "2026-11-18",
       "calendar_end": "2026-11-18",
       "calendar_start": "2025-11-19",
-      "calendar_total": 1087,
+      "calendar_total": 1091,
       "days": {
         "2025-11-19": 6,
         "2025-11-20": 3,
@@ -404,9 +404,9 @@
         "2026-11-15": 0,
         "2026-11-16": 0,
         "2026-11-17": 9,
-        "2026-11-18": 0
+        "2026-11-18": 4
       },
-      "source_calendar_total": 1096
+      "source_calendar_total": 1100
     },
     "contributions": {
       "as_of": "2026-11-18",
@@ -414,7 +414,7 @@
       "public_issues": 1,
       "public_prs": 4,
       "public_reviews": 1,
-      "published_private": 856,
+      "published_private": 860,
       "year": 2026
     },
     "merged": {
