@@ -1,12 +1,12 @@
 {
   "schema": 1,
   "snake": {
-    "dark": "./src/assets/generated/snake-dark.33acbacd4015.svg",
-    "light": "./src/assets/generated/snake-light.a2ae31457c36.svg"
+    "dark": "./src/assets/generated/snake-dark.6bdb01d43129.svg",
+    "light": "./src/assets/generated/snake-light.9291ca1cdd2b.svg"
   },
   "sources": {
     "activity": {
-      "as_of": "2026-11-17",
+      "as_of": "2026-11-18",
       "items": [
         {
           "kind": "pr",
@@ -35,12 +35,11 @@
       ]
     },
     "calendar": {
-      "as_of": "2026-11-17",
-      "calendar_end": "2026-11-17",
-      "calendar_start": "2025-11-18",
-      "calendar_total": 1092,
+      "as_of": "2026-11-18",
+      "calendar_end": "2026-11-18",
+      "calendar_start": "2025-11-19",
+      "calendar_total": 1087,
       "days": {
-        "2025-11-18": 5,
         "2025-11-19": 6,
         "2025-11-20": 3,
         "2025-11-21": 0,
@@ -404,12 +403,13 @@
         "2026-11-14": 1,
         "2026-11-15": 0,
         "2026-11-16": 0,
-        "2026-11-17": 9
+        "2026-11-17": 9,
+        "2026-11-18": 0
       },
       "source_calendar_total": 1096
     },
     "contributions": {
-      "as_of": "2026-11-17",
+      "as_of": "2026-11-18",
       "public_commits": 99,
       "public_issues": 1,
       "public_prs": 4,
@@ -418,7 +418,7 @@
       "year": 2026
     },
     "merged": {
-      "as_of": "2026-11-17",
+      "as_of": "2026-11-18",
       "items": [
         {
           "kind": "pr",
@@ -431,7 +431,7 @@
       ]
     },
     "posts": {
-      "as_of": "2026-11-17",
+      "as_of": "2026-11-18",
       "items": [
         {
           "excerpt": "This is a well-known (very old) Docker security risk, that everybody knows exists, yet sometimes we underestimate the impact of it.",

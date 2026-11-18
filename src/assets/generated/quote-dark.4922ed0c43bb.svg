@@ -1,16 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="600" height="96" viewBox="0 0 600 96" role="img" aria-labelledby="title desc">
   <title id="title">Quote from quotes.txt</title>
-  <desc id="desc">All operating systems suck, but Linux just sucks less — Linus Torvalds</desc>
+  <desc id="desc">The best way to predict the future is to invent it. — Alan Kay</desc>
   <rect width="600" height="96" rx="5" fill="#0d1117"/>
   <g font-family="Verdana,DejaVu Sans,sans-serif">
 <path d="M22 20V76" stroke="#58a6ff" stroke-width="3" stroke-linecap="round"/>
 <text x="35" y="56" fill="#58a6ff" font-size="42" text-anchor="start" font-weight="normal">“</text>
 
 <g font-style="italic">
-<text x="62" y="42" fill="#c9d1d9" font-size="15" text-anchor="start" font-weight="normal">All operating systems suck, but Linux just sucks less”</text>
+<text x="62" y="42" fill="#c9d1d9" font-size="15" text-anchor="start" font-weight="normal">The best way to predict the future is to invent it.”</text>
 
 </g>
-<text x="62" y="70" fill="#8b949e" font-size="12" text-anchor="start" font-weight="normal">— Linus Torvalds</text>
+<text x="62" y="70" fill="#8b949e" font-size="12" text-anchor="start" font-weight="normal">— Alan Kay</text>
 
 
   </g>
