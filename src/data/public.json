@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "snake": {
-    "dark": "./src/assets/generated/snake-dark.8f511dac4003.svg",
-    "light": "./src/assets/generated/snake-light.840c55f4dfb1.svg"
+    "dark": "./src/assets/generated/snake-dark.87bf8edefec8.svg",
+    "light": "./src/assets/generated/snake-light.3b53779bccf3.svg"
   },
   "sources": {
     "activity": {
@@ -12,9 +12,17 @@
           "kind": "pr",
           "number": 585745,
           "repository": "NixOS/nixpkgs",
-          "title": "fido2-manage: update to 0.2.2",
-          "updated_at": "2026-11-20T01:23:43Z",
+          "title": "fido2-manage: 0-unstable-2025-06-06 -> 0.2.2",
+          "updated_at": "2026-11-20T11:30:41Z",
           "url": "https://github.com/NixOS/nixpkgs/pull/585745"
+        },
+        {
+          "kind": "pr",
+          "number": 70,
+          "repository": "token2/fido2-manage",
+          "title": "Fix mismatched hex input in parse_key test",
+          "updated_at": "2026-11-20T11:29:02Z",
+          "url": "https://github.com/token2/fido2-manage/pull/70"
         },
         {
           "kind": "pr",
@@ -38,7 +46,7 @@
       "as_of": "2026-11-20",
       "calendar_end": "2026-11-20",
       "calendar_start": "2025-11-21",
-      "calendar_total": 1082,
+      "calendar_total": 1084,
       "days": {
         "2025-11-21": 0,
         "2025-11-22": 1,
@@ -404,15 +412,15 @@
         "2026-11-17": 9,
         "2026-11-18": 4,
         "2026-11-19": 0,
-        "2026-11-20": 0
+        "2026-11-20": 2
       },
-      "source_calendar_total": 1100
+      "source_calendar_total": 1102
     },
     "contributions": {
       "as_of": "2026-11-20",
       "public_commits": 99,
       "public_issues": 1,
-      "public_prs": 4,
+      "public_prs": 5,
       "public_reviews": 1,
       "published_private": 860,
       "year": 2026
