@@ -1,12 +1,12 @@
 {
   "schema": 1,
   "snake": {
-    "dark": "./src/assets/generated/snake-dark.754dd68e99cc.svg",
-    "light": "./src/assets/generated/snake-light.07a8e13a11a1.svg"
+    "dark": "./src/assets/generated/snake-dark.0dd396661ca5.svg",
+    "light": "./src/assets/generated/snake-light.87e16993b460.svg"
   },
   "sources": {
     "activity": {
-      "as_of": "2026-11-21",
+      "as_of": "2026-11-22",
       "items": [
         {
           "kind": "pr",
@@ -417,7 +417,7 @@
       "source_calendar_total": 1102
     },
     "contributions": {
-      "as_of": "2026-11-21",
+      "as_of": "2026-11-22",
       "public_commits": 99,
       "public_issues": 1,
       "public_prs": 5,
@@ -426,7 +426,7 @@
       "year": 2026
     },
     "merged": {
-      "as_of": "2026-11-21",
+      "as_of": "2026-11-22",
       "items": [
         {
           "kind": "pr",
@@ -439,7 +439,7 @@
       ]
     },
     "posts": {
-      "as_of": "2026-11-21",
+      "as_of": "2026-11-22",
       "items": [
         {
           "excerpt": "This is a well-known (very old) Docker security risk, that everybody knows exists, yet sometimes we underestimate the impact of it.",

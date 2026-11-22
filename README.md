@@ -122,22 +122,22 @@
 ## GitHub activity
 
 <!-- profile:snake:start -->
-<a href="./src/assets/generated/snake-dark.754dd68e99cc.svg#gh-dark-mode-only">
-  <img src="./src/assets/generated/snake-dark.754dd68e99cc.svg" alt="Cosipa&#x27;s contribution snake" width="1000">
+<a href="./src/assets/generated/snake-dark.0dd396661ca5.svg#gh-dark-mode-only">
+  <img src="./src/assets/generated/snake-dark.0dd396661ca5.svg" alt="Cosipa&#x27;s contribution snake" width="1000">
 </a>
-<a href="./src/assets/generated/snake-light.07a8e13a11a1.svg#gh-light-mode-only">
-  <img src="./src/assets/generated/snake-light.07a8e13a11a1.svg" alt="Cosipa&#x27;s contribution snake" width="1000">
+<a href="./src/assets/generated/snake-light.87e16993b460.svg#gh-light-mode-only">
+  <img src="./src/assets/generated/snake-light.87e16993b460.svg" alt="Cosipa&#x27;s contribution snake" width="1000">
 </a>
 <!-- profile:snake:end -->
 
 ### Public contribution stats
 
 <!-- profile:stats:start -->
-<a href="./src/assets/generated/stats-dark.6cd60c304486.svg#gh-dark-mode-only">
-  <img src="./src/assets/generated/stats-dark.6cd60c304486.svg" alt="Cosipa&#x27;s public GitHub contribution statistics" width="467">
+<a href="./src/assets/generated/stats-dark.c83b3d52f0ac.svg#gh-dark-mode-only">
+  <img src="./src/assets/generated/stats-dark.c83b3d52f0ac.svg" alt="Cosipa&#x27;s public GitHub contribution statistics" width="467">
 </a>
-<a href="./src/assets/generated/stats-light.5b6ca0c70d17.svg#gh-light-mode-only">
-  <img src="./src/assets/generated/stats-light.5b6ca0c70d17.svg" alt="Cosipa&#x27;s public GitHub contribution statistics" width="467">
+<a href="./src/assets/generated/stats-light.0678a299e48f.svg#gh-light-mode-only">
+  <img src="./src/assets/generated/stats-light.0678a299e48f.svg" alt="Cosipa&#x27;s public GitHub contribution statistics" width="467">
 </a>
 <!-- profile:stats:end -->
 
@@ -156,10 +156,10 @@
 
 <!-- profile:quote:start -->
 <a href="./src/data/quotes.txt#gh-dark-mode-only">
-  <img src="./src/assets/generated/quote-dark.e1968c647dc7.svg" alt="Quote card from quotes.txt">
+  <img src="./src/assets/generated/quote-dark.a0bf31fc87a6.svg" alt="Quote card from quotes.txt">
 </a>
 <a href="./src/data/quotes.txt#gh-light-mode-only">
-  <img src="./src/assets/generated/quote-light.ec64b796c5ff.svg" alt="Quote card from quotes.txt">
+  <img src="./src/assets/generated/quote-light.4b287c4787a2.svg" alt="Quote card from quotes.txt">
 </a>
 <!-- profile:quote:end -->
 
