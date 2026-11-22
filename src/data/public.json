@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "snake": {
-    "dark": "./src/assets/generated/snake-dark.0dd396661ca5.svg",
-    "light": "./src/assets/generated/snake-light.87e16993b460.svg"
+    "dark": "./src/assets/generated/snake-dark.ea265125d7fb.svg",
+    "light": "./src/assets/generated/snake-light.d9b43d924351.svg"
   },
   "sources": {
     "activity": {
@@ -422,7 +422,7 @@
       "public_issues": 1,
       "public_prs": 5,
       "public_reviews": 1,
-      "published_private": 860,
+      "published_private": 867,
       "year": 2026
     },
     "merged": {

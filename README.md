@@ -122,22 +122,22 @@
 ## GitHub activity
 
 <!-- profile:snake:start -->
-<a href="./src/assets/generated/snake-dark.0dd396661ca5.svg#gh-dark-mode-only">
-  <img src="./src/assets/generated/snake-dark.0dd396661ca5.svg" alt="Cosipa&#x27;s contribution snake" width="1000">
+<a href="./src/assets/generated/snake-dark.ea265125d7fb.svg#gh-dark-mode-only">
+  <img src="./src/assets/generated/snake-dark.ea265125d7fb.svg" alt="Cosipa&#x27;s contribution snake" width="1000">
 </a>
-<a href="./src/assets/generated/snake-light.87e16993b460.svg#gh-light-mode-only">
-  <img src="./src/assets/generated/snake-light.87e16993b460.svg" alt="Cosipa&#x27;s contribution snake" width="1000">
+<a href="./src/assets/generated/snake-light.d9b43d924351.svg#gh-light-mode-only">
+  <img src="./src/assets/generated/snake-light.d9b43d924351.svg" alt="Cosipa&#x27;s contribution snake" width="1000">
 </a>
 <!-- profile:snake:end -->
 
 ### Public contribution stats
 
 <!-- profile:stats:start -->
-<a href="./src/assets/generated/stats-dark.c83b3d52f0ac.svg#gh-dark-mode-only">
-  <img src="./src/assets/generated/stats-dark.c83b3d52f0ac.svg" alt="Cosipa&#x27;s public GitHub contribution statistics" width="467">
+<a href="./src/assets/generated/stats-dark.0287d65b5ace.svg#gh-dark-mode-only">
+  <img src="./src/assets/generated/stats-dark.0287d65b5ace.svg" alt="Cosipa&#x27;s public GitHub contribution statistics" width="467">
 </a>
-<a href="./src/assets/generated/stats-light.0678a299e48f.svg#gh-light-mode-only">
-  <img src="./src/assets/generated/stats-light.0678a299e48f.svg" alt="Cosipa&#x27;s public GitHub contribution statistics" width="467">
+<a href="./src/assets/generated/stats-light.0ff5676c39c1.svg#gh-light-mode-only">
+  <img src="./src/assets/generated/stats-light.0ff5676c39c1.svg" alt="Cosipa&#x27;s public GitHub contribution statistics" width="467">
 </a>
 <!-- profile:stats:end -->
 
