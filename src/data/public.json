@@ -12,17 +12,9 @@
           "kind": "pr",
           "number": 585745,
           "repository": "NixOS/nixpkgs",
-          "title": "fido2-manage: 0-unstable-2025-06-06 -> 0.2.2",
-          "updated_at": "2026-11-20T11:30:41Z",
+          "title": "fido2-manage: 0-unstable-2025-06-06 -> 0.2.3",
+          "updated_at": "2026-11-23T20:51:00Z",
           "url": "https://github.com/NixOS/nixpkgs/pull/585745"
-        },
-        {
-          "kind": "pr",
-          "number": 70,
-          "repository": "token2/fido2-manage",
-          "title": "Fix mismatched hex input in parse_key test",
-          "updated_at": "2026-11-20T11:29:02Z",
-          "url": "https://github.com/token2/fido2-manage/pull/70"
         },
         {
           "kind": "pr",
@@ -46,7 +38,7 @@
       "as_of": "2026-11-23",
       "calendar_end": "2026-11-23",
       "calendar_start": "2025-11-24",
-      "calendar_total": 1088,
+      "calendar_total": 1089,
       "days": {
         "2025-11-24": 0,
         "2025-11-25": 0,
@@ -409,16 +401,16 @@
         "2026-11-17": 9,
         "2026-11-18": 4,
         "2026-11-19": 0,
-        "2026-11-20": 2,
+        "2026-11-20": 3,
         "2026-11-21": 0,
         "2026-11-22": 9,
         "2026-11-23": 0
       },
-      "source_calendar_total": 1092
+      "source_calendar_total": 1093
     },
     "contributions": {
       "as_of": "2026-11-23",
-      "public_commits": 99,
+      "public_commits": 100,
       "public_issues": 1,
       "public_prs": 5,
       "public_reviews": 1,
@@ -428,6 +420,14 @@
     "merged": {
       "as_of": "2026-11-23",
       "items": [
+        {
+          "kind": "pr",
+          "merged_at": "2026-11-23T16:04:05+00:00",
+          "number": 70,
+          "repository": "token2/fido2-manage",
+          "title": "Fix mismatched hex input in parse_key test",
+          "url": "https://github.com/token2/fido2-manage/pull/70"
+        },
         {
           "kind": "pr",
           "merged_at": "2026-11-14T17:05:55+00:00",
