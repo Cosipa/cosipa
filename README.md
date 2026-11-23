@@ -122,33 +122,33 @@
 ## GitHub activity
 
 <!-- profile:snake:start -->
-<a href="./src/assets/generated/snake-dark.ea265125d7fb.svg#gh-dark-mode-only">
-  <img src="./src/assets/generated/snake-dark.ea265125d7fb.svg" alt="Cosipa&#x27;s contribution snake" width="1000">
+<a href="./src/assets/generated/snake-dark.600ea52aa4b9.svg#gh-dark-mode-only">
+  <img src="./src/assets/generated/snake-dark.600ea52aa4b9.svg" alt="Cosipa&#x27;s contribution snake" width="1000">
 </a>
-<a href="./src/assets/generated/snake-light.d9b43d924351.svg#gh-light-mode-only">
-  <img src="./src/assets/generated/snake-light.d9b43d924351.svg" alt="Cosipa&#x27;s contribution snake" width="1000">
+<a href="./src/assets/generated/snake-light.3d4da33b2be8.svg#gh-light-mode-only">
+  <img src="./src/assets/generated/snake-light.3d4da33b2be8.svg" alt="Cosipa&#x27;s contribution snake" width="1000">
 </a>
 <!-- profile:snake:end -->
 
 ### Public contribution stats
 
 <!-- profile:stats:start -->
-<a href="./src/assets/generated/stats-dark.0287d65b5ace.svg#gh-dark-mode-only">
-  <img src="./src/assets/generated/stats-dark.0287d65b5ace.svg" alt="Cosipa&#x27;s public GitHub contribution statistics" width="467">
+<a href="./src/assets/generated/stats-dark.fc7d13cd098f.svg#gh-dark-mode-only">
+  <img src="./src/assets/generated/stats-dark.fc7d13cd098f.svg" alt="Cosipa&#x27;s public GitHub contribution statistics" width="467">
 </a>
-<a href="./src/assets/generated/stats-light.0ff5676c39c1.svg#gh-light-mode-only">
-  <img src="./src/assets/generated/stats-light.0ff5676c39c1.svg" alt="Cosipa&#x27;s public GitHub contribution statistics" width="467">
+<a href="./src/assets/generated/stats-light.4c9deeb0735a.svg#gh-light-mode-only">
+  <img src="./src/assets/generated/stats-light.4c9deeb0735a.svg" alt="Cosipa&#x27;s public GitHub contribution statistics" width="467">
 </a>
 <!-- profile:stats:end -->
 
 ### This year's weekly line graph
 
 <!-- profile:timeline:start -->
-<a href="./src/assets/generated/timeline-dark.ce1777727c2e.svg#gh-dark-mode-only">
-  <img src="./src/assets/generated/timeline-dark.ce1777727c2e.svg" alt="Cosipa&#x27;s 365-day contribution timeline">
+<a href="./src/assets/generated/timeline-dark.54dc13f88684.svg#gh-dark-mode-only">
+  <img src="./src/assets/generated/timeline-dark.54dc13f88684.svg" alt="Cosipa&#x27;s 365-day contribution timeline">
 </a>
-<a href="./src/assets/generated/timeline-light.c4012fc03d30.svg#gh-light-mode-only">
-  <img src="./src/assets/generated/timeline-light.c4012fc03d30.svg" alt="Cosipa&#x27;s 365-day contribution timeline">
+<a href="./src/assets/generated/timeline-light.662aed072f58.svg#gh-light-mode-only">
+  <img src="./src/assets/generated/timeline-light.662aed072f58.svg" alt="Cosipa&#x27;s 365-day contribution timeline">
 </a>
 <!-- profile:timeline:end -->
 
@@ -156,10 +156,10 @@
 
 <!-- profile:quote:start -->
 <a href="./src/data/quotes.txt#gh-dark-mode-only">
-  <img src="./src/assets/generated/quote-dark.a0bf31fc87a6.svg" alt="Quote card from quotes.txt">
+  <img src="./src/assets/generated/quote-dark.0e9f68e3e988.svg" alt="Quote card from quotes.txt">
 </a>
 <a href="./src/data/quotes.txt#gh-light-mode-only">
-  <img src="./src/assets/generated/quote-light.4b287c4787a2.svg" alt="Quote card from quotes.txt">
+  <img src="./src/assets/generated/quote-light.12dcf16673f0.svg" alt="Quote card from quotes.txt">
 </a>
 <!-- profile:quote:end -->
 
