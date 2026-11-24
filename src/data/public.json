@@ -13,7 +13,7 @@
           "number": 585745,
           "repository": "NixOS/nixpkgs",
           "title": "fido2-manage: 0-unstable-2025-06-06 -> 0.2.3",
-          "updated_at": "2026-11-23T20:51:00Z",
+          "updated_at": "2026-11-24T12:40:34Z",
           "url": "https://github.com/NixOS/nixpkgs/pull/585745"
         },
         {
@@ -38,7 +38,7 @@
       "as_of": "2026-11-24",
       "calendar_end": "2026-11-24",
       "calendar_start": "2025-11-25",
-      "calendar_total": 1089,
+      "calendar_total": 1090,
       "days": {
         "2025-11-25": 0,
         "2025-11-26": 0,
@@ -404,9 +404,9 @@
         "2026-11-21": 0,
         "2026-11-22": 9,
         "2026-11-23": 0,
-        "2026-11-24": 0
+        "2026-11-24": 1
       },
-      "source_calendar_total": 1093
+      "source_calendar_total": 1094
     },
     "contributions": {
       "as_of": "2026-11-24",

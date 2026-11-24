@@ -144,11 +144,11 @@
 ### This year's weekly line graph
 
 <!-- profile:timeline:start -->
-<a href="./src/assets/generated/timeline-dark.6e99f71c3018.svg#gh-dark-mode-only">
-  <img src="./src/assets/generated/timeline-dark.6e99f71c3018.svg" alt="Cosipa&#x27;s 365-day contribution timeline">
+<a href="./src/assets/generated/timeline-dark.51ea534896a1.svg#gh-dark-mode-only">
+  <img src="./src/assets/generated/timeline-dark.51ea534896a1.svg" alt="Cosipa&#x27;s 365-day contribution timeline">
 </a>
-<a href="./src/assets/generated/timeline-light.8efe3975699d.svg#gh-light-mode-only">
-  <img src="./src/assets/generated/timeline-light.8efe3975699d.svg" alt="Cosipa&#x27;s 365-day contribution timeline">
+<a href="./src/assets/generated/timeline-light.a59839e77d1c.svg#gh-light-mode-only">
+  <img src="./src/assets/generated/timeline-light.a59839e77d1c.svg" alt="Cosipa&#x27;s 365-day contribution timeline">
 </a>
 <!-- profile:timeline:end -->
 
